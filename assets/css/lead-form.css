@@ -1,0 +1,105 @@
+/**
+ * Lead Form Styles for Keiste Solar Report
+ */
+
+.ksrad-lead-form {
+    width: 100%;
+}
+
+.ksrad-form-title {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.ksrad-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.ksrad-form-group input[type="text"],
+.ksrad-form-group input[type="email"],
+.ksrad-form-group input[type="tel"],
+.ksrad-form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+    font-family: inherit;
+}
+
+.ksrad-form-group input:focus,
+.ksrad-form-group textarea:focus {
+    outline: none;
+    border-color: #2271b1;
+}
+
+.ksrad-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.required {
+    color: #d63638;
+    font-weight: bold;
+}
+
+.ksrad-form-consent {
+    margin: 20px 0;
+}
+
+.ksrad-form-consent label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: normal !important;
+}
+
+.ksrad-form-consent input[type="checkbox"] {
+    width: auto;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.ksrad-submit-btn {
+    margin-top: 10px;
+}
+
+.ksrad-form-message {
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.ksrad-form-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.ksrad-form-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.ksrad-lead-form input:disabled,
+.ksrad-lead-form textarea:disabled,
+.ksrad-lead-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ksrad-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}

@@ -1,0 +1,84 @@
+/**
+ * Admin Styles for Keiste Solar Report
+ */
+
+.ksrad-stats {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.ksrad-stat-box {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    min-width: 150px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.ksrad-stat-box h3 {
+    margin: 0;
+    font-size: 32px;
+    color: #2271b1;
+    font-weight: 600;
+}
+
+.ksrad-stat-box p {
+    margin: 10px 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+#ksrad-lead-modal {
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.ksrad-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ksrad-modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 20px;
+}
+
+.ksrad-modal-close:hover,
+.ksrad-modal-close:focus {
+    color: #000;
+}
+
+#ksrad-lead-details h2 {
+    margin-top: 0;
+    padding-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+#ksrad-lead-details .form-table th {
+    font-weight: 600;
+    width: 200px;
+}
+
+#ksrad-lead-details .form-table td {
+    color: #555;
+}

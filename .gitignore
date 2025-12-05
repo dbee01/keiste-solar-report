@@ -1,0 +1,22 @@
+# WordPress
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+error_log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Node modules (if needed in future)
+node_modules/
+package-lock.json
