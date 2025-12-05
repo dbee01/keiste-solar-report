@@ -29,6 +29,7 @@ class KSRAD_Database {
         $charset_collate = $wpdb->get_charset_collate();
         $table_name = $wpdb->prefix . self::$table_name;
         
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe, dbDelta doesn't support prepared statements
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             name varchar(255) NOT NULL,
@@ -77,11 +78,12 @@ class KSRAD_Database {
             'estimated_savings' => 0,
             'notes' => '',
             'ip_address' => self::get_client_ip(),
-            'user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field($_SERVER['HTTP_USER_AGENT']) : '',
+            'user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '',
         );
         
         $data = wp_parse_args($data, $defaults);
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Custom table operation
         $result = $wpdb->insert(
             $table_name,
             array(
@@ -148,13 +150,15 @@ class KSRAD_Database {
             $order = 'DESC';
         }
         
-        // Build safe query
+        // Build safe query with validated orderby and order (already whitelisted above)
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name and orderby are safe (validated against whitelist)
         $sql = $wpdb->prepare(
             "SELECT * FROM {$table_name} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
             $per_page,
             $offset
         );
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table query, table name is safe (wpdb prefix + hardcoded constant), orderby validated against whitelist
         return $wpdb->get_results($sql);
     }
     
@@ -168,6 +172,7 @@ class KSRAD_Database {
         
         $table_name = $wpdb->prefix . self::$table_name;
         
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name is safe (wpdb prefix + hardcoded constant)
         return (int) $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
     }
     
@@ -182,6 +187,7 @@ class KSRAD_Database {
         
         $table_name = $wpdb->prefix . self::$table_name;
         
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name is safe (wpdb prefix + hardcoded constant)
         return $wpdb->get_row($wpdb->prepare(
             "SELECT * FROM $table_name WHERE id = %d",
             $id
@@ -199,6 +205,7 @@ class KSRAD_Database {
         
         $table_name = $wpdb->prefix . self::$table_name;
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom table delete operation
         return $wpdb->delete(
             $table_name,
             array('id' => $id),
@@ -224,7 +231,7 @@ class KSRAD_Database {
         
         foreach ($ip_keys as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
-                foreach (explode(',', $_SERVER[$key]) as $ip) {
+                foreach (explode(',', sanitize_text_field(wp_unslash($_SERVER[$key]))) as $ip) {
                     $ip = trim($ip);
                     
                     if (filter_var($ip, FILTER_VALIDATE_IP) !== false) {
@@ -246,6 +253,7 @@ class KSRAD_Database {
         global $wpdb;
         
         $table_name = $wpdb->prefix . self::$table_name;
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name is safe (wpdb prefix + hardcoded constant)
         $leads = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC", ARRAY_A);
         
         if (empty($leads)) {

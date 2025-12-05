@@ -54,7 +54,7 @@ class KSRAD_Calculator {
             
             wp_localize_script('ksrad-calculator', 'ksradAjax', array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('ksrad_calculate_nonce'),
+                'nonce' => esc_js(wp_create_nonce('ksrad_calculate_nonce')),
             ));
         }
     }
@@ -81,7 +81,7 @@ class KSRAD_Calculator {
             <div class="ksrad-calculator-form">
                 <div class="ksrad-form-group">
                     <label for="ksrad-monthly-bill">
-                        <?php _e('Average Monthly Electric Bill ($)', 'keiste-solar-report'); ?>
+                        <?php esc_html_e('Average Monthly Electric Bill ($)', 'keiste-solar-report'); ?>
                     </label>
                     <input 
                         type="number" 
@@ -96,20 +96,20 @@ class KSRAD_Calculator {
                 
                 <div class="ksrad-form-group">
                     <label for="ksrad-roof-type">
-                        <?php _e('Roof Type', 'keiste-solar-report'); ?>
+                        <?php esc_html_e('Roof Type', 'keiste-solar-report'); ?>
                     </label>
                     <select id="ksrad-roof-type" name="roof_type">
-                        <option value="asphalt"><?php _e('Asphalt Shingles', 'keiste-solar-report'); ?></option>
-                        <option value="metal"><?php _e('Metal', 'keiste-solar-report'); ?></option>
-                        <option value="tile"><?php _e('Tile', 'keiste-solar-report'); ?></option>
-                        <option value="flat"><?php _e('Flat', 'keiste-solar-report'); ?></option>
-                        <option value="other"><?php _e('Other', 'keiste-solar-report'); ?></option>
+                        <option value="asphalt"><?php esc_html_e('Asphalt Shingles', 'keiste-solar-report'); ?></option>
+                        <option value="metal"><?php esc_html_e('Metal', 'keiste-solar-report'); ?></option>
+                        <option value="tile"><?php esc_html_e('Tile', 'keiste-solar-report'); ?></option>
+                        <option value="flat"><?php esc_html_e('Flat', 'keiste-solar-report'); ?></option>
+                        <option value="other"><?php esc_html_e('Other', 'keiste-solar-report'); ?></option>
                     </select>
                 </div>
                 
                 <div class="ksrad-form-group">
                     <label for="ksrad-electricity-rate">
-                        <?php _e('Electricity Rate ($/kWh)', 'keiste-solar-report'); ?>
+                        <?php esc_html_e('Electricity Rate ($/kWh)', 'keiste-solar-report'); ?>
                     </label>
                     <input 
                         type="number" 
@@ -120,53 +120,53 @@ class KSRAD_Calculator {
                         value="0.13" 
                         placeholder="0.13"
                     />
-                    <small class="ksrad-help-text"><?php _e('Average U.S. rate is $0.13/kWh', 'keiste-solar-report'); ?></small>
+                    <small class="ksrad-help-text"><?php esc_html_e('Average U.S. rate is $0.13/kWh', 'keiste-solar-report'); ?></small>
                 </div>
                 
                 <button type="button" id="ksrad-calculate-btn" class="ksrad-btn ksrad-btn-primary">
-                    <?php _e('Calculate Savings', 'keiste-solar-report'); ?>
+                    <?php esc_html_e('Calculate Savings', 'keiste-solar-report'); ?>
                 </button>
             </div>
             
             <div class="ksrad-results" style="display: none;">
-                <h3><?php _e('Your Solar Savings Estimate', 'keiste-solar-report'); ?></h3>
+                <h3><?php esc_html_e('Your Solar Savings Estimate', 'keiste-solar-report'); ?></h3>
                 
                 <div class="ksrad-results-grid">
                     <div class="ksrad-result-card">
-                        <div class="ksrad-result-label"><?php _e('Recommended System Size', 'keiste-solar-report'); ?></div>
+                        <div class="ksrad-result-label"><?php esc_html_e('Recommended System Size', 'keiste-solar-report'); ?></div>
                         <div class="ksrad-result-value" id="ksrad-system-size">-</div>
                     </div>
                     
                     <div class="ksrad-result-card">
-                        <div class="ksrad-result-label"><?php _e('Estimated Cost', 'keiste-solar-report'); ?></div>
+                        <div class="ksrad-result-label"><?php esc_html_e('Estimated Cost', 'keiste-solar-report'); ?></div>
                         <div class="ksrad-result-value" id="ksrad-estimated-cost">-</div>
                     </div>
                     
                     <div class="ksrad-result-card">
-                        <div class="ksrad-result-label"><?php _e('Annual Savings', 'keiste-solar-report'); ?></div>
+                        <div class="ksrad-result-label"><?php esc_html_e('Annual Savings', 'keiste-solar-report'); ?></div>
                         <div class="ksrad-result-value" id="ksrad-annual-savings">-</div>
                     </div>
                     
                     <div class="ksrad-result-card">
-                        <div class="ksrad-result-label"><?php _e('25-Year Savings', 'keiste-solar-report'); ?></div>
+                        <div class="ksrad-result-label"><?php esc_html_e('25-Year Savings', 'keiste-solar-report'); ?></div>
                         <div class="ksrad-result-value" id="ksrad-lifetime-savings">-</div>
                     </div>
                     
                     <div class="ksrad-result-card">
-                        <div class="ksrad-result-label"><?php _e('Payback Period', 'keiste-solar-report'); ?></div>
+                        <div class="ksrad-result-label"><?php esc_html_e('Payback Period', 'keiste-solar-report'); ?></div>
                         <div class="ksrad-result-value" id="ksrad-payback-period">-</div>
                     </div>
                     
                     <div class="ksrad-result-card">
-                        <div class="ksrad-result-label"><?php _e('CO₂ Offset (25 years)', 'keiste-solar-report'); ?></div>
+                        <div class="ksrad-result-label"><?php esc_html_e('CO₂ Offset (25 years)', 'keiste-solar-report'); ?></div>
                         <div class="ksrad-result-value" id="ksrad-co2-offset">-</div>
                     </div>
                 </div>
                 
                 <?php if ($atts['show_form'] === 'yes') : ?>
                     <div class="ksrad-lead-form-wrapper">
-                        <h3><?php _e('Get Your Free Solar Quote', 'keiste-solar-report'); ?></h3>
-                        <p><?php _e('Fill out the form below and we\'ll send you a detailed solar report with a custom quote for your home.', 'keiste-solar-report'); ?></p>
+                        <h3><?php esc_html_e('Get Your Free Solar Quote', 'keiste-solar-report'); ?></h3>
+                        <p><?php esc_html_e('Fill out the form below and we\'ll send you a detailed solar report with a custom quote for your home.', 'keiste-solar-report'); ?></p>
                         <?php echo do_shortcode('[keiste_solar_lead_form]'); ?>
                     </div>
                 <?php endif; ?>
@@ -174,7 +174,7 @@ class KSRAD_Calculator {
             
             <div class="ksrad-loading" style="display: none;">
                 <div class="ksrad-spinner"></div>
-                <p><?php _e('Calculating...', 'keiste-solar-report'); ?></p>
+                <p><?php esc_html_e('Calculating...', 'keiste-solar-report'); ?></p>
             </div>
             
             <div class="ksrad-error" style="display: none;"></div>

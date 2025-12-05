@@ -78,11 +78,35 @@ class KSRAD_Admin {
      * Register plugin settings
      */
     public static function register_settings() {
-        register_setting('ksrad_settings', 'ksrad_notification_email');
-        register_setting('ksrad_settings', 'ksrad_send_confirmation');
-        register_setting('ksrad_settings', 'ksrad_default_electricity_rate');
-        register_setting('ksrad_settings', 'ksrad_cost_per_watt');
-        register_setting('ksrad_settings', 'ksrad_tax_credit');
+        register_setting('ksrad_settings', 'ksrad_notification_email', array(
+            'sanitize_callback' => 'sanitize_email'
+        ));
+        register_setting('ksrad_settings', 'ksrad_send_confirmation', array(
+            'sanitize_callback' => array(__CLASS__, 'sanitize_checkbox')
+        ));
+        register_setting('ksrad_settings', 'ksrad_default_electricity_rate', array(
+            'sanitize_callback' => array(__CLASS__, 'sanitize_float')
+        ));
+        register_setting('ksrad_settings', 'ksrad_cost_per_watt', array(
+            'sanitize_callback' => array(__CLASS__, 'sanitize_float')
+        ));
+        register_setting('ksrad_settings', 'ksrad_tax_credit', array(
+            'sanitize_callback' => array(__CLASS__, 'sanitize_float')
+        ));
+    }
+    
+    /**
+     * Sanitize checkbox value
+     */
+    public static function sanitize_checkbox($value) {
+        return $value ? '1' : '';
+    }
+    
+    /**
+     * Sanitize float value
+     */
+    public static function sanitize_float($value) {
+        return floatval($value);
     }
     
     /**
@@ -120,6 +144,7 @@ class KSRAD_Admin {
      */
     public static function render_leads_page() {
         // Handle pagination
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public page view, no state change
         $page = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
         $per_page = 20;
         
@@ -130,43 +155,45 @@ class KSRAD_Admin {
         
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php _e('Solar Leads', 'keiste-solar-report'); ?></h1>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Solar Leads', 'keiste-solar-report'); ?></h1>
             
-            <a href="<?php echo wp_nonce_url(admin_url('admin-post.php?action=ksrad_export_leads'), 'ksrad_export_leads'); ?>" class="page-title-action">
-                <?php _e('Export to CSV', 'keiste-solar-report'); ?>
+            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=ksrad_export_leads'), 'ksrad_export_leads')); ?>" class="page-title-action">
+                <?php esc_html_e('Export to CSV', 'keiste-solar-report'); ?>
             </a>
             
             <hr class="wp-header-end">
             
-            <?php if (isset($_GET['deleted']) && $_GET['deleted'] === '1') : ?>
+            <?php
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Status message display only
+            if (isset($_GET['deleted']) && $_GET['deleted'] === '1') : ?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php _e('Lead deleted successfully.', 'keiste-solar-report'); ?></p>
+                    <p><?php esc_html_e('Lead deleted successfully.', 'keiste-solar-report'); ?></p>
                 </div>
             <?php endif; ?>
             
             <div class="ksrad-stats">
                 <div class="ksrad-stat-box">
                     <h3><?php echo number_format($total_leads); ?></h3>
-                    <p><?php _e('Total Leads', 'keiste-solar-report'); ?></p>
+                    <p><?php esc_html_e('Total Leads', 'keiste-solar-report'); ?></p>
                 </div>
             </div>
             
             <?php if (empty($leads)) : ?>
-                <p><?php _e('No leads found yet. Add the calculator shortcode to your pages:', 'keiste-solar-report'); ?></p>
+                <p><?php esc_html_e('No leads found yet. Add the calculator shortcode to your pages:', 'keiste-solar-report'); ?></p>
                 <code>[keiste_solar_calculator]</code>
             <?php else : ?>
                 <table class="wp-list-table widefat fixed striped">
                     <thead>
                         <tr>
-                            <th><?php _e('ID', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('Name', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('Email', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('Phone', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('Monthly Bill', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('System Size', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('Est. Cost', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('Date', 'keiste-solar-report'); ?></th>
-                            <th><?php _e('Actions', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('ID', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('Name', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('Email', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('Phone', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('Monthly Bill', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('System Size', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('Est. Cost', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('Date', 'keiste-solar-report'); ?></th>
+                            <th><?php esc_html_e('Actions', 'keiste-solar-report'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -182,11 +209,11 @@ class KSRAD_Admin {
                                 <td><?php echo esc_html(date_i18n(get_option('date_format'), strtotime($lead->created_at))); ?></td>
                                 <td>
                                     <a href="#" onclick='showLeadDetails(<?php echo json_encode($lead); ?>); return false;'>
-                                        <?php _e('View', 'keiste-solar-report'); ?>
+                                        <?php esc_html_e('View', 'keiste-solar-report'); ?>
                                     </a> |
-                                    <a href="<?php echo wp_nonce_url(admin_url('admin-post.php?action=ksrad_delete_lead&lead_id=' . $lead->id), 'delete_lead_' . $lead->id); ?>" 
+                                    <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=ksrad_delete_lead&lead_id=' . $lead->id), 'delete_lead_' . $lead->id)); ?>" 
                                        onclick="return confirm('<?php esc_attr_e('Are you sure you want to delete this lead?', 'keiste-solar-report'); ?>');">
-                                        <?php _e('Delete', 'keiste-solar-report'); ?>
+                                        <?php esc_html_e('Delete', 'keiste-solar-report'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -198,6 +225,7 @@ class KSRAD_Admin {
                     <div class="tablenav">
                         <div class="tablenav-pages">
                             <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- paginate_links is safe
                             echo paginate_links(array(
                                 'base' => add_query_arg('paged', '%#%'),
                                 'format' => '',
@@ -317,7 +345,7 @@ class KSRAD_Admin {
         // Save settings
         if (isset($_POST['ksrad_settings_submit']) && check_admin_referer('ksrad_settings')) {
             // Validate and sanitize email
-            $notification_email = isset($_POST['ksrad_notification_email']) ? sanitize_email($_POST['ksrad_notification_email']) : '';
+            $notification_email = isset($_POST['ksrad_notification_email']) ? sanitize_email(wp_unslash($_POST['ksrad_notification_email'])) : '';
             if (!empty($notification_email) && is_email($notification_email)) {
                 update_option('ksrad_notification_email', $notification_email);
             }
@@ -355,12 +383,12 @@ class KSRAD_Admin {
         
         ?>
         <div class="wrap">
-            <h1><?php _e('Keiste Solar Report Settings', 'keiste-solar-report'); ?></h1>
+            <h1><?php esc_html_e('Keiste Solar Report Settings', 'keiste-solar-report'); ?></h1>
             
             <form method="post" action="">
                 <?php wp_nonce_field('ksrad_settings'); ?>
                 
-                <h2><?php _e('Email Settings', 'keiste-solar-report'); ?></h2>
+                <h2><?php esc_html_e('Email Settings', 'keiste-solar-report'); ?></h2>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
@@ -374,17 +402,17 @@ class KSRAD_Admin {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="ksrad_send_confirmation"><?php _e('Send Confirmation Email', 'keiste-solar-report'); ?></label>
+                            <label for="ksrad_send_confirmation"><?php esc_html_e('Send Confirmation Email', 'keiste-solar-report'); ?></label>
                         </th>
                         <td>
                             <input type="checkbox" name="ksrad_send_confirmation" id="ksrad_send_confirmation" 
                                    value="1" <?php checked($send_confirmation, '1'); ?>>
-                            <label for="ksrad_send_confirmation"><?php _e('Send confirmation email to leads', 'keiste-solar-report'); ?></label>
+                            <label for="ksrad_send_confirmation"><?php esc_html_e('Send confirmation email to leads', 'keiste-solar-report'); ?></label>
                         </td>
                     </tr>
                 </table>
                 
-                <h2><?php _e('Calculator Settings', 'keiste-solar-report'); ?></h2>
+                <h2><?php esc_html_e('Calculator Settings', 'keiste-solar-report'); ?></h2>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
@@ -421,20 +449,20 @@ class KSRAD_Admin {
                     </tr>
                 </table>
                 
-                <h2><?php _e('Shortcodes', 'keiste-solar-report'); ?></h2>
+                <h2><?php esc_html_e('Shortcodes', 'keiste-solar-report'); ?></h2>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php _e('Calculator', 'keiste-solar-report'); ?></th>
+                        <th scope="row"><?php esc_html_e('Calculator', 'keiste-solar-report'); ?></th>
                         <td>
                             <code>[keiste_solar_calculator]</code>
-                            <p class="description"><?php _e('Display the solar calculator with integrated lead form.', 'keiste-solar-report'); ?></p>
+                            <p class="description"><?php esc_html_e('Display the solar calculator with integrated lead form.', 'keiste-solar-report'); ?></p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e('Lead Form Only', 'keiste-solar-report'); ?></th>
+                        <th scope="row"><?php esc_html_e('Lead Form Only', 'keiste-solar-report'); ?></th>
                         <td>
                             <code>[keiste_solar_lead_form]</code>
-                            <p class="description"><?php _e('Display only the lead capture form.', 'keiste-solar-report'); ?></p>
+                            <p class="description"><?php esc_html_e('Display only the lead capture form.', 'keiste-solar-report'); ?></p>
                         </td>
                     </tr>
                 </table>
@@ -455,7 +483,8 @@ class KSRAD_Admin {
         
         // Verify nonce if coming from admin page
         if (isset($_GET['_wpnonce'])) {
-            if (!wp_verify_nonce($_GET['_wpnonce'], 'ksrad_export_leads')) {
+            $nonce = sanitize_text_field(wp_unslash($_GET['_wpnonce']));
+            if (!wp_verify_nonce($nonce, 'ksrad_export_leads')) {
                 wp_die(esc_html__('Security check failed.', 'keiste-solar-report'));
             }
         }
@@ -468,11 +497,12 @@ class KSRAD_Admin {
         
         // Security headers
         header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename="solar-leads-' . sanitize_file_name(date('Y-m-d')) . '.csv"');
+        header('Content-Disposition: attachment; filename="solar-leads-' . sanitize_file_name(gmdate('Y-m-d')) . '.csv"');
         header('Pragma: no-cache');
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: 0');
         
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSV data is already sanitized
         echo $csv;
         exit;
     }

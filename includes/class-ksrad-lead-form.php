@@ -83,7 +83,7 @@ class KSRAD_Lead_Form {
             
             <form id="ksrad-lead-form" class="ksrad-lead-form">
                 <input type="hidden" name="action" value="ksrad_submit_lead">
-                <input type="hidden" name="nonce" value="<?php echo wp_create_nonce('ksrad_lead_nonce'); ?>">
+                <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('ksrad_lead_nonce')); ?>">
                 
                 <!-- Hidden fields for calculator data -->
                 <input type="hidden" name="monthly_bill" id="ksrad-lead-monthly-bill" value="">
@@ -95,7 +95,7 @@ class KSRAD_Lead_Form {
                 <div class="ksrad-form-row">
                     <div class="ksrad-form-group">
                         <label for="ksrad-lead-name">
-                            <?php _e('Full Name', 'keiste-solar-report'); ?> <span class="required">*</span>
+                            <?php esc_html_e('Full Name', 'keiste-solar-report'); ?> <span class="required">*</span>
                         </label>
                         <input 
                             type="text" 
@@ -108,7 +108,7 @@ class KSRAD_Lead_Form {
                     
                     <div class="ksrad-form-group">
                         <label for="ksrad-lead-email">
-                            <?php _e('Email Address', 'keiste-solar-report'); ?> <span class="required">*</span>
+                            <?php esc_html_e('Email Address', 'keiste-solar-report'); ?> <span class="required">*</span>
                         </label>
                         <input 
                             type="email" 
@@ -123,7 +123,7 @@ class KSRAD_Lead_Form {
                 <div class="ksrad-form-row">
                     <div class="ksrad-form-group">
                         <label for="ksrad-lead-phone">
-                            <?php _e('Phone Number', 'keiste-solar-report'); ?> <span class="required">*</span>
+                            <?php esc_html_e('Phone Number', 'keiste-solar-report'); ?> <span class="required">*</span>
                         </label>
                         <input 
                             type="tel" 
@@ -136,7 +136,7 @@ class KSRAD_Lead_Form {
                     
                     <div class="ksrad-form-group">
                         <label for="ksrad-lead-address">
-                            <?php _e('Address', 'keiste-solar-report'); ?> <span class="required">*</span>
+                            <?php esc_html_e('Address', 'keiste-solar-report'); ?> <span class="required">*</span>
                         </label>
                         <input 
                             type="text" 
@@ -150,7 +150,7 @@ class KSRAD_Lead_Form {
                 
                 <div class="ksrad-form-group">
                     <label for="ksrad-lead-notes">
-                        <?php _e('Additional Notes (Optional)', 'keiste-solar-report'); ?>
+                        <?php esc_html_e('Additional Notes (Optional)', 'keiste-solar-report'); ?>
                     </label>
                     <textarea 
                         id="ksrad-lead-notes" 
@@ -163,7 +163,7 @@ class KSRAD_Lead_Form {
                 <div class="ksrad-form-group ksrad-form-consent">
                     <label>
                         <input type="checkbox" name="consent" required>
-                        <?php _e('I agree to receive information about solar solutions and understand my information will be used according to the privacy policy.', 'keiste-solar-report'); ?>
+                        <?php esc_html_e('I agree to receive information about solar solutions and understand my information will be used according to the privacy policy.', 'keiste-solar-report'); ?>
                         <span class="required">*</span>
                     </label>
                 </div>
@@ -188,15 +188,16 @@ class KSRAD_Lead_Form {
         // Validate required fields
         $required_fields = array('name', 'email', 'phone', 'address');
         foreach ($required_fields as $field) {
-            if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+            if (!isset($_POST[$field]) || empty(trim(sanitize_text_field(wp_unslash($_POST[$field]))))) {
                 wp_send_json_error(array(
+                    /* translators: %s: field name (e.g., name, email, phone, address) */
                     'message' => sprintf(__('Please fill in the %s field.', 'keiste-solar-report'), esc_html($field))
                 ));
             }
         }
         
         // Validate and sanitize name
-        $name = sanitize_text_field($_POST['name']);
+        $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
         if (strlen($name) < 2 || strlen($name) > 255) {
             wp_send_json_error(array(
                 'message' => __('Please enter a valid name (2-255 characters).', 'keiste-solar-report')
@@ -204,7 +205,7 @@ class KSRAD_Lead_Form {
         }
         
         // Validate email
-        $email = sanitize_email($_POST['email']);
+        $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
         if (!is_email($email)) {
             wp_send_json_error(array(
                 'message' => __('Please enter a valid email address.', 'keiste-solar-report')
@@ -212,7 +213,7 @@ class KSRAD_Lead_Form {
         }
         
         // Validate and sanitize phone
-        $phone = sanitize_text_field($_POST['phone']);
+        $phone = isset($_POST['phone']) ? sanitize_text_field(wp_unslash($_POST['phone'])) : '';
         if (strlen($phone) < 10 || strlen($phone) > 50) {
             wp_send_json_error(array(
                 'message' => __('Please enter a valid phone number.', 'keiste-solar-report')
@@ -220,7 +221,7 @@ class KSRAD_Lead_Form {
         }
         
         // Validate and sanitize address
-        $address = sanitize_textarea_field($_POST['address']);
+        $address = isset($_POST['address']) ? sanitize_textarea_field(wp_unslash($_POST['address'])) : '';
         if (strlen($address) < 5 || strlen($address) > 500) {
             wp_send_json_error(array(
                 'message' => __('Please enter a valid address (5-500 characters).', 'keiste-solar-report')
@@ -242,13 +243,13 @@ class KSRAD_Lead_Form {
         
         // Validate roof type
         $allowed_roof_types = array('asphalt', 'metal', 'tile', 'flat', 'other', '');
-        $roof_type = isset($_POST['roof_type']) ? sanitize_text_field($_POST['roof_type']) : '';
+        $roof_type = isset($_POST['roof_type']) ? sanitize_text_field(wp_unslash($_POST['roof_type'])) : '';
         if (!in_array($roof_type, $allowed_roof_types, true)) {
             $roof_type = '';
         }
         
         // Sanitize notes
-        $notes = isset($_POST['notes']) ? sanitize_textarea_field($_POST['notes']) : '';
+        $notes = isset($_POST['notes']) ? sanitize_textarea_field(wp_unslash($_POST['notes'])) : '';
         if (strlen($notes) > 2000) {
             $notes = substr($notes, 0, 2000);
         }

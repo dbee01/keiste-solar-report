@@ -41,9 +41,6 @@ function ksrad_init() {
     KSRAD_Lead_Form::init();
     KSRAD_Admin::init();
     KSRAD_Upgrade_Manager::init();
-    
-    // Load text domain for translations
-    load_plugin_textdomain('keiste-solar-report', false, dirname(KSRAD_PLUGIN_BASENAME) . '/languages');
 }
 add_action('plugins_loaded', 'ksrad_init');
 

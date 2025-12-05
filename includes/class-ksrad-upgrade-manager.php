@@ -469,6 +469,7 @@ class KSRAD_Upgrade_Manager {
         // Get all leads
         global $wpdb;
         $table_name = $wpdb->prefix . 'ksrad_solar_leads';
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Migration export, table name is safe (wpdb prefix + hardcoded string)
         $leads = $wpdb->get_results("SELECT * FROM {$table_name} ORDER BY created_at DESC", ARRAY_A);
         
         if (!empty($leads)) {
