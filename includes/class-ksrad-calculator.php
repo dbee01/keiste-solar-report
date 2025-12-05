@@ -207,7 +207,7 @@ class KSRAD_Calculator {
         
         // Validate and sanitize roof type
         $allowed_roof_types = array('asphalt', 'metal', 'tile', 'flat', 'other');
-        $roof_type = isset($_POST['roof_type']) ? sanitize_text_field($_POST['roof_type']) : 'asphalt';
+        $roof_type = isset($_POST['roof_type']) ? sanitize_text_field(wp_unslash($_POST['roof_type'])) : 'asphalt';
         if (!in_array($roof_type, $allowed_roof_types, true)) {
             $roof_type = 'asphalt';
         }

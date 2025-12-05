@@ -86,8 +86,8 @@ class KSRAD_Upgrade_Manager {
         ?>
         <div class="notice notice-info">
             <p>
-                <strong><?php _e('Keiste Solar Report Premium is active!', 'keiste-solar-report'); ?></strong>
-                <?php _e('The free version has been automatically deactivated. You can safely delete the free plugin.', 'keiste-solar-report'); ?>
+                <strong><?php esc_html_e('Keiste Solar Report Premium is active!', 'keiste-solar-report'); ?></strong>
+                <?php esc_html_e('The free version has been automatically deactivated. You can safely delete the free plugin.', 'keiste-solar-report'); ?>
             </p>
         </div>
         <?php
@@ -115,22 +115,22 @@ class KSRAD_Upgrade_Manager {
         
         ?>
         <div class="notice notice-warning is-dismissible ksrad-upgrade-notice">
-            <h3><?php _e('🚀 Upgrade to Premium for Advanced Features!', 'keiste-solar-report'); ?></h3>
-            <p><?php _e('Get access to:', 'keiste-solar-report'); ?></p>
+            <h3><?php esc_html_e('🚀 Upgrade to Premium for Advanced Features!', 'keiste-solar-report'); ?></h3>
+            <p><?php esc_html_e('Get access to:', 'keiste-solar-report'); ?></p>
             <ul style="list-style: disc; margin-left: 20px;">
-                <li><?php _e('Google Maps integration for accurate solar data', 'keiste-solar-report'); ?></li>
-                <li><?php _e('Roof area measurement and analysis', 'keiste-solar-report'); ?></li>
-                <li><?php _e('Real-time solar potential calculations', 'keiste-solar-report'); ?></li>
-                <li><?php _e('Advanced lead management and CRM integration', 'keiste-solar-report'); ?></li>
-                <li><?php _e('Custom branding and white-label options', 'keiste-solar-report'); ?></li>
-                <li><?php _e('Priority support and updates', 'keiste-solar-report'); ?></li>
+                <li><?php esc_html_e('Google Maps integration for accurate solar data', 'keiste-solar-report'); ?></li>
+                <li><?php esc_html_e('Roof area measurement and analysis', 'keiste-solar-report'); ?></li>
+                <li><?php esc_html_e('Real-time solar potential calculations', 'keiste-solar-report'); ?></li>
+                <li><?php esc_html_e('Advanced lead management and CRM integration', 'keiste-solar-report'); ?></li>
+                <li><?php esc_html_e('Custom branding and white-label options', 'keiste-solar-report'); ?></li>
+                <li><?php esc_html_e('Priority support and updates', 'keiste-solar-report'); ?></li>
             </ul>
             <p>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=keiste-solar-report-upgrade')); ?>" class="button button-primary">
-                    <?php _e('Learn More About Premium', 'keiste-solar-report'); ?>
+                    <?php esc_html_e('Learn More About Premium', 'keiste-solar-report'); ?>
                 </a>
                 <a href="#" class="button ksrad-dismiss-notice">
-                    <?php _e('Dismiss', 'keiste-solar-report'); ?>
+                    <?php esc_html_e('Dismiss', 'keiste-solar-report'); ?>
                 </a>
             </p>
         </div>
@@ -142,7 +142,7 @@ class KSRAD_Upgrade_Manager {
                 $('.ksrad-upgrade-notice').fadeOut();
                 $.post(ajaxurl, {
                     action: 'ksrad_dismiss_upgrade_notice',
-                    nonce: '<?php echo wp_create_nonce('ksrad_dismiss_notice'); ?>'
+                    nonce: '<?php echo esc_js(wp_create_nonce('ksrad_dismiss_notice')); ?>'
                 });
             });
         });
@@ -162,7 +162,7 @@ class KSRAD_Upgrade_Manager {
         add_submenu_page(
             'keiste-solar-report',
             __('Upgrade to Premium', 'keiste-solar-report'),
-            '<span style="color: #FCB214;">⭐ ' . __('Upgrade', 'keiste-solar-report') . '</span>',
+            '<span style="color: #FCB214;">⭐ ' . esc_html__('Upgrade', 'keiste-solar-report') . '</span>',
             'manage_options',
             'keiste-solar-report-upgrade',
             array(__CLASS__, 'render_upgrade_page')
@@ -175,94 +175,94 @@ class KSRAD_Upgrade_Manager {
     public static function render_upgrade_page() {
         ?>
         <div class="wrap ksrad-upgrade-page">
-            <h1><?php _e('Upgrade to Keiste Solar Report Premium', 'keiste-solar-report'); ?></h1>
+            <h1><?php esc_html_e('Upgrade to Keiste Solar Report Premium', 'keiste-solar-report'); ?></h1>
             
             <div class="ksrad-upgrade-hero">
-                <h2><?php _e('Take Your Solar Lead Generation to the Next Level', 'keiste-solar-report'); ?></h2>
-                <p class="subtitle"><?php _e('Get accurate solar data with Google Maps integration and advanced features', 'keiste-solar-report'); ?></p>
+                <h2><?php esc_html_e('Take Your Solar Lead Generation to the Next Level', 'keiste-solar-report'); ?></h2>
+                <p class="subtitle"><?php esc_html_e('Get accurate solar data with Google Maps integration and advanced features', 'keiste-solar-report'); ?></p>
             </div>
             
             <div class="ksrad-feature-comparison">
                 <table class="wp-list-table widefat fixed striped">
                     <thead>
                         <tr>
-                            <th style="width: 40%;"><?php _e('Feature', 'keiste-solar-report'); ?></th>
-                            <th style="text-align: center; width: 30%;"><?php _e('Free Version', 'keiste-solar-report'); ?></th>
-                            <th style="text-align: center; width: 30%; background: #FCB214;"><?php _e('Premium Version', 'keiste-solar-report'); ?></th>
+                            <th style="width: 40%;"><?php esc_html_e('Feature', 'keiste-solar-report'); ?></th>
+                            <th style="text-align: center; width: 30%;"><?php esc_html_e('Free Version', 'keiste-solar-report'); ?></th>
+                            <th style="text-align: center; width: 30%; background: #FCB214;"><?php esc_html_e('Premium Version', 'keiste-solar-report'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong><?php _e('Basic Solar Calculator', 'keiste-solar-report'); ?></strong></td>
+                            <td><strong><?php esc_html_e('Basic Solar Calculator', 'keiste-solar-report'); ?></strong></td>
                             <td style="text-align: center;">✅</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Lead Capture Forms', 'keiste-solar-report'); ?></strong></td>
+                            <td><strong><?php esc_html_e('Lead Capture Forms', 'keiste-solar-report'); ?></strong></td>
                             <td style="text-align: center;">✅</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Email Notifications', 'keiste-solar-report'); ?></strong></td>
+                            <td><strong><?php esc_html_e('Email Notifications', 'keiste-solar-report'); ?></strong></td>
                             <td style="text-align: center;">✅</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('CSV Export', 'keiste-solar-report'); ?></strong></td>
+                            <td><strong><?php esc_html_e('CSV Export', 'keiste-solar-report'); ?></strong></td>
                             <td style="text-align: center;">✅</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Google Maps Integration', 'keiste-solar-report'); ?></strong><br>
-                                <small><?php _e('Accurate location-based calculations', 'keiste-solar-report'); ?></small>
+                            <td><strong><?php esc_html_e('Google Maps Integration', 'keiste-solar-report'); ?></strong><br>
+                                <small><?php esc_html_e('Accurate location-based calculations', 'keiste-solar-report'); ?></small>
                             </td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Solar API Integration', 'keiste-solar-report'); ?></strong><br>
-                                <small><?php _e('Real-time solar data from Google', 'keiste-solar-report'); ?></small>
+                            <td><strong><?php esc_html_e('Solar API Integration', 'keiste-solar-report'); ?></strong><br>
+                                <small><?php esc_html_e('Real-time solar data from Google', 'keiste-solar-report'); ?></small>
                             </td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Roof Area Measurement', 'keiste-solar-report'); ?></strong><br>
-                                <small><?php _e('Automatic roof detection and sizing', 'keiste-solar-report'); ?></small>
+                            <td><strong><?php esc_html_e('Roof Area Measurement', 'keiste-solar-report'); ?></strong><br>
+                                <small><?php esc_html_e('Automatic roof detection and sizing', 'keiste-solar-report'); ?></small>
                             </td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Shading Analysis', 'keiste-solar-report'); ?></strong><br>
-                                <small><?php _e('Account for trees and obstructions', 'keiste-solar-report'); ?></small>
+                            <td><strong><?php esc_html_e('Shading Analysis', 'keiste-solar-report'); ?></strong><br>
+                                <small><?php esc_html_e('Account for trees and obstructions', 'keiste-solar-report'); ?></small>
                             </td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Custom Branding', 'keiste-solar-report'); ?></strong><br>
-                                <small><?php _e('Add your logo and colors', 'keiste-solar-report'); ?></small>
+                            <td><strong><?php esc_html_e('Custom Branding', 'keiste-solar-report'); ?></strong><br>
+                                <small><?php esc_html_e('Add your logo and colors', 'keiste-solar-report'); ?></small>
                             </td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('CRM Integration', 'keiste-solar-report'); ?></strong><br>
-                                <small><?php _e('Connect with popular CRMs', 'keiste-solar-report'); ?></small>
+                            <td><strong><?php esc_html_e('CRM Integration', 'keiste-solar-report'); ?></strong><br>
+                                <small><?php esc_html_e('Connect with popular CRMs', 'keiste-solar-report'); ?></small>
                             </td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Advanced Lead Management', 'keiste-solar-report'); ?></strong><br>
-                                <small><?php _e('Lead scoring, tags, and workflows', 'keiste-solar-report'); ?></small>
+                            <td><strong><?php esc_html_e('Advanced Lead Management', 'keiste-solar-report'); ?></strong><br>
+                                <small><?php esc_html_e('Lead scoring, tags, and workflows', 'keiste-solar-report'); ?></small>
                             </td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
                         <tr>
-                            <td><strong><?php _e('Priority Support', 'keiste-solar-report'); ?></strong></td>
+                            <td><strong><?php esc_html_e('Priority Support', 'keiste-solar-report'); ?></strong></td>
                             <td style="text-align: center;">❌</td>
                             <td style="text-align: center;">✅</td>
                         </tr>
@@ -271,47 +271,47 @@ class KSRAD_Upgrade_Manager {
             </div>
             
             <div class="ksrad-pricing">
-                <h2><?php _e('Simple, Transparent Pricing', 'keiste-solar-report'); ?></h2>
+                <h2><?php esc_html_e('Simple, Transparent Pricing', 'keiste-solar-report'); ?></h2>
                 <div class="ksrad-pricing-card">
-                    <h3><?php _e('Premium License', 'keiste-solar-report'); ?></h3>
+                    <h3><?php esc_html_e('Premium License', 'keiste-solar-report'); ?></h3>
                     <div class="price">$99 <span>/year</span></div>
                     <ul>
-                        <li>✅ <?php _e('All Premium Features', 'keiste-solar-report'); ?></li>
-                        <li>✅ <?php _e('1 Year of Updates', 'keiste-solar-report'); ?></li>
-                        <li>✅ <?php _e('1 Year of Support', 'keiste-solar-report'); ?></li>
-                        <li>✅ <?php _e('Unlimited Sites', 'keiste-solar-report'); ?></li>
-                        <li>✅ <?php _e('30-Day Money Back Guarantee', 'keiste-solar-report'); ?></li>
+                        <li>✅ <?php esc_html_e('All Premium Features', 'keiste-solar-report'); ?></li>
+                        <li>✅ <?php esc_html_e('1 Year of Updates', 'keiste-solar-report'); ?></li>
+                        <li>✅ <?php esc_html_e('1 Year of Support', 'keiste-solar-report'); ?></li>
+                        <li>✅ <?php esc_html_e('Unlimited Sites', 'keiste-solar-report'); ?></li>
+                        <li>✅ <?php esc_html_e('30-Day Money Back Guarantee', 'keiste-solar-report'); ?></li>
                     </ul>
                     <a href="https://keiste.com/solar-report-premium" class="button button-primary button-hero" target="_blank">
-                        <?php _e('Upgrade Now →', 'keiste-solar-report'); ?>
+                        <?php esc_html_e('Upgrade Now →', 'keiste-solar-report'); ?>
                     </a>
                 </div>
             </div>
             
             <div class="ksrad-upgrade-faq">
-                <h2><?php _e('Frequently Asked Questions', 'keiste-solar-report'); ?></h2>
+                <h2><?php esc_html_e('Frequently Asked Questions', 'keiste-solar-report'); ?></h2>
                 
-                <h3><?php _e('Will my existing data be preserved?', 'keiste-solar-report'); ?></h3>
-                <p><?php _e('Yes! When you upgrade to premium, all your existing leads and settings will be automatically imported. Nothing is lost in the transition.', 'keiste-solar-report'); ?></p>
+                <h3><?php esc_html_e('Will my existing data be preserved?', 'keiste-solar-report'); ?></h3>
+                <p><?php esc_html_e('Yes! When you upgrade to premium, all your existing leads and settings will be automatically imported. Nothing is lost in the transition.', 'keiste-solar-report'); ?></p>
                 
-                <h3><?php _e('Do I need a Google API key?', 'keiste-solar-report'); ?></h3>
-                <p><?php _e('Yes, the premium version requires a Google API key for Maps and Solar API access. We provide detailed instructions on getting your free API key (includes $200 free credit monthly).', 'keiste-solar-report'); ?></p>
+                <h3><?php esc_html_e('Do I need a Google API key?', 'keiste-solar-report'); ?></h3>
+                <p><?php esc_html_e('Yes, the premium version requires a Google API key for Maps and Solar API access. We provide detailed instructions on getting your free API key (includes $200 free credit monthly).', 'keiste-solar-report'); ?></p>
                 
-                <h3><?php _e('Can I use premium on multiple sites?', 'keiste-solar-report'); ?></h3>
-                <p><?php _e('Yes! One license covers unlimited sites that you own or manage.', 'keiste-solar-report'); ?></p>
+                <h3><?php esc_html_e('Can I use premium on multiple sites?', 'keiste-solar-report'); ?></h3>
+                <p><?php esc_html_e('Yes! One license covers unlimited sites that you own or manage.', 'keiste-solar-report'); ?></p>
                 
-                <h3><?php _e('What happens when my license expires?', 'keiste-solar-report'); ?></h3>
-                <p><?php _e('The plugin continues to work, but you won\'t receive updates or support. You can renew at any time at a discounted rate.', 'keiste-solar-report'); ?></p>
+                <h3><?php esc_html_e('What happens when my license expires?', 'keiste-solar-report'); ?></h3>
+                <p><?php esc_html_e('The plugin continues to work, but you won\'t receive updates or support. You can renew at any time at a discounted rate.', 'keiste-solar-report'); ?></p>
                 
-                <h3><?php _e('Is there a money-back guarantee?', 'keiste-solar-report'); ?></h3>
-                <p><?php _e('Yes! We offer a 30-day money-back guarantee. If you\'re not satisfied, we\'ll refund your purchase, no questions asked.', 'keiste-solar-report'); ?></p>
+                <h3><?php esc_html_e('Is there a money-back guarantee?', 'keiste-solar-report'); ?></h3>
+                <p><?php esc_html_e('Yes! We offer a 30-day money-back guarantee. If you\'re not satisfied, we\'ll refund your purchase, no questions asked.', 'keiste-solar-report'); ?></p>
             </div>
             
             <div class="ksrad-upgrade-cta">
-                <h2><?php _e('Ready to Upgrade?', 'keiste-solar-report'); ?></h2>
-                <p><?php _e('Get accurate solar calculations with Google integration and close more leads.', 'keiste-solar-report'); ?></p>
+                <h2><?php esc_html_e('Ready to Upgrade?', 'keiste-solar-report'); ?></h2>
+                <p><?php esc_html_e('Get accurate solar calculations with Google integration and close more leads.', 'keiste-solar-report'); ?></p>
                 <a href="https://keiste.com/solar-report-premium" class="button button-primary button-hero" target="_blank">
-                    <?php _e('Get Premium Now →', 'keiste-solar-report'); ?>
+                    <?php esc_html_e('Get Premium Now →', 'keiste-solar-report'); ?>
                 </a>
             </div>
         </div>

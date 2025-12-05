@@ -152,13 +152,14 @@ class KSRAD_Database {
         
         // Build safe query with validated orderby and order (already whitelisted above)
         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name and orderby are safe (validated against whitelist)
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name and orderby are safe (table uses wpdb->prefix + constant, orderby validated against whitelist)
         $sql = $wpdb->prepare(
             "SELECT * FROM {$table_name} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
             $per_page,
             $offset
         );
         
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table query, table name is safe (wpdb prefix + hardcoded constant), orderby validated against whitelist
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $sql is prepared above with wpdb->prepare(), table name is safe (wpdb prefix + hardcoded constant), orderby validated against whitelist
         return $wpdb->get_results($sql);
     }
     

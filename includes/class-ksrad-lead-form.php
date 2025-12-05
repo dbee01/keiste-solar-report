@@ -303,15 +303,17 @@ class KSRAD_Lead_Form {
         }
         
         // Sanitize subject line
+        /* translators: 1: Site name, 2: Lead name */
         $subject = sprintf(
-            __('[%s] New Solar Lead: %s', 'keiste-solar-report'), 
+            __('[%1$s] New Solar Lead: %2$s', 'keiste-solar-report'), 
             sanitize_text_field(get_bloginfo('name')), 
             sanitize_text_field($lead_data['name'])
         );
         
         // Build sanitized message
+        /* translators: 1: Name, 2: Email, 3: Phone, 4: Address, 5: Monthly bill, 6: Roof type, 7: System size, 8: Estimated cost, 9: Annual savings, 10: Notes */
         $message = sprintf(
-            __("New solar lead received:\n\nName: %s\nEmail: %s\nPhone: %s\nAddress: %s\nMonthly Bill: $%s\nRoof Type: %s\nEstimated System Size: %s kW\nEstimated Cost: $%s\nEstimated Savings: $%s\nNotes: %s\n\nView all leads in the admin panel.", 'keiste-solar-report'),
+            __("New solar lead received:\n\nName: %1\$s\nEmail: %2\$s\nPhone: %3\$s\nAddress: %4\$s\nMonthly Bill: $%5\$s\nRoof Type: %6\$s\nEstimated System Size: %7\$s kW\nEstimated Cost: $%8\$s\nEstimated Savings: $%9\$s\nNotes: %10\$s\n\nView all leads in the admin panel.", 'keiste-solar-report'),
             sanitize_text_field($lead_data['name']),
             sanitize_email($lead_data['email']),
             sanitize_text_field($lead_data['phone']),
@@ -351,14 +353,16 @@ class KSRAD_Lead_Form {
         }
         
         // Sanitize subject line
+        /* translators: %s: Site name */
         $subject = sprintf(
             __('Thank you for your interest in solar - %s', 'keiste-solar-report'), 
             sanitize_text_field(get_bloginfo('name'))
         );
         
         // Build sanitized message
+        /* translators: 1: Lead name, 2: System size, 3: Estimated cost, 4: Annual savings, 5: Site name */
         $message = sprintf(
-            __("Hi %s,\n\nThank you for requesting a solar quote! We have received your information and will be in touch shortly with a personalized solar analysis for your home.\n\nYour Estimated Results:\n- System Size: %s kW\n- Estimated Cost: $%s\n- Annual Savings: $%s\n\nOur team will review your information and contact you within 24-48 hours.\n\nBest regards,\n%s", 'keiste-solar-report'),
+            __("Hi %1\$s,\n\nThank you for requesting a solar quote! We have received your information and will be in touch shortly with a personalized solar analysis for your home.\n\nYour Estimated Results:\n- System Size: %2\$s kW\n- Estimated Cost: $%3\$s\n- Annual Savings: $%4\$s\n\nOur team will review your information and contact you within 24-48 hours.\n\nBest regards,\n%5\$s", 'keiste-solar-report'),
             sanitize_text_field($lead_data['name']),
             number_format(floatval($lead_data['estimated_system_size']), 2),
             number_format(floatval($lead_data['estimated_cost']), 2),
