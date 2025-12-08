@@ -40,6 +40,9 @@ class KSRAD_Upgrade_Manager {
         
         // Add upgrade callout in admin pages
         add_action('admin_footer', array(__CLASS__, 'add_upgrade_callout'));
+        
+        // Enqueue admin scripts
+        add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue_admin_scripts'));
     }
     
     /**
@@ -134,19 +137,6 @@ class KSRAD_Upgrade_Manager {
                 </a>
             </p>
         </div>
-        
-        <script>
-        jQuery(document).ready(function($) {
-            $('.ksrad-dismiss-notice').on('click', function(e) {
-                e.preventDefault();
-                $('.ksrad-upgrade-notice').fadeOut();
-                $.post(ajaxurl, {
-                    action: 'ksrad_dismiss_upgrade_notice',
-                    nonce: '<?php echo esc_js(wp_create_nonce('ksrad_dismiss_notice')); ?>'
-                });
-            });
-        });
-        </script>
         <?php
     }
     
@@ -315,81 +305,6 @@ class KSRAD_Upgrade_Manager {
                 </a>
             </div>
         </div>
-        
-        <style>
-        .ksrad-upgrade-page {
-            max-width: 1200px;
-        }
-        .ksrad-upgrade-hero {
-            background: linear-gradient(135deg, #2271b1 0%, #1a5a8e 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 8px;
-            margin: 20px 0 30px;
-            text-align: center;
-        }
-        .ksrad-upgrade-hero h2 {
-            color: white;
-            font-size: 32px;
-            margin: 0 0 10px;
-        }
-        .ksrad-upgrade-hero .subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-        .ksrad-feature-comparison {
-            margin: 30px 0;
-        }
-        .ksrad-pricing {
-            text-align: center;
-            margin: 40px 0;
-        }
-        .ksrad-pricing-card {
-            background: #f8f9fa;
-            border: 2px solid #FCB214;
-            border-radius: 8px;
-            padding: 30px;
-            max-width: 400px;
-            margin: 20px auto;
-        }
-        .ksrad-pricing-card .price {
-            font-size: 48px;
-            font-weight: bold;
-            color: #2271b1;
-            margin: 20px 0;
-        }
-        .ksrad-pricing-card .price span {
-            font-size: 24px;
-            color: #666;
-        }
-        .ksrad-pricing-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-            text-align: left;
-        }
-        .ksrad-pricing-card ul li {
-            padding: 8px 0;
-            font-size: 16px;
-        }
-        .ksrad-upgrade-faq {
-            margin: 40px 0;
-        }
-        .ksrad-upgrade-faq h3 {
-            color: #2271b1;
-            margin-top: 20px;
-        }
-        .ksrad-upgrade-cta {
-            background: #FCB214;
-            padding: 40px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 40px 0;
-        }
-        .ksrad-upgrade-cta h2 {
-            margin-top: 0;
-        }
-        </style>
         <?php
     }
     
@@ -407,30 +322,32 @@ class KSRAD_Upgrade_Manager {
         if (self::is_premium_active()) {
             return;
         }
+    }
+    
+    /**
+     * Enqueue admin scripts
+     */
+    public static function enqueue_admin_scripts($hook) {
+        // Only load on our admin pages
+        if (strpos($hook, 'keiste-solar-report') === false) {
+            return;
+        }
         
-        ?>
-        <style>
-        .ksrad-upgrade-banner {
-            background: linear-gradient(135deg, #FCB214 0%, #f39c12 100%);
-            color: #000;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .ksrad-upgrade-banner strong {
-            font-size: 16px;
-        }
-        .ksrad-upgrade-banner .button {
-            background: white;
-            color: #000;
-            border: none;
-            font-weight: 600;
-        }
-        </style>
-        <?php
+        wp_enqueue_script(
+            'ksrad-admin',
+            KSRAD_PLUGIN_URL . 'assets/js/admin.js',
+            array('jquery'),
+            KSRAD_VERSION,
+            true
+        );
+        
+        wp_localize_script(
+            'ksrad-admin',
+            'ksradAdmin',
+            array(
+                'dismissNonce' => wp_create_nonce('ksrad_dismiss_notice')
+            )
+        );
     }
     
     /**
@@ -480,7 +397,7 @@ class KSRAD_Upgrade_Manager {
         $upload_dir = wp_upload_dir();
         $export_file = $upload_dir['basedir'] . '/ksrad-premium-migration-' . time() . '.json';
         
-        file_put_contents($export_file, json_encode($data, JSON_PRETTY_PRINT));
+        file_put_contents($export_file, wp_json_encode($data, JSON_PRETTY_PRINT));
         
         return $export_file;
     }

@@ -124,6 +124,22 @@ class KSRAD_Admin {
             array(),
             KSRAD_VERSION
         );
+        
+        wp_enqueue_script(
+            'ksrad-admin',
+            KSRAD_PLUGIN_URL . 'assets/js/admin.js',
+            array('jquery'),
+            KSRAD_VERSION,
+            true
+        );
+        
+        wp_localize_script(
+            'ksrad-admin',
+            'ksradAdmin',
+            array(
+                'dismissNonce' => wp_create_nonce('ksrad_dismiss_notice')
+            )
+        );
     }
     
     /**
@@ -208,7 +224,7 @@ class KSRAD_Admin {
                                 <td>$<?php echo esc_html(number_format(floatval($lead->estimated_cost), 2)); ?></td>
                                 <td><?php echo esc_html(date_i18n(get_option('date_format'), strtotime($lead->created_at))); ?></td>
                                 <td>
-                                    <a href="#" onclick='showLeadDetails(<?php echo json_encode($lead); ?>); return false;'>
+                                    <a href="#" onclick='showLeadDetails(<?php echo wp_json_encode($lead); ?>); return false;'>
                                         <?php esc_html_e('View', 'keiste-solar-report'); ?>
                                     </a> |
                                     <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=ksrad_delete_lead&lead_id=' . $lead->id), 'delete_lead_' . $lead->id)); ?>" 
@@ -248,88 +264,6 @@ class KSRAD_Admin {
                 </div>
             </div>
         </div>
-        
-        <script>
-        function showLeadDetails(lead) {
-            var html = '<h2>' + lead.name + '</h2>';
-            html += '<table class="form-table">';
-            html += '<tr><th>Email:</th><td><a href="mailto:' + lead.email + '">' + lead.email + '</a></td></tr>';
-            html += '<tr><th>Phone:</th><td><a href="tel:' + lead.phone + '">' + lead.phone + '</a></td></tr>';
-            html += '<tr><th>Address:</th><td>' + lead.address + '</td></tr>';
-            html += '<tr><th>Monthly Bill:</th><td>$' + parseFloat(lead.monthly_bill).toFixed(2) + '</td></tr>';
-            html += '<tr><th>Roof Type:</th><td>' + lead.roof_type + '</td></tr>';
-            html += '<tr><th>System Size:</th><td>' + parseFloat(lead.estimated_system_size).toFixed(2) + ' kW</td></tr>';
-            html += '<tr><th>Estimated Cost:</th><td>$' + parseFloat(lead.estimated_cost).toFixed(2) + '</td></tr>';
-            html += '<tr><th>Annual Savings:</th><td>$' + parseFloat(lead.estimated_savings).toFixed(2) + '</td></tr>';
-            if (lead.notes) {
-                html += '<tr><th>Notes:</th><td>' + lead.notes + '</td></tr>';
-            }
-            html += '<tr><th>IP Address:</th><td>' + lead.ip_address + '</td></tr>';
-            html += '<tr><th>Date:</th><td>' + lead.created_at + '</td></tr>';
-            html += '</table>';
-            
-            document.getElementById('ksrad-lead-details').innerHTML = html;
-            document.getElementById('ksrad-lead-modal').style.display = 'block';
-        }
-        
-        function closeLeadModal() {
-            document.getElementById('ksrad-lead-modal').style.display = 'none';
-        }
-        </script>
-        
-        <style>
-        .ksrad-stats {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .ksrad-stat-box {
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 20px;
-            text-align: center;
-            min-width: 150px;
-        }
-        .ksrad-stat-box h3 {
-            margin: 0;
-            font-size: 32px;
-            color: #2271b1;
-        }
-        .ksrad-stat-box p {
-            margin: 10px 0 0;
-            color: #666;
-        }
-        #ksrad-lead-modal {
-            position: fixed;
-            z-index: 100000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-        .ksrad-modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 800px;
-            border-radius: 4px;
-        }
-        .ksrad-modal-close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .ksrad-modal-close:hover {
-            color: #000;
-        }
-        </style>
         <?php
     }
     

@@ -47,3 +47,9 @@ Desktop.ini
 
 # Plugin-specific
 languages/*.mo
+
+# Development/Testing Plugins (exclude from production)
+wp-mail-smtp/
+wordfence/
+mailpoet/
+litespeed-cache/
