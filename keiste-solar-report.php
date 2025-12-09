@@ -63,9 +63,6 @@ if (!defined('KSRAD_RENDERING')) {
     return;
 }
 
-// Load configuration
-define('GOOGLE_SOLAR_API_URL', 'https://solar.googleapis.com/v1/buildingInsights:findClosest');
-
 // HTTP Authentication removed - access is now managed by WordPress
 
 // Function to fetch solar data from Google Solar API
@@ -94,7 +91,7 @@ if (!function_exists('ksrad_fetch_solar_data')) {
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'X-Goog-Api-Key' => $apiKey,
-            'Referer' => 'https://keiste.com/'
+            'Referer' => home_url('/')
         )
     ));
 
@@ -244,6 +241,11 @@ if ($ksrad_isAjaxRequest) {
 
 
     <!-- ROI Modal Popup (jQuery-powered, accessible) -->
+    <?php
+    // Check if lead capture modal is enabled (premium feature)
+    $ksrad_enable_lead_modal = apply_filters('ksrad_enable_lead_modal', false);
+    if ($ksrad_enable_lead_modal):
+    ?>
     <dialog id="roiModal">
         <button type="button" class="roi-modal-close" style="display: none;" onclick="hideModal()" aria-label="Close">&times;</button>
         <form id="roiForm" method="dialog" class="roi-modal-form">
@@ -309,6 +311,7 @@ if ($ksrad_isAjaxRequest) {
         
         </form>
     </dialog>
+    <?php endif; // End lead modal check ?>
     
     <style>
         /* Enhanced Modal Styles */
@@ -416,7 +419,7 @@ if ($ksrad_isAjaxRequest) {
         </div>
 
         <div class="text-center mt-4">
-            <h1>Keiste Solar Report</h1>
+            <h1>Solar Report</h1>
         </div>
 
 
@@ -426,6 +429,7 @@ if ($ksrad_isAjaxRequest) {
                 style="text-align: center; background: #FDFDFB; border: 2px solid #E8E8E6; border-radius: 12px; padding: 2rem; margin: 2rem auto; max-width: 600px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
                 <h3 style="color: #2A2A28; margin-bottom: 1rem; font-size: 1.3em; font-weight: 600;">🔍 How Much Can You Save With Solar? 
                 </h3>
+                <h5 style="font-size: 1rem; color: #2a2a28; font-family: 'Brush Script MT', cursive;">by <a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Keiste.com</a></h5>
                 
                 <!-- Social Media Share Buttons -->
                 <div class="social-share-buttons" style="margin: 1.8rem 0;">
@@ -1515,6 +1519,10 @@ if ($ksrad_isAjaxRequest) {
 
         <!-- Solar Calculator v1.0.9 -->
 
+        <?php if (!apply_filters('ksrad_is_premium', false)): ?>
+        <h6 style="color: #2a2a28; text-align: center;font-family: 'Brush Script MT', cursive;"><a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Get Your Keiste Solar Report</a></h6>
+        <?php endif; ?>
+
 </div><!-- #keiste-solar-report-wrapper -->
 <?php
 // Return the buffered content to shortcode handler
@@ -1869,7 +1877,7 @@ if (!function_exists('ksrad_handle_gamma_pdf_generation')) {
     ));
     
     // Send notification email to admin
-    $to = 'info@keiste.com';
+    $to = ksrad_get_option('notification_email', get_option('admin_email'));
     $subject = 'Solar Form Submitted';
     $message = sprintf(
         "New Solar Report Request\n\n" .
