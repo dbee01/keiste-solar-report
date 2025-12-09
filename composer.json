@@ -1,0 +1,14 @@
+{
+    "name": "keiste/solar-report",
+    "description": "WordPress plugin for solar analysis reports",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=7.4",
+        "twilio/sdk": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Keiste\\SolarReport\\": "includes/"
+        }
+    }
+}
