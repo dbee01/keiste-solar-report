@@ -676,7 +676,7 @@ if ($ksrad_isAjaxRequest) {
                                     <div class="col-md-4 ml-auto mr-auto text-center"></div>
                                 </div>
                                 <div class="row mt-4">
-                                    <div class="col-md-6 ml-auto mr-auto" style="border-right: 1px #ccc solid;">
+                                    <div class="col-md-6 ml-auto mr-auto">
                                         <div class="colDirection">
                                             <div class="colFlexRight">
                                                 <i class="fas fa-euro-sign"></i>
