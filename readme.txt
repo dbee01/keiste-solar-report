@@ -10,7 +10,11 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 A comprehensive solar analysis tool for residential, commercial, community, business and farm buildings. That are capable of handling solar panels on their roof. 
 
-Covers most of the map for the countries of the United States, Canada, the UK and the Republic of Ireland. 
+== Description ==
+
+The Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar project analysis for US, Canadian, UK and Irish buidlings including residential, commercial, community, business and farm buildings. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations. 
+
+The visitor simply enters a building address, their monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (premium only).
 
 Calculations for the visitor's solar project include estimates of Return on Investment, CO2 saved and solar project breakeven point. 
 
@@ -18,9 +22,6 @@ The Keiste Solar Plugin features a Google Solar API integration, interactive cha
 
 Check out our Enterprise Plan which will programmatically verify your visitor lead data eg. phone number and email address as well as a custom-designed personal 10 - 12 page downloadable report.
 
-== Description ==
-
-The Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar project analysis for US, Canadian, UK and Irish residential, commercial, community, business and farm buildings capable of handling solar panels on their roof. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations. The visitor simply enters a building address, their monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (premium only).
 
 = Key Features (Free) =
 
