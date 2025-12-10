@@ -553,7 +553,7 @@ input[type="number"] {
 
     .energy-display-left,
     .energy-display-right {
-        width: 250px !important;
+        width: 200px !important;
         margin: 0.4rem 0 !important;
         padding: 0.5rem 0.75rem !important;
         box-sizing: border-box !important;
@@ -1285,7 +1285,7 @@ gmp-place-autocomplete input:-webkit-autofill,
 }
 
 .form-control {
-    width: 250px;
+    width: 200px;
     text-align: left;
     margin-right: auto;
     margin-left: 1.5rem;
