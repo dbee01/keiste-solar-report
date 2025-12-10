@@ -203,6 +203,5 @@ This plugin sends address data to Google's Solar API and Maps API for analysis. 
 
 = Links =
 
-* [Plugin Homepage](https://keiste.ie/keiste-solar-report)
-* [Documentation](https://keiste.ie/keiste-solar-report/docs)
+* [Plugin Homepage](https://keiste.com/solar-report/)
 * [Support](https://keiste.com/)
