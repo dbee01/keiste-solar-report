@@ -186,6 +186,11 @@ Yes, you can use the plugin on multiple WordPress installations. Each site will 
 
 == Changelog ==
 
+= 1.0.8 =
+* Fixed: Added missing config-inline.js file
+* Fixed: Font Awesome loading from local files instead of CDN
+* Improved: Asset enqueuing and dependency management
+
 = 1.0.0 =
 * Initial release
 * Google Solar API integration
