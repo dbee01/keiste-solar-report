@@ -520,7 +520,7 @@ input[type="number"] {
 .mt-5 { margin-top: 3rem !important; }
 
 /* ===== Responsive Design ===== */
-@media (max-width: 900px) {
+@media (max-width: 650px) {
     .install-details-row {
         flex-direction: column;
     }
