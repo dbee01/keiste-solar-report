@@ -12,7 +12,7 @@ Comprehensive solar analysis tool with ROI calculations, Google Solar API integr
 
 == Description ==
 
-Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar panel analysis for Ireland, the UK, the USA and many other regions. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations.
+Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar panel analysis for Ireland, the UK, the USA and Canada. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations.
 
 = Key Features =
 
@@ -62,7 +62,7 @@ Upgrade to the premium version for:
 1. Upload the plugin files to `/wp-content/plugins/keiste-solar-report/` or install via WordPress plugin installer
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. **IMPORTANT: Get your Google Solar API key** (see Configuration below)
-4. Go to **Solar Leads → Settings** and enter your API key
+4. Go to **Solar Leads → Settings** and enter your API key for Google Maps and Google Solar API (same key is fine for both if you wish)
 5. Add the shortcode `[keiste_solar_report]` to any page
 
 == Configuration ==
@@ -121,11 +121,7 @@ Currently, the plugin is configured for:
 
 == Country Coverage ==
 
-The plugin leverages Google's Solar API, which provides solar potential data globally. You can use the calculator for any address where Google has solar data, but financial calculations (grants, tariffs) are pre-configured for Ireland, UK, USA, and Canada.
-
-![Google Solar API Coverage Map](assets/images/google-solar-coverage-map.png)
-
-**Note:** To add support for additional countries, you can customize grant settings, currency, electricity rates, and other parameters in the admin panel (Settings > Solar Leads).
+The plugin leverages Google's Solar API, which provides solar potential data for many countries. You can use the calculator for any address where Google has solar data, but financial calculations (grants, tariffs) are pre-configured for Ireland, UK, USA, and Canada.
 
 = Can I customize the ROI calculations? =
 
@@ -158,9 +154,6 @@ Yes, you can use the plugin on multiple WordPress installations. Each site will 
 3. Interactive break-even chart over 25 years
 4. System size configuration with panel slider
 5. Financial inputs and customization options
-6. Detailed installation specifications
-7. PDF report download interface
-8. Admin settings panel
 
 == Changelog ==
 
