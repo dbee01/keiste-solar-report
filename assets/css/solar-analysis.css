@@ -286,13 +286,12 @@
     border-radius: var(--radius-md);
     border: 2px solid var(--primary-color);
     font-weight: 600;
-    text-align: left;
-    padding-left: 3rem;
+    text-align: center;
 }
 
 input[type="number"] {
     -webkit-appearance: none;
-    padding-left: 3rem !important;
+    text-align: center;
 }
 
 /* ===== Button Styles ===== */
