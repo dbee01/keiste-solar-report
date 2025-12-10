@@ -14,7 +14,7 @@ A comprehensive solar analysis tool for residential, commercial, community, busi
 
 The Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar project analysis for US, Canadian, UK and Irish residential, commercial, community, business and farm buildings capable of handling solar panels on their roof. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations. The visitor simply enters a building address, their monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-16 page bespoke-designed personalized report download (premium only).
 
-= Key Features =
+= Key Features (Free) =
 
 * **Google Solar API Integration** - Real-time solar potential data for any address
 * **Interactive Address Search** - Google Maps autocomplete for easy location selection
@@ -24,16 +24,25 @@ The Keiste Solar Report is a powerful WordPress plugin that provides comprehensi
 * **Mobile Responsive** - Fully optimized for all devices
 * **Admin Settings Panel** - Easy configuration of API keys and default values
 
-= Premium Features =
+= Premium Features (Upgrade $49.99 / month) =
 
-Upgrade to the premium version for:
-* **PDF Report Generation** - Professional downloadable reports for clients
 * **Lead Generation Form** - Collect contact details before showing results
 * **GA4 Analytics Tracking** - Track form submissions as conversion events in Google Analytics 4
 * **Social Media Share Buttons** - Enable social sharing to increase reach
-* **Choose Your Country** - Choose your individual country or area boundary with your own grant settings
+* **Choose Your Country or Area** - Choose your individual country or area boundary with your own grant settings
 * **Remove Branding** - White-label the plugin for your business
 * **Remove Links** - Hide all Keiste.com attribution links
+* **Email Support** - Support over email 
+
+= Enterprise Features =
+
+* **PDF Report Generation** - Bespoke 10-12 page personalized, downloadable reports for clients
+* **Multiple Branch Support** - Do you have multiple branches? We will support you to cover different branches
+* **Choose Multiple Boundaries** - Choose multiple boundaries to cover different areas of the map.
+* **Lead Verification** - Verify each telephone number and email address to stop fake contact details
+* **Personal Support** - Personal support requests
+
+Special deals for multiple websites. Contact us at keiste.com
 
 = Use Cases =
 
@@ -42,6 +51,10 @@ Upgrade to the premium version for:
 * Property developers evaluating solar potential
 * Homeowners researching solar panel investments
 * Educational institutions teaching renewable energy
+
+= Demo =
+
+Check out our Keiste Solar Report demo at [Keiste.com](https://keiste.com/keiste-solar-report/)
 
 = How It Works =
 
