@@ -762,51 +762,87 @@ class KSRAD_Admin {
     }
     
     public function report_key_callback() {
+        $is_premium = apply_filters('ksrad_is_premium', false);
+        $disabled = $is_premium ? '' : 'disabled';
         printf(
-            '<input type="text" id="report_key" name="ksrad_options[report_key]" value="%s" class="regular-text" />',
-            isset($this->options['report_key']) ? esc_attr($this->options['report_key']) : ''
+            '<input type="text" id="report_key" name="ksrad_options[report_key]" value="%s" class="regular-text" %s />',
+            isset($this->options['report_key']) ? esc_attr($this->options['report_key']) : '',
+            $disabled
         );
         echo '<p class="description">Optional key for report authentication</p>';
+        if (!$is_premium) {
+            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Activate the premium version to enable this field.</p>';
+        }
     }
     
     public function gamma_api_key_callback() {
+        $is_premium = apply_filters('ksrad_is_premium', false);
+        $disabled = $is_premium ? '' : 'disabled';
         printf(
-            '<input type="text" id="gamma_api_key" name="ksrad_options[gamma_api_key]" value="%s" class="regular-text" />',
-            isset($this->options['gamma_api_key']) ? esc_attr($this->options['gamma_api_key']) : ''
+            '<input type="text" id="gamma_api_key" name="ksrad_options[gamma_api_key]" value="%s" class="regular-text" %s />',
+            isset($this->options['gamma_api_key']) ? esc_attr($this->options['gamma_api_key']) : '',
+            $disabled
         );
         echo '<p class="description">API key for Gamma.app PDF generation service</p>';
+        if (!$is_premium) {
+            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Activate the premium version to enable this field.</p>';
+        }
     }
     
     public function gamma_template_id_callback() {
+        $is_premium = apply_filters('ksrad_is_premium', false);
+        $disabled = $is_premium ? '' : 'disabled';
         printf(
-            '<input type="text" id="gamma_template_id" name="ksrad_options[gamma_template_id]" value="%s" class="regular-text" />',
-            isset($this->options['gamma_template_id']) ? esc_attr($this->options['gamma_template_id']) : ''
+            '<input type="text" id="gamma_template_id" name="ksrad_options[gamma_template_id]" value="%s" class="regular-text" %s />',
+            isset($this->options['gamma_template_id']) ? esc_attr($this->options['gamma_template_id']) : '',
+            $disabled
         );
         echo '<p class="description">Template ID from Gamma.app</p>';
+        if (!$is_premium) {
+            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Activate the premium version to enable this field.</p>';
+        }
     }
     
     public function twilio_account_sid_callback() {
+        $is_premium = apply_filters('ksrad_is_premium', false);
+        $disabled = $is_premium ? '' : 'disabled';
         printf(
-            '<input type="text" id="twilio_account_sid" name="ksrad_options[twilio_account_sid]" value="%s" class="regular-text" />',
-            isset($this->options['twilio_account_sid']) ? esc_attr($this->options['twilio_account_sid']) : ''
+            '<input type="text" id="twilio_account_sid" name="ksrad_options[twilio_account_sid]" value="%s" class="regular-text" %s />',
+            isset($this->options['twilio_account_sid']) ? esc_attr($this->options['twilio_account_sid']) : '',
+            $disabled
         );
         echo '<p class="description">Twilio Account SID for phone number verification</p>';
+        if (!$is_premium) {
+            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Activate the premium version to enable this field.</p>';
+        }
     }
     
     public function twilio_auth_token_callback() {
+        $is_premium = apply_filters('ksrad_is_premium', false);
+        $disabled = $is_premium ? '' : 'disabled';
         printf(
-            '<input type="password" id="twilio_auth_token" name="ksrad_options[twilio_auth_token]" value="%s" class="regular-text" />',
-            isset($this->options['twilio_auth_token']) ? esc_attr($this->options['twilio_auth_token']) : ''
+            '<input type="password" id="twilio_auth_token" name="ksrad_options[twilio_auth_token]" value="%s" class="regular-text" %s />',
+            isset($this->options['twilio_auth_token']) ? esc_attr($this->options['twilio_auth_token']) : '',
+            $disabled
         );
         echo '<p class="description">Your Twilio Auth Token for phone number verification.</p>';
+        if (!$is_premium) {
+            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Activate the premium version to enable this field.</p>';
+        }
     }
     
     public function ga4_measurement_id_callback() {
+        $is_premium = apply_filters('ksrad_is_premium', false);
+        $disabled = $is_premium ? '' : 'disabled';
         printf(
-            '<input type="text" id="ga4_measurement_id" name="ksrad_options[ga4_measurement_id]" value="%s" class="regular-text" placeholder="G-XXXXXXXXXX" />',
-            isset($this->options['ga4_measurement_id']) ? esc_attr($this->options['ga4_measurement_id']) : ''
+            '<input type="text" id="ga4_measurement_id" name="ksrad_options[ga4_measurement_id]" value="%s" class="regular-text" placeholder="G-XXXXXXXXXX" %s />',
+            isset($this->options['ga4_measurement_id']) ? esc_attr($this->options['ga4_measurement_id']) : '',
+            $disabled
         );
         echo '<p class="description">Your Google Analytics 4 Measurement ID (format: G-XXXXXXXXXX). Form submissions will be tracked as conversion events.</p>';
+        if (!$is_premium) {
+            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Activate the premium version to enable this field.</p>';
+        }
     }
     
     public function admin_notification_email_callback() {

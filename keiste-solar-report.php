@@ -243,7 +243,7 @@ if ($ksrad_isAjaxRequest) {
     <!-- ROI Modal Popup (jQuery-powered, accessible) -->
     <?php
     // Check if lead capture modal is enabled (premium feature)
-    $ksrad_enable_lead_modal = apply_filters('ksrad_enable_lead_modal', false);
+    $ksrad_enable_lead_modal = apply_filters('ksrad_is_premium', false);
     if ($ksrad_enable_lead_modal):
     ?>
     <dialog id="roiModal">

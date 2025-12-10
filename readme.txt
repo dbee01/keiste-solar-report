@@ -29,6 +29,7 @@ Keiste Solar Report is a powerful WordPress plugin that provides comprehensive s
 Upgrade to the premium version for:
 * **PDF Report Generation** - Professional downloadable reports for clients
 * **Lead Generation Form** - Collect contact details before showing results
+* **GA4 Analytics Tracking** - Track form submissions as conversion events in Google Analytics 4
 * **Social Media Share Buttons** - Enable social sharing to increase reach
 * **Choose Your Country** - Add custom countries with their own grant settings
 * **Remove Branding** - White-label the plugin for your business
