@@ -8,7 +8,15 @@ Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A comprehensive solar analysis tool for residential, commercial, community, business and farm buildings capable of handling solar panels on their roof. For the countries of the United States, Canada, the UK and the Republic of Ireland. Calculations include Return on investment, CO2 saved and solar project Breakeven time. Plugin includes a Google Solar API integration, interactive charts, and PDF report generation (premium only), a lead generation form (premium) and tons more features.
+A comprehensive solar analysis tool for residential, commercial, community, business and farm buildings. That are capable of handling solar panels on their roof. 
+
+Covers most of the map for the countries of the United States, Canada, the UK and the Republic of Ireland. 
+
+Calculations for the visitor's solar project include estimates of Return on Investment, CO2 saved and solar project breakeven point. 
+
+The Keiste Solar Plugin features a Google Solar API integration, interactive charts, a lead generation form (premium) and tons more features.
+
+Check out our Enterprise Plan which will programmatically verify your visitor lead data eg. phone number and email address as well as a custom-designed personal 10 - 12 page downloadable report.
 
 == Description ==
 
@@ -64,9 +72,17 @@ Check out our Keiste Solar Report demo at [Keiste.com](https://keiste.com/keiste
 4. Interactive charts display financial projections over 25 years
 5. Results are displayed instantly (PDF reports and lead capture available in premium version)
 
+= Notes =
+
+If the building isn't designed to take solar panels on the roof. The plugin will show a 404 error. Please choose another building.
+
+Parts of rural Ireland are not covered by the satellite and so won't appear on the results.
+
+Stay tuned for new country support, multi-language support and additional features.
+
 = Requirements =
 
-* Google Solar API key (obtain from Google Cloud Console)
+* Google API key (obtain from Google Cloud Console)
 * Active WordPress installation (5.8 or higher)
 * PHP 7.4 or higher
 
