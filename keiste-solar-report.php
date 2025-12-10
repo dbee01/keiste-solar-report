@@ -567,6 +567,39 @@ if ($ksrad_isAjaxRequest) {
                                     <input type="number" class="form-control" id="systemSize" step="0.1" required>
                                     <div class="input-help">Based on 400W panels</div>
                                 </div>
+                                <style>
+
+                                    /* ===== Range Slider ===== */
+                                    input[type="range"] {
+                                        width: 100%;
+                                        height: 8px;
+                                        border-radius: 5px;
+                                        background: linear-gradient(to right, var(--primary-color) 0%, var(--primary-color) 50%, #ddd 50%, #ddd 100%);
+                                        outline: none;
+                                        -webkit-appearance: none;
+                                    }
+
+                                    input[type="range"]::-webkit-slider-thumb {
+                                        -webkit-appearance: none;
+                                        appearance: none;
+                                        width: 20px;
+                                        height: 20px;
+                                        border-radius: 50%;
+                                        background: var(--primary-color);
+                                        cursor: pointer;
+                                        box-shadow: var(--shadow-sm);
+                                    }
+
+                                    input[type="range"]::-moz-range-thumb {
+                                        width: 20px;
+                                        height: 20px;
+                                        border-radius: 50%;
+                                        background: var(--primary-color);
+                                        cursor: pointer;
+                                        box-shadow: var(--shadow-sm);
+                                    }
+
+                                </style>
 
                                 <h5 class="text-center mb-4">Your Finances</h5>
 
