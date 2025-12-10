@@ -75,7 +75,7 @@ Check out our Keiste Solar Report demo at [Keiste.com](https://keiste.com/keiste
 1. Upload the plugin files to `/wp-content/plugins/keiste-solar-report/` or install via WordPress plugin installer
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. **IMPORTANT: Get your Google Solar API key** (see Configuration below). Enable Google Places API, Google Maps API and Google Solar API for this key. Add http website restrictions to the key on your Google Console for your domain only.
-4. Go to **Solar Leads → Settings** and enter your API key for Google Maps and Google Solar API. The same key is fine for all if you wish.
+4. Go to **Solar Leads → Settings** and enter your API Key (or keys)
 5. Add the shortcode `[keiste_solar_report]` to any page
 
 == Configuration ==
@@ -84,10 +84,11 @@ Check out our Keiste Solar Report demo at [Keiste.com](https://keiste.com/keiste
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select existing
-3. Enable these APIs:
+3. Enable these Google APIs:
    - Solar API
    - Maps JavaScript API
-   - Places API
+   - Places API (New)
+   - Maps API
 4. Create credentials → API Key
 5. **Restrict your key:**
    - Application restrictions: HTTP referrers
@@ -96,7 +97,7 @@ Check out our Keiste Solar Report demo at [Keiste.com](https://keiste.com/keiste
 **Step 2: Configure Plugin**
 
 1. In WordPress, go to **Solar Leads → Settings**
-2. Paste your Google Solar API key
+2. Paste your Google Solar and Maps API key
 3. Set your defaults (optional):
    - Electricity rate
    - Grant percentages
@@ -119,7 +120,7 @@ This service is provided by "Google": terms of use, privacy policy
 
 = Do I need a Google API key? =
 
-Yes, you need a Google Solar API, Google Places API and Google Maps API enabled key to fetch data. You can obtain one from the Google Cloud Console. The API is free for limited usage.
+Yes, you need a Google Solar API, Google Places API (New), Google Maps Javascript API and Google Maps API enabled key to fetch data. You can obtain one from the Google Cloud Console. The API is free for limited usage.
 
 = Which countries are supported? =
 
@@ -153,7 +154,7 @@ Yes, the plugin is designed to work with any WordPress theme. It uses Bootstrap 
 
 = Is there a cost for using this plugin? =
 
-The plugin itself is free. You can also upgrade for premium features. You'll need a Google Solar API, Google Places API and Google Maps API key, which has free tier usage limits. Check Google Cloud pricing for current rates.
+The plugin itself is free. You can also upgrade for premium features. You'll need a Google API key. Google has generous free tier usage limits. Check Google Cloud pricing for current rates.
 
 = Can I use this on multiple sites? =
 
@@ -199,6 +200,7 @@ For support, please visit [keiste.com](https://keiste.com/) or contact us throug
 * Developed by Keiste
 * Uses Google Solar API for solar potential data
 * Uses Google Maps API for rooftop satellite image
+* Uses Google Maps Javascript API for logic
 * Uses Google Places API for autocomplete address bar
 * Charts powered by Chart.js
 * PDF generation by gamma.app
@@ -206,7 +208,7 @@ For support, please visit [keiste.com](https://keiste.com/) or contact us throug
 
 = Privacy Policy =
 
-This plugin sends address data to Google's Solar API and Maps API for analysis. No personal data is stored by the plugin itself. Users who download reports provide their name and email, which is handled according to your site's privacy policy.
+This plugin sends address data to Google for analysis. No personal data is stored by the plugin itself unless the user fills out the lead generation form (premium plan only). Users who download reports provide their name and email, which is handled according to your site's privacy policy.
 
 = Links =
 

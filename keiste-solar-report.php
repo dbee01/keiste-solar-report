@@ -285,7 +285,7 @@ if ($ksrad_isAjaxRequest) {
             <div class="roi-form-group roi-checkbox-group">
                 <input id="roiTerms" name="terms" type="checkbox" required>
                 <label for="roiTerms" class="roi-checkbox-label">
-                    I agree to be contacted regarding my solar installation and accept the <a href="https://keiste.com/data-use-keiste-solar-report/" target="_blank" style="color: #1B4D3E; text-decoration: underline;">Data Use Policy</a> <span class="required">*</span>
+                    I agree to be contacted regarding my solar installation and accept the <a href="#" target="_blank" style="color: #1B4D3E; text-decoration: underline;">Data Use Policy</a> <span class="required">*</span>
                 </label>
             </div>
             
@@ -411,7 +411,7 @@ if ($ksrad_isAjaxRequest) {
                 $ksrad_logo_url = KSRAD_PLUGIN_URL . 'assets/images/keiste-logo.png';
             }
             ?>
-            <a href="<?php echo esc_url(home_url('/keiste-solar-report')); ?>">
+            <a href="<?php echo esc_url(home_url('/')); ?>">
                 <img src="<?php echo esc_url($ksrad_logo_url); ?>" alt="Company Logo"
                     class="img-fluid logo-image" style="max-width: 130px; width: 100%;">
             </a>
@@ -693,7 +693,7 @@ if ($ksrad_isAjaxRequest) {
                         style="text-align: left; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1.5rem; margin: 2rem auto; max-width: 600px;">
                         <h4 style="color: #856404; margin-bottom: 1rem;">⚠️ Solar Data Not Available</h4>
                         <p style="color: #856404; margin-bottom: 0.5rem;">Unfortunately, Google Solar API does not have coverage
-                            for this location yet. Please <a href="<?php echo esc_url(home_url('/keiste-solar-report')); ?>">try another location</a>.</p>
+                            for this location yet. Please <a href="<?php echo esc_url(home_url('/')); ?>">try another location</a>.</p>
                         <p style="color: #856404; margin-bottom: 1rem;"><strong>Location:</strong>
                             <?php echo esc_html($ksrad_business_name); ?></p>
                         <p style="color: #856404; font-size: 0.9rem; margin-bottom: 0;">

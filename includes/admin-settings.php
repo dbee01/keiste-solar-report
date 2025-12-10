@@ -90,7 +90,7 @@ class KSRAD_Admin {
             <div class="card">
                 <h3>Shortcode</h3>
                 <p>Use this shortcode to display the solar analysis tool on any page or post:</p>
-                <code>[keiste_solar_analysis]</code>
+                <code>[keiste_solar_report]</code>
                 
                 <h3>PHP Template Tag</h3>
                 <p>Or use this PHP code in your theme templates:</p>
