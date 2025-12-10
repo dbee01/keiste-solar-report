@@ -3,7 +3,7 @@
  * Plugin Name: Keiste Solar Report
  * Plugin URI: https://keiste.com/keiste-solar-report
  * Description: Comprehensive solar panel analysis tool with ROI calculations, Google Solar API integration, interactive charts, and PDF report generation.
- * Version: 1.0.10
+ * Version: 1.0.2
  * Author: Dara Burke, Keiste
  * Author URI: https://keiste.com
  * License: GPL v2 or later
@@ -32,7 +32,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 // Define plugin constants (only once) with ksrad_ namespace
 if (!defined('KSRAD_VERSION')) {
-    define('KSRAD_VERSION', '1.0.12');
+    define('KSRAD_VERSION', '1.0.2');
 }
 if (!defined('KSRAD_PLUGIN_DIR')) {
     define('KSRAD_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -430,7 +430,9 @@ if ($ksrad_isAjaxRequest) {
                 <h3 style="color: #2A2A28; margin-bottom: 1rem; font-size: 1.3em; font-weight: 600;">🔍 How Much Can You Save With Solar? 
                 </h3>
                 <h5 style="font-size: 1rem; color: #2a2a28; font-family: 'Brush Script MT', cursive;">by <a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Keiste.com</a></h5>
-                
+  
+                <?php if (apply_filters('ksrad_is_premium', false)): ?>
+  
                 <!-- Social Media Share Buttons -->
                 <div class="social-share-buttons" style="margin: 1.8rem 0;">
                     <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" 
@@ -569,7 +571,8 @@ if ($ksrad_isAjaxRequest) {
                         }
                     }
                 </style>
-                
+                <?php endif; ?>
+  
                 <p style="color: #3A3A38; margin-bottom: 0.5rem; font-weight: 500;">Use the search box below to select an
                     address.</p>
                 <p style="color: #5A5A58; font-size: 1rem; margin-bottom: 0;">We'll analyze solar potential

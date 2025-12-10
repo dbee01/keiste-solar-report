@@ -66,18 +66,18 @@ class KSRAD_Plugin {
             return;
         }
         
-        // Font Awesome (Local)
+        // Font Awesome (CDN)
         wp_enqueue_style(
             'font-awesome',
-            KSRAD_PLUGIN_URL . 'assets/vendor/font-awesome.min.css',
+            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
             array(),
             '6.4.0'
         );
         
-        // Bootstrap CSS (Local)
+        // Bootstrap CSS (CDN)
         wp_enqueue_style(
             'bootstrap',
-            KSRAD_PLUGIN_URL . 'assets/vendor/bootstrap.min.css',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
             array(),
             '5.1.3'
         );
@@ -90,18 +90,18 @@ class KSRAD_Plugin {
             KSRAD_VERSION
         );
         
-        // Chart.js (Local)
+        // Chart.js (CDN)
         wp_enqueue_script(
             'chartjs',
-            KSRAD_PLUGIN_URL . 'assets/vendor/chart.min.js',
+            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
             array(),
-            '4.5.1',
+            '4.4.0',
             true
         );
-        // Bootstrap JS (Local)
+        // Bootstrap JS (CDN)
         wp_enqueue_script(
             'bootstrap-js',
-            KSRAD_PLUGIN_URL . 'assets/vendor/bootstrap.bundle.min.js',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js',
             array(),
             '5.1.3',
             true
