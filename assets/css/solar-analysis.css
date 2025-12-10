@@ -540,7 +540,7 @@ input[type="number"] {
     }
 
     .form-control {
-        width: 250px !important;
+        width: 200px !important;
         max-width: 100% !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
@@ -1564,7 +1564,7 @@ gmp-place-autocomplete input:-webkit-autofill,
 
     /* Mobile-specific adjustments to make inputs and displays full-width */
     .form-control {
-        width: 250px !important;
+        width: 200px !important;
         max-width: 100% !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
