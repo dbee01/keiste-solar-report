@@ -4,7 +4,7 @@ Tags: solar, solar panels, roi calculator, google solar api, energy analysis
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,7 +187,13 @@ Yes, you can use the plugin on multiple WordPress installations. Each site will 
 
 == Changelog ==
 
-= 1.0.8 =
+= 1.0.10 =
+* Fixed Font Awesome local loading
+* Improved responsive layout for narrow screens (650px breakpoint)
+* Centered input field alignment
+* Updated form control widths for better mobile display
+
+= 1.0.9 =
 * Fixed: Added missing config-inline.js file
 * Fixed: Font Awesome loading from local files instead of CDN
 * Improved: Asset enqueuing and dependency management
