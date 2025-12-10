@@ -583,18 +583,18 @@ class KSRAD_Admin {
      */
     public function google_solar_api_key_callback() {
         printf(
-            '<input type="text" id="google_solar_api_key" name="ksrad_options[google_solar_api_key]" value="%s" class="regular-text" />',
+            '<input type="password" id="google_solar_api_key" name="ksrad_options[google_solar_api_key]" value="%s" class="regular-text" />',
             isset($this->options['google_solar_api_key']) ? esc_attr($this->options['google_solar_api_key']) : ''
         );
-        echo '<p class="description">Required for fetching solar potential data.</p>';
+        echo '<p class="description">**REQUIRED for fetching solar potential data.</p>';
     }
     
     public function google_maps_api_key_callback() {
         printf(
-            '<input type="text" id="google_maps_api_key" name="ksrad_options[google_maps_api_key]" value="%s" class="regular-text" />',
+            '<input type="password" id="google_maps_api_key" name="ksrad_options[google_maps_api_key]" value="%s" class="regular-text" />',
             isset($this->options['google_maps_api_key']) ? esc_attr($this->options['google_maps_api_key']) : ''
         );
-        echo '<p class="description">Required for location search and map display.</p>';
+        echo '<p class="description">**REQUIRED for location search and map display.</p>';
     }
     
     public function logo_url_callback() {
