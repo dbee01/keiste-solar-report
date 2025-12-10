@@ -31,7 +31,7 @@ Upgrade to the premium version for:
 * **Lead Generation Form** - Collect contact details before showing results
 * **GA4 Analytics Tracking** - Track form submissions as conversion events in Google Analytics 4
 * **Social Media Share Buttons** - Enable social sharing to increase reach
-* **Choose Your Country** - Choose your individual country or area boundary with their own grant settings
+* **Choose Your Country** - Choose your individual country or area boundary with your own grant settings
 * **Remove Branding** - White-label the plugin for your business
 * **Remove Links** - Hide all Keiste.com attribution links
 
