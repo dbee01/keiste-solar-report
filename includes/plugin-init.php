@@ -66,12 +66,12 @@ class KSRAD_Plugin {
             return;
         }
         
-        // Font Awesome (CDN)
+        // Font Awesome (local)
         wp_enqueue_style(
             'font-awesome',
-            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+            KSRAD_PLUGIN_URL . 'assets/vendor/font-awesome.min.css',
             array(),
-            '6.4.0'
+            KSRAD_VERSION
         );
         
         // Bootstrap CSS (CDN)
