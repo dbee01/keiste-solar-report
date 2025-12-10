@@ -193,6 +193,15 @@ class KSRAD_Plugin {
             true
         );
         
+        // 10. Configuration inline (global utilities)
+        wp_enqueue_script(
+            'keiste-solar-config-inline',
+            KSRAD_PLUGIN_URL . 'assets/js/config-inline.js',
+            array('jquery'),
+            KSRAD_VERSION,
+            true
+        );
+        
         // Pass PHP data to JavaScript
         wp_localize_script('keiste-solar-modal', 'ksradData', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),

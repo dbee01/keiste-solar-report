@@ -222,21 +222,6 @@ if ($ksrad_isAjaxRequest) {
             </div>
             <p style="color: #1B4D3E; font-weight: 600; margin: 0;">Loading solar data...</p>
         </div>
-        <style>
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            #ajaxLoader[style*="display: flex"] {
-                display: flex !important;
-            }
-        </style>
     </div>
 
 
@@ -312,94 +297,6 @@ if ($ksrad_isAjaxRequest) {
         </form>
     </dialog>
     <?php endif; // End lead modal check ?>
-    
-    <style>
-        /* Enhanced Modal Styles */
-        .roi-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #E8E8E6;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-        
-        .roi-input:focus {
-            outline: none;
-            border-color: #5CB8B2;
-            box-shadow: 0 0 0 3px rgba(92, 184, 178, 0.1);
-        }
-        
-        /* Phone Input with Country Code */
-        .phone-input-wrapper {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .phone-country-select {
-            width: 110px;
-            padding: 0.75rem 0.5rem;
-            border: 1px solid #E8E8E6;
-            border-radius: 6px;
-            font-size: 1rem;
-            background: white;
-            cursor: pointer;
-        }
-        
-        .phone-input {
-            flex: 1;
-        }
-        
-        /* Checkbox Groups */
-        .roi-checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin: 1rem 0;
-        }
-        
-        .roi-checkbox-group input[type="checkbox"] {
-            margin-top: 0.25rem;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        
-        .roi-checkbox-label {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #3A3A38;
-            cursor: pointer;
-        }
-        
-        /* Improved Select Styles */
-        select.roi-input {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233A3A38' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            padding-right: 2.5rem;
-        }
-        
-        /* Required field indicator */
-        .required {
-            color: #dc3545;
-            font-weight: bold;
-        }
-        
-        /* Modal responsiveness */
-        @media (max-width: 600px) {
-            .phone-input-wrapper {
-                flex-direction: column;
-            }
-            
-            .phone-country-select {
-                width: 100%;
-            }
-        }
-    </style>
 
     <div class="container">
 
@@ -479,98 +376,6 @@ if ($ksrad_isAjaxRequest) {
                     </a>
                 </div>
                 
-                <style>
-                    .social-share-buttons {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        gap: 1rem;
-                        flex-wrap: wrap;
-                    }
-                    
-                    .social-btn {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        color: white;
-                        text-decoration: none;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                    }
-                    
-                    .social-btn:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-                        color: white;
-                        text-decoration: none;
-                    }
-                    
-                    .social-btn i {
-                        font-size: 18px;
-                    }
-                    
-                    .social-btn.facebook {
-                        background: #4A8FC7;
-                    }
-                    
-                    .social-btn.facebook:hover {
-                        background: #3d7db3;
-                    }
-                    
-                    .social-btn.twitter {
-                        background: #52B8D8;
-                    }
-                    
-                    .social-btn.twitter:hover {
-                        background: #42a3c4;
-                    }
-                    
-                    .social-btn.instagram {
-                        background: linear-gradient(135deg, #E85D9A 0%, #D946A3 50%, #B537B5 100%);
-                    }
-                    
-                    .social-btn.instagram:hover {
-                        background: linear-gradient(135deg, #d54e8a 0%, #c43993 50%, #a22fa5 100%);
-                    }
-                    
-                    .social-btn.tiktok {
-                        background: #2A2A2A;
-                    }
-                    
-                    .social-btn.tiktok:hover {
-                        background: #1a1a1a;
-                    }
-                    
-                    .social-btn.linkedin {
-                        background: #0077B5;
-                    }
-                    
-                    .social-btn.linkedin:hover {
-                        background: #006399;
-                    }
-                    
-                    .social-btn.email {
-                        background: #7A8F4A;
-                    }
-                    
-                    .social-btn.email:hover {
-                        background: #687a3d;
-                    }
-                    
-                    @media (max-width: 480px) {
-                        .social-btn {
-                            width: 36px;
-                            height: 36px;
-                        }
-                        
-                        .social-btn i {
-                            font-size: 16px;
-                        }
-                    }
-                </style>
                 <?php endif; ?>
   
                 <p style="color: #3A3A38; margin-bottom: 0.5rem; font-weight: 500;">Use the search box below to select an
@@ -609,28 +414,6 @@ if ($ksrad_isAjaxRequest) {
                 </div>
             </div>
             
-            <style>
-                .location-form-wrapper .form-select {
-                    cursor: pointer;
-                    appearance: none;
-                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233A3A38' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-                    background-repeat: no-repeat;
-                    background-position: right 0.75rem center;
-                    padding-right: 2.5rem;
-                }
-                
-                .location-form-wrapper .form-select:focus {
-                    outline: none;
-                    border-color: #5CB8B2;
-                    box-shadow: 0 0 0 3px rgba(92, 184, 178, 0.1);
-                }
-                
-                .location-form-wrapper .form-label .required,
-                .location-form-wrapper span[style*="color: #dc3545"] {
-                    color: #dc3545;
-                    font-weight: bold;
-                }
-            </style>
         <?php endif; ?>
 
 
@@ -777,93 +560,6 @@ if ($ksrad_isAjaxRequest) {
                                     </div>
                                     <div class="input-help text-center">Drag slider to adjust number of panels (Maximum
                                         capacity: <?php echo esc_html($ksrad_maxPanels); ?> panels)</div>
-                                    <style>
-                                        .slider-container {
-                                            position: relative;
-                                            padding: 1.5rem 0 0.5rem;
-                                        }
-
-                                        .custom-slider {
-                                            -webkit-appearance: none;
-                                            width: 100%;
-                                            height: 8px;
-                                            border-radius: 4px;
-                                            background: var(--light-green);
-                                            outline: none;
-                                            margin: 1rem 0;
-                                        }
-
-                                        .custom-slider::-webkit-slider-thumb {
-                                            -webkit-appearance: none;
-                                            appearance: none;
-                                            width: 24px;
-                                            height: 24px;
-                                            border-radius: 50%;
-                                            background: var(--accent-yellow);
-                                            cursor: pointer;
-                                            border: 2px solid var(--light-yellow);
-                                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                                            transition: all 0.3s ease;
-                                        }
-
-                                        .custom-slider::-moz-range-thumb {
-                                            width: 24px;
-                                            height: 24px;
-                                            border-radius: 50%;
-                                            background: var(--accent-yellow);
-                                            cursor: pointer;
-                                            border: 2px solid var(--light-yellow);
-                                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                                            transition: all 0.3s ease;
-                                        }
-
-                                        .custom-slider::-webkit-slider-thumb:hover {
-                                            background: var(--light-yellow);
-                                            transform: scale(1.1);
-                                        }
-
-                                        .custom-slider::-moz-range-thumb:hover {
-                                            background: var(--light-yellow);
-                                            transform: scale(1.1);
-                                        }
-
-                                        .downloadLink {
-                                            color: var(--primary-green);
-                                            margin: 1rem auto;
-                                            display: block;
-                                            text-transform: uppercase;
-                                            text-decoration: none;
-                                        }
-
-                                        .slider-labels {
-                                            display: flex;
-                                            justify-content: space-between;
-                                            padding: 0 12px;
-                                            margin-top: 0.5rem;
-                                            color: var(--text-color);
-                                            font-size: 0.85rem;
-                                        }
-
-                                        .input-help {
-                                            margin-top: 0.25rem;
-                                            color: var(--text-color);
-                                            text-align: center;
-                                            font-style: italic;
-                                            font-size: 0.85rem;
-                                        }
-
-                                        #panelCountValue,
-                                        #systemSizeValue {
-                                            color: var(--primary-green);
-                                            font-weight: 600;
-                                            font-size: 1.1em;
-                                        }
-
-                                        .system-size {
-                                            color: var(--text-color);
-                                            font-size: 0.95rem;
-                                        }
-                                    </style>
                                     <div class="col-md-2 mb-4"></div>
                                 </div>
                                 <div class="col-md-6 mb-3" style="display: none;">
@@ -912,41 +608,14 @@ if ($ksrad_isAjaxRequest) {
                                                 </label>
                                             </div>
                                         </div>
-                                        
-                                        <style>
-                                            .tooltip-icon {
-                                                display: inline-block;
-                                                width: 16px;
-                                                height: 16px;
-                                                line-height: 16px;
-                                                text-align: center;
-                                                background: #5CB8B2;
-                                                color: white;
-                                                border-radius: 50%;
-                                                font-size: 12px;
-                                                font-weight: bold;
-                                                cursor: help;
-                                                margin-left: 4px;
-                                                font-style: normal;
-                                            }
-                                            
-                                            .tooltip-icon:hover {
-                                                background: #4ca8a3;
-                                            }
-                                        </style>
-
                                         <div class="mb-4 mt-4">
                                             <div class="row">
                                                 <h6 class="col-md-12 mb-3 text-center" style="font-size: smaller;" >
                                                     * Installation costs are estimates based on system size and will vary
                                                     based on site conditions and specific requirements.
                                                 </h6>
-
-                    
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -1140,88 +809,6 @@ if ($ksrad_isAjaxRequest) {
                                     </div>
                                 </div>
                             </div>
-                            <style>
-                                .install-details-grid {
-                                    display: flex;
-                                    flex-direction: column;
-                                    gap: 0.5rem;
-                                    width: 100%;
-                                    max-width: 700px;
-                                    margin: 0 auto 0 auto;
-                                }
-
-                                .install-details-row {
-                                    display: flex;
-                                    flex-direction: row;
-                                    align-items: stretch;
-                                    width: 100%;
-                                }
-
-                                .install-details-cell {
-                                    flex: 1 1 0;
-                                    display: flex;
-                                    flex-direction: column;
-                                    align-items: center;
-                                    justify-content: center;
-                                    padding: 1.1rem 1rem 0.7rem 1rem;
-                                }
-
-                                .install-details-border {
-                                    border-left: 1px solid #bbb;
-                                }
-
-                                @media (max-width: 900px) {
-                                    .install-details-row {
-                                        flex-direction: column;
-                                    }
-
-                                    .install-details-border {
-                                        border-left: none;
-                                        border-top: 1px solid #bbb;
-                                    }
-
-                                    /* Mobile-specific adjustments to make inputs and displays full-width */
-                                    .form-control {
-                                        width: 250px !important;
-                                        max-width: 100% !important;
-                                        margin-left: 0 !important;
-                                        margin-right: 0 !important;
-                                        box-sizing: border-box !important;
-                                    }
-
-                                    #electricityBill {
-                                        width: 150px !important;
-                                    }
-
-                                    .energy-display-left,
-                                    .energy-display-right {
-                                        width: 250px !important;
-                                        margin: 0.4rem 0 !important;
-                                        padding: 0.5rem 0.75rem !important;
-                                        box-sizing: border-box !important;
-                                        text-align: center !important;
-                                    }
-
-                                    .form-label-left,
-                                    .form-label-right {
-                                        width: auto !important;
-                                        max-width: 100% !important;
-                                        text-align: center !important;
-                                        display: block !important;
-                                        margin-bottom: 0.35rem !important;
-                                    }
-
-                                    .input-help-left,
-                                    .input-help-right {
-                                        text-align: center !important;
-                                        margin-bottom: 0.5rem !important;
-                                    }
-
-                                    .install-details-cell {
-                                        padding: 0.6rem 0.6rem 0.4rem 0.6rem !important;
-                                    }
-                                }
-                            </style>
                         </div>
                         <script>
                             // Configuration for utility-functions.js
@@ -1279,42 +866,6 @@ if ($ksrad_isAjaxRequest) {
                     <div class="middle-column">
 
                         <h4 class="text-center mb-4">Building Overview</h4>
-
-                        <style>
-                            .overview-grid {
-                                display: flex;
-                                flex-wrap: wrap;
-                                gap: 1rem;
-                                justify-content: center;
-                                align-items: stretch;
-                                margin-bottom: 0.5rem;
-                            }
-
-                            .overview-item {
-                                flex: 1 1 220px;
-                                max-width: 320px;
-                                background: transparent;
-                                padding: 0.5rem 0.75rem;
-                            }
-
-                            .overview-item h6 {
-                                margin: 0 0 0.35rem 0;
-                                font-size: 0.95rem;
-                                font-weight: 600;
-                            }
-
-                            .overview-item .value {
-                                font-size: 1rem;
-                                color: var(--text-color);
-                            }
-
-                            @media (max-width: 600px) {
-                                .overview-item {
-                                    flex: 1 1 100%;
-                                    max-width: 100%;
-                                }
-                            }
-                        </style>
 
                         <div class="overview-grid">
                             <div class="overview-item text-center">
