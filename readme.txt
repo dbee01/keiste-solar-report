@@ -14,13 +14,13 @@ A comprehensive solar analysis tool for residential, commercial, community, busi
 
 The Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar project analysis for US, Canadian, UK and Irish buidlings including residential, commercial, community, business and farm buildings. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations. 
 
-The visitor simply enters a building address, their monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (premium only).
+The visitor simply enters a building address, their monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (Enterprise Plan only).
 
 Calculations for the visitor's solar project include estimates of Return on Investment, CO2 saved and solar project breakeven point. 
 
-The Keiste Solar Plugin features a Google Solar API integration, interactive charts, a lead generation form (premium) and tons more features.
+The Keiste Solar Plugin features a Google Solar API integration, interactive charts, a lead generation form (Premium Plan or above) and tons more features.
 
-Check out our Enterprise Plan which will programmatically verify your visitor lead data eg. phone number and email address as well as a custom-designed personal 10 - 12 page downloadable report.
+Check out our Enterprise Plan which will programmatically verify your visitor lead data eg. phone number and email address as well as a custom-designed personalized downloadable report.
 
 
 = Key Features (Free) =
@@ -45,8 +45,8 @@ Check out our Enterprise Plan which will programmatically verify your visitor le
 
 = Enterprise Features =
 
-* **PDF Report Generation** - Bespoke 10-12 page personalized, downloadable reports for clients
-* **Multiple Branch Support** - Do you have multiple branches? We will support you to cover different branches
+* **PDF Report Generation** - Bespoke and branded 10 to 12 page personalized, downloadable reports for clients
+* **Multiple Branch Support** - Do you have multiple branches or franchises? We will support you to cover different branches
 * **Choose Multiple Boundaries** - Choose multiple boundaries to cover different areas of the map.
 * **Lead Verification** - Verify each telephone number and email address to stop fake contact details
 * **Personal Support** - Personal support requests
