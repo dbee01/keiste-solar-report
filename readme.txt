@@ -8,7 +8,7 @@ Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Comprehensive solar analysis tool with ROI calculations, Google Solar API integration, interactive charts, and PDF report generation (premium only).
+Comprehensive solar analysis tool with ROI calculations, Google Solar API integration, interactive charts, and PDF report generation.
 
 == Description ==
 
@@ -31,7 +31,7 @@ Upgrade to the premium version for:
 * **Lead Generation Form** - Collect contact details before showing results
 * **GA4 Analytics Tracking** - Track form submissions as conversion events in Google Analytics 4
 * **Social Media Share Buttons** - Enable social sharing to increase reach
-* **Choose Your Country** - Choose your individual country or area boundary with your own grant settings
+* **Choose Your Country** - Add custom countries with their own grant settings
 * **Remove Branding** - White-label the plugin for your business
 * **Remove Links** - Hide all Keiste.com attribution links
 
@@ -61,8 +61,8 @@ Upgrade to the premium version for:
 
 1. Upload the plugin files to `/wp-content/plugins/keiste-solar-report/` or install via WordPress plugin installer
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. **IMPORTANT: Get your Google Solar API key** (see Configuration below). Enable Google Places API and Google Maps API for this key.
-4. Go to **Solar Leads → Settings** and enter your API key for Google Maps and Google Solar API. Also enable Google Solar API for this key. The same key is fine for all if you wish.
+3. **IMPORTANT: Get your Google Solar API key** (see Configuration below)
+4. Go to **Solar Leads → Settings** and enter your API key for Google Maps and Google Solar API (same key is fine for both if you wish)
 5. Add the shortcode `[keiste_solar_report]` to any page
 
 == Configuration ==
@@ -100,13 +100,14 @@ Add this shortcode to any page: `[keiste_solar_report]`
 
 This plugin connects to an API to obtain solar info, it's needed to show the iridescence information and access satellite photos of roofs of buildings.
 
+It sends the user's location every time the widget is loaded (If the location isn't available and/or the user hasn't given their consent, it displays a configurable default location).
 This service is provided by "Google": terms of use, privacy policy
 
 == Frequently Asked Questions ==
 
-= Do I need a Google API key? =
+= Do I need a Google Solar API key? =
 
-Yes, you need a Google Solar API, Google Places API and Google Maps API enabled key to fetch data. You can obtain one from the Google Cloud Console. The API is free for limited usage.
+Yes, you need a Google Solar API key to fetch solar potential data. You can obtain one from the Google Cloud Console. The API is free for limited usage.
 
 = Which countries are supported? =
 
@@ -120,7 +121,7 @@ Currently, the plugin is configured for:
 
 == Country Coverage ==
 
-The plugin leverages Google's Solar API, which theoretically provides solar potential data for many countries. You can use the calculator for any address where Google has solar data, but financial calculations (grants, tariffs) are pre-configured for Ireland, UK, USA, and Canada.
+The plugin leverages Google's Solar API, which provides solar potential data for many countries. You can use the calculator for any address where Google has solar data, but financial calculations (grants, tariffs) are pre-configured for Ireland, UK, USA, and Canada.
 
 = Can I customize the ROI calculations? =
 
@@ -140,7 +141,7 @@ Yes, the plugin is designed to work with any WordPress theme. It uses Bootstrap 
 
 = Is there a cost for using this plugin? =
 
-The plugin itself is free. You can also upgrade for premium features. You'll need a Google Solar API, Google Places API and Google Maps API key, which has free tier usage limits. Check Google Cloud pricing for current rates.
+The plugin itself is free. However, you'll need a Google Solar API key, which has free tier usage limits. Check Google Cloud pricing for current rates.
 
 = Can I use this on multiple sites? =
 
@@ -162,7 +163,7 @@ Yes, you can use the plugin on multiple WordPress installations. Each site will 
 * ROI calculator with customizable parameters
 * Solar grant calculations
 * Interactive charts (Chart.js)
-* PDF report generation (gamma.app)
+* PDF report generation (jsPDF)
 * Google Maps address autocomplete
 * Mobile-responsive design
 * Admin settings panel
@@ -185,10 +186,8 @@ For support, please visit [keiste.com](https://keiste.com/) or contact us throug
 
 * Developed by Keiste
 * Uses Google Solar API for solar potential data
-* Uses Google Maps API for rooftop satellite image
-* Uses Google Places API for autocomplete address bar
 * Charts powered by Chart.js
-* PDF generation by gamma.app
+* PDF generation by jsPDF
 * UI framework: Bootstrap 5
 
 = Privacy Policy =
