@@ -71,7 +71,7 @@ Check out our Keiste Solar Report demo at [Keiste.com](https://keiste.com/keiste
 2. Plugin fetches solar data from Google Solar API
 3. System calculates ROI based on user's electricity costs and financing options
 4. Interactive charts display financial projections over 25 years
-5. Results are displayed instantly (PDF reports and lead capture available in premium version)
+5. Results are displayed instantly (lead capture form is available in premium version)
 
 = Notes =
 
