@@ -255,7 +255,7 @@ async function initMaps() {
         });
 
         // Update URL in browser without reload (preserves map state)
-        const newUrl = `/keiste-solar-report/?${params.toString()}`;
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
         window.history.pushState({ lat: coords.lat, lng: coords.lng, label: label }, '', newUrl);
         
         // Fetch solar data via AJAX instead of page reload
