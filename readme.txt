@@ -12,7 +12,7 @@ A comprehensive solar analysis tool for residential, commercial, community, busi
 
 == Description ==
 
-The Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar project analysis for US, Canadian, UK and Irish buidlings including residential, commercial, community, business and farm buildings. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations. 
+The Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar project analysis for US, Canadian, UK and Irish buildings including residential, commercial, community, business and farm buildings. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations. 
 
 The visitor simply enters a building address, their monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (Enterprise Plan only).
 
