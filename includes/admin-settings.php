@@ -164,7 +164,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'google_solar_api_key',
-            'Google Solar API Key',
+            'API Key 1 (Solar API, Maps Javascript API)',
             array($this, 'google_solar_api_key_callback'),
             'keiste-solar-admin',
             'api_keys_section'
@@ -172,7 +172,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'google_maps_api_key',
-            'Google Maps API Key',
+            'API Key 2 (Maps API, Places API (New))',
             array($this, 'google_maps_api_key_callback'),
             'keiste-solar-admin',
             'api_keys_section'
@@ -586,7 +586,7 @@ class KSRAD_Admin {
             '<input type="password" id="google_solar_api_key" name="ksrad_options[google_solar_api_key]" value="%s" class="regular-text" />',
             isset($this->options['google_solar_api_key']) ? esc_attr($this->options['google_solar_api_key']) : ''
         );
-        echo '<p class="description">**REQUIRED for fetching solar potential data.</p>';
+        echo '<p class="description">**REQUIRED for fetching solar potential data. (Same API Key for both inputs is recommended)</p>';
     }
     
     public function google_maps_api_key_callback() {
@@ -594,7 +594,7 @@ class KSRAD_Admin {
             '<input type="password" id="google_maps_api_key" name="ksrad_options[google_maps_api_key]" value="%s" class="regular-text" />',
             isset($this->options['google_maps_api_key']) ? esc_attr($this->options['google_maps_api_key']) : ''
         );
-        echo '<p class="description">**REQUIRED for location search and map display.</p>';
+        echo '<p class="description">**REQUIRED for location search and map display. (Same API Key for both inputs is recommended)</p>';
     }
     
     public function logo_url_callback() {
