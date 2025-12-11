@@ -25,10 +25,10 @@ if (!defined('WPINC')) {
 // Set error reporting to show only errors, not warnings
 error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
 
-// Load Composer autoloader
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require_once __DIR__ . '/vendor/autoload.php';
-}
+// Load Composer autoloader (Enterprise only - not included in free version)
+// if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+//     require_once __DIR__ . '/vendor/autoload.php';
+// }
 
 // Define plugin constants (only once) with ksrad_ namespace
 if (!defined('KSRAD_VERSION')) {
