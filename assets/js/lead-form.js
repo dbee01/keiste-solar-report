@@ -69,7 +69,7 @@
                         setTimeout(function() {
                             form.find('input, textarea, button').prop('disabled', false);
                             submitBtn.text(submitBtn.data('original-text') || 'Get My Free Quote');
-                        }, 3000);
+                        }, 20000);
                     } else {
                         showMessage(messageDiv, 'error', response.data.message || 'An error occurred. Please try again.');
                         form.find('input, textarea, button').prop('disabled', false);
