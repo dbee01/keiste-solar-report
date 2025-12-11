@@ -810,7 +810,7 @@ if ($ksrad_isAjaxRequest) {
                                             <label for="electricityRate" class="form-label-right">Electricity Rate (<span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>/kWh)</label>
                                             <input type="number" class="form-control" id="electricityRate" value="<?php echo esc_attr(ksrad_get_option('default_electricity_rate', '0.45')); ?>" step="0.01"
                                                 min="0" required>
-                                            <div class="input-help-right">Enter your current unit cost per kWh</div>
+                                            <div class="input-help-right">Electricity unit cost / kWh</div>
                                         </div>
                                     </div>
                                     <div class="install-details-row">
@@ -826,7 +826,7 @@ if ($ksrad_isAjaxRequest) {
                                             <label for="exportRate" class="form-label-right">Feed-in Tariff (<span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>/kWh)</label>
                                             <input type="number" class="form-control" id="exportRate" value="<?php echo esc_attr(ksrad_get_option('default_feed_in_tariff', '0.21')); ?>" step="0.01"
                                                 min="0" required>
-                                            <div class="input-help-right">Clean Export Guarantee / Feed-in tariff</div>
+                                            <div class="input-help-right">Export rate</div>
                                         </div>
                                     </div>
                                     <div class="install-details-row">
@@ -840,7 +840,7 @@ if ($ksrad_isAjaxRequest) {
                                             <label for="annualIncrease" class="form-label-right">Annual Price Increase</label>
                                             <div class="energy-display-right"><span id="annualIncrease"
                                                     class="highlighted-value"><?php echo esc_html(ksrad_get_option('annual_price_increase', '5')); ?></span></div>
-                                            <div class="input-help-right">Expected electricity price inflation</div>
+                                            <div class="input-help-right">Electricity inflation (estimate)</div>
                                         </div>
                                     </div>
                                 </div>
