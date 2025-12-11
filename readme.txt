@@ -4,11 +4,11 @@ Tags: solar, solar panels, roi calculator, google solar api, energy analysis
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A comprehensive solar analysis tool for residential, commercial, community, business and farm buildings. That are capable of handling solar panels on their roof. 
+A comprehensive solar analysis tool for residential, commercial, community, business and farm buildings. 
 
 == Description ==
 
