@@ -316,7 +316,7 @@ if ($ksrad_isAjaxRequest) {
         </div>
 
         <div class="text-center mt-4">
-            <h1>Solar Report</h1>
+            <h1>Solar Report<sup style="color: red;font-size: 16px;vertical-align: middle;top: -14px;" > BETA</sup></h1>
         </div>
 
 
