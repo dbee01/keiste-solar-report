@@ -91,7 +91,7 @@ Stay tuned for new country support, multi-language support and additional featur
 
 1. Upload the plugin files to `/wp-content/plugins/keiste-solar-report/` or install via WordPress plugin installer
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. **IMPORTANT: Get your Google Solar API key** (see Configuration below). Enable Google Places API, Google Maps API and Google Solar API for this key. Add http website restrictions to the key on your Google Console for your domain only.
+3. **IMPORTANT: Get your Google Solar API key** (see Configuration below). Enable Google Places (New) API, Google Maps API and Google Solar API for this key. Add http website restrictions to the key on your Google Console for your domain only.
 4. Go to **Solar Leads → Settings** and enter your API Key (or keys)
 5. Add the shortcode `[keiste_solar_report]` to any page
 
