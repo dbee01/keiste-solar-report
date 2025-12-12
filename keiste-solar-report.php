@@ -4,7 +4,7 @@
  * Plugin Name: Keiste Solar Report
  * Plugin URI: https://keiste.com/keiste-solar-report
  * Description: Comprehensive solar panel analysis tool with ROI calculations, Google Solar API integration, interactive charts, and PDF report generation.
- * Version: 1.0.14
+ * Version: 1.0.15
  * Author: Dara Burke, Keiste
  * Author URI: https://keiste.com
  * License: GPL v2 or later
@@ -430,7 +430,7 @@ if ($ksrad_isAjaxRequest) {
 
 
         <div id="pacContainer" style="display: none;">
-            <gmp-place-autocomplete id="pac" fields="id,location,formattedAddress,displayName" style="min-width: 320px;
+            <gmp-place-autocomplete id="pac" fields="id,location,formattedAddress,displayName" style="min-width: 280px;" 
                 placeholder: 'Search your address';
                 background-color: #fff;
                 color: #222;
@@ -517,7 +517,7 @@ if ($ksrad_isAjaxRequest) {
                                     <h4 class="text-center mb-4">Choose Your System Size</h4>
                                     <div class="col-md-1 mb-4"></div>
 
-                                    <div class="col-md-10 mb-4">
+                                    <div class="col-md-10 mb-4 text-center" style="padding: 0 0.2rem;" >
                                         <?php $ksrad_maxPanels = $ksrad_solarData['solarPotential']['maxArrayPanelsCount']; ?>
                                         <div class="d-flex justify-content-between align-items-baseline mb-2">
                                             <label for="panelCount" class="form-label mb-0">Panels: <span
@@ -618,7 +618,7 @@ if ($ksrad_isAjaxRequest) {
                                                     style="margin-right: unset;display: inline-block;text-align: right;"
                                                     id="electricityBill" maxlength="12" placeholder="0" required>
                                             </div>
-                                            <div class="col-md-6 mb-3 align-center grant-box" style="padding-left: 2rem;">
+                                            <div class="col-md-6 mb-3 text-center grant-box" style="padding-left: 2rem;">
                                                 <div>
                                                     <input type="checkbox" id="inclGrant" checked required>
                                                     <label for="inclGrant" class="form-label">
@@ -646,7 +646,7 @@ if ($ksrad_isAjaxRequest) {
                                             </div>
                                             <div class="mb-4 mt-4">
                                                 <div class="row">
-                                                    <h6 class="col-md-12 mb-3 text-center" style="font-size: smaller;">
+                                                    <h6 class="col-md-12 mb-3 px-3 text-center" style="font-size: smaller;">
                                                         * Installation costs are estimates based on system size and will vary
                                                         based on site conditions and specific requirements.
                                                     </h6>
@@ -657,15 +657,15 @@ if ($ksrad_isAjaxRequest) {
                                 </div>
                             </div>
 
-                            <div class="section financial-form">
+                            <div class="section financial-form" id="financial-form">
 
                                 <!-- Results Section -->
                                 <div class="results-section" id="results">
                                     <h4 class="text-center">Your Return on Investment (ROI)</h4>
                                     <!-- END .section.site-overview -->
                                     <div class="row mt-4">
-                                        <div class="col-md-4 ml-auto mr-auto text-center"></div>
-                                        <div class="col-md-4 ml-auto mr-auto text-center">
+                                        <div class="col-md-2 ml-auto mr-auto text-center"></div>
+                                        <div class="col-md-8 ml-auto mr-auto text-center">
                                             <div class="colDirection">
                                                 <div class="colFlex">
                                                     <i class="fas fa-exchange-alt"></i>
@@ -676,7 +676,7 @@ if ($ksrad_isAjaxRequest) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 ml-auto mr-auto text-center"></div>
+                                        <div class="col-md-2 ml-auto mr-auto text-center"></div>
                                     </div>
                                     <div class="row mt-4">
                                         <div class="col-md-6 ml-auto mr-auto">
@@ -685,7 +685,7 @@ if ($ksrad_isAjaxRequest) {
                                                     <i class="fas fa-euro-sign"></i>
                                                     <div class="resultsCol">
                                                         <span class="highlight" id="netCost"><span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>0</span>
-                                                        <div class="ms-2 underWrite">NET INSTALL COST</div>
+                                                        <div class="ms-2 underWrite">NET INSTALL <br>COST</div>
                                                     </div>
                                                 </div>
                                                 <div class="colFlexRight">
@@ -700,7 +700,7 @@ if ($ksrad_isAjaxRequest) {
                                                     <i class="fas fa-piggy-bank"></i>
                                                     <div class="resultsCol">
                                                         <span class="highlight" id="annualSavings"><span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>0</span>
-                                                        <div class="ms-2 underWrite">ANNUAL SAVINGS (YEAR 1)</div>
+                                                        <div class="ms-2 underWrite">ANNUAL SAVINGS <br>(YEAR 1)</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -711,7 +711,7 @@ if ($ksrad_isAjaxRequest) {
                                                     <i class="fas fa-chart-line"></i>
                                                     <div class="resultsCol">
                                                         <span class="highlight" id="totalSavings"><span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>0</span>
-                                                        <div class="ms-2 underWrite">25-YEAR SAVINGS</div>
+                                                        <div class="ms-2 underWrite">25-YEAR <br>SAVINGS</div>
                                                     </div>
                                                 </div>
                                                 <div class="colFlexLeft">
@@ -725,7 +725,7 @@ if ($ksrad_isAjaxRequest) {
                                                     <i class="fas fa-leaf"></i>
                                                     <div class="resultsCol">
                                                         <span class="highlight" id="co2Reduction">0</span>
-                                                        <div class="ms-2 underWrite">CO₂ REDUCTION (TONNES)</div>
+                                                        <div class="ms-2 underWrite">CO₂ REDUCTION <br>(TONNES)</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -775,7 +775,7 @@ if ($ksrad_isAjaxRequest) {
                             </div>
 
                             <!-- Solar Investment Analysis -->
-                            <div class="section financial-form mt-5" id="installation-details">
+                            <div class="section financial-form mt-5 pt-4" id="installation-details">
                                 <h4 class="text-center mb-4">Your Installation Details</h4>
                                 <!-- System Size Section -->
                                 <div class="install-details-grid">
@@ -1109,7 +1109,7 @@ if ($ksrad_isAjaxRequest) {
     <!-- Solar Calculator v1.0.9 -->
 
     <?php if (!apply_filters('ksrad_is_premium', false)): ?>
-        <h6 style="color: #2a2a28; text-align: center;font-family: 'Brush Script MT', cursive;"><a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Get Your Keiste Solar Report</a></h6>
+        <h6 style="color: #2a2a28; text-align: center;font-family: 'Brush Script MT', cursive;margin-top: 2rem;"><a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Get Your Keiste Solar Report</a></h6>
     <?php endif; ?>
 
 </div><!-- #keiste-solar-report-wrapper -->

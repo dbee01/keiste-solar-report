@@ -49,6 +49,150 @@
     --line-height: 1.6;
 }
 
+/* Keiste.com inspired branding for Solar Analysis Plugin */
+:root {
+    --primary-green: #2a9d8f;
+    --accent-yellow: #ffd600;
+    --dark-blue: #264653;
+    --light-green: #e9f5f2;
+    --text-color: #222;
+    --background: #f5fafd;
+    --border-radius: 10px;
+    --font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
+}
+
+body,
+.container,
+.pdf-page {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    padding-bottom: 3rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.ksrad-wrapper h6 {
+    font-family: var(--font-family);
+    color: var(--dark-blue);
+    font-weight: 700;
+}
+
+.ksrad-wrapper .btn,
+.ksrad-wrapper .btn-primary {
+    background: var(--primary-green);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(42, 157, 143, 0.08);
+    transition: background 0.2s;
+}
+
+#netIncome {
+    width: 200px;
+    text-align: center;
+    font-size: 2rem !important;
+}
+
+.fa-exchange-alt {
+    font-size: 2rem !important;
+}
+
+.btn:hover,
+.btn-primary:hover {
+    background: var(--dark-blue);
+    color: #fff;
+}
+
+.form-label-left {
+    font-weight: 600;
+    color: var(--dark-blue);
+    margin-bottom: 0.5rem;
+    text-align: right;
+    width: 300px;
+    max-width: 85%;
+}
+
+.form-label-right {
+    font-weight: 600;
+    color: var(--dark-blue);
+    margin-bottom: 0.5rem;
+    text-align: left;
+    width: 300px;
+    max-width: 85%;
+}
+
+input,
+select,
+textarea,
+.form-control {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--primary-green);
+    font-family: var(--font-family);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent-yellow);
+    outline: none;
+}
+
+.input-help-right {
+    font-size: 0.85em;
+    color: var(--dark-blue);
+    margin-top: 0.25rem;
+    text-align: right;
+}
+
+.input-help-left {
+    font-size: 0.85em;
+    color: var(--dark-blue);
+    margin-top: 0.25rem;
+    text-align: right;
+}
+
+.section,
+.results-section,
+.pdf-page {
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 12px rgba(38, 70, 83, 0.06);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.highlight,
+.grant-display,
+.installation-cost-display {
+    color: var(--primary-green);
+    font-weight: 700;
+}
+
+.underWrite {
+    color: var(--dark-blue);
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+input[type=range].custom-slider {
+    background: var(--light-green);
+}
+
+input[type=range].custom-slider::-webkit-slider-thumb {
+    background: var(--accent-yellow);
+}
+
+input[type=range].custom-slider::-moz-range-thumb {
+    background: var(--accent-yellow);
+}
+
+
 /* ===== Base Styles ===== */
 .ksrad-wrapper {
     font-family: var(--font-family);
@@ -387,6 +531,10 @@ input[type="number"] {
     color: var(--text-color);
 }
 
+.financial-form {
+    padding: 2rem 0;
+}
+
 /* ===== Panel Config Styles ===== */
 .panel-config {
     background: var(--bg-white);
@@ -537,7 +685,6 @@ input[type="number"] {
 
     .install-details-border {
         border-left: none;
-        border-top: 1px solid #bbb;
     }
 
     .form-control {
@@ -577,7 +724,7 @@ input[type="number"] {
     }
 
     .install-details-cell {
-        padding: 0.6rem 0.6rem 0.4rem 0.6rem !important;
+        padding: 2.6rem 0.6rem !important;
     }
 
     .chart-container {
@@ -672,7 +819,7 @@ input[type="number"] {
 .colFlex>.resultsCol {
     border-left: 1px solid var(--primary-green);
     border-right: 1px solid var(--primary-green);
-    padding: 0 2rem;
+    padding: 0;
     margin: 0;
 }
 
@@ -703,12 +850,12 @@ input[type="number"] {
     flex-direction: row;
     flex-wrap: nowrap;
     align-content: center;
-    justify-content: right;
+    justify-content: center
 }
 
 /* Ensure icon and text align vertically with a fixed icon width */
 .colFlex, .colFlexLeft, .colFlexRight {
-    gap: 0.75rem;
+    gap: 0.2rem;
 }
 
 .colFlex i.fas, .colFlexLeft i.fas, .colFlexRight i.fas {
@@ -741,149 +888,6 @@ input[type="number"] {
 .resultsCol .underWrite {
     text-align: center;
     margin-top: 0.25rem;
-}
-
-/* Keiste.com inspired branding for Solar Analysis Plugin */
-:root {
-    --primary-green: #2a9d8f;
-    --accent-yellow: #ffd600;
-    --dark-blue: #264653;
-    --light-green: #e9f5f2;
-    --text-color: #222;
-    --background: #f5fafd;
-    --border-radius: 10px;
-    --font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
-}
-
-body,
-.container,
-.pdf-page {
-    font-family: var(--font-family);
-    color: var(--text-color);
-    padding-bottom: 3rem;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-.ksrad-wrapper h6 {
-    font-family: var(--font-family);
-    color: var(--dark-blue);
-    font-weight: 700;
-}
-
-.ksrad-wrapper .btn,
-.ksrad-wrapper .btn-primary {
-    background: var(--primary-green);
-    color: #fff;
-    border: none;
-    border-radius: var(--border-radius);
-    font-family: var(--font-family);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    box-shadow: 0 2px 8px rgba(42, 157, 143, 0.08);
-    transition: background 0.2s;
-}
-
-#netIncome {
-    width: 200px;
-    text-align: center;
-    font-size: 2rem !important;
-}
-
-.fa-exchange-alt {
-    font-size: 2rem !important;
-}
-
-.btn:hover,
-.btn-primary:hover {
-    background: var(--dark-blue);
-    color: #fff;
-}
-
-.form-label-left {
-    font-weight: 600;
-    color: var(--dark-blue);
-    margin-bottom: 0.5rem;
-    text-align: right;
-    width: 300px;
-    max-width: 85%;
-}
-
-.form-label-right {
-    font-weight: 600;
-    color: var(--dark-blue);
-    margin-bottom: 0.5rem;
-    text-align: left;
-    width: 300px;
-    max-width: 85%;
-}
-
-input,
-select,
-textarea,
-.form-control {
-    border-radius: var(--border-radius);
-    border: 1px solid var(--primary-green);
-    font-family: var(--font-family);
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--accent-yellow);
-    outline: none;
-}
-
-.input-help-right {
-    font-size: 0.85em;
-    color: var(--dark-blue);
-    margin-top: 0.25rem;
-    text-align: right;
-}
-
-.input-help-left {
-    font-size: 0.85em;
-    color: var(--dark-blue);
-    margin-top: 0.25rem;
-    text-align: right;
-}
-
-.section,
-.results-section,
-.pdf-page {
-    background: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 2px 12px rgba(38, 70, 83, 0.06);
-    padding: 2rem 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.highlight,
-.grant-display,
-.installation-cost-display {
-    color: var(--primary-green);
-    font-weight: 700;
-}
-
-.underWrite {
-    color: var(--dark-blue);
-    font-size: 0.95em;
-    font-weight: 500;
-}
-
-input[type=range].custom-slider {
-    background: var(--light-green);
-}
-
-input[type=range].custom-slider::-webkit-slider-thumb {
-    background: var(--accent-yellow);
-}
-
-input[type=range].custom-slider::-moz-range-thumb {
-    background: var(--accent-yellow);
 }
 
 .downloadLink {
@@ -1163,7 +1167,6 @@ input[type=range].custom-slider::-moz-range-thumb {
 
 .table td {
     padding: 1.25rem 1rem;
-    border-top: 1px solid var(--border-color);
     background: white;
     font-size: 0.95rem;
     vertical-align: middle;
@@ -1417,11 +1420,11 @@ gmp-place-autocomplete input:-webkit-autofill,
 /* slider css */
 .slider-container {
     position: relative;
-    padding: 1.5rem 0 0.5rem;
 }
 
 .custom-slider {
-    -webkit-appearance: none;
+    -webkit-appearance: none;   
+    appearance: none;
     width: 100%;
     height: 8px;
     border-radius: 4px;
@@ -1546,7 +1549,7 @@ gmp-place-autocomplete input:-webkit-autofill,
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.1rem 1rem 0.7rem 1rem;
+    padding: 1.6rem 0.6rem 0.4rem 0.6rem !important;
 }
 
 .install-details-border {
@@ -1560,7 +1563,6 @@ gmp-place-autocomplete input:-webkit-autofill,
 
     .install-details-border {
         border-left: none;
-        border-top: 1px solid #bbb;
     }
 
     /* Mobile-specific adjustments to make inputs and displays full-width */
