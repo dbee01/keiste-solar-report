@@ -164,16 +164,8 @@ class KSRAD_Admin {
         
         add_settings_field(
             'google_solar_api_key',
-            'API Key 1 (Solar API, Maps Javascript API)',
+            'Google API Credentials Key',
             array($this, 'google_solar_api_key_callback'),
-            'keiste-solar-admin',
-            'api_keys_section'
-        );
-        
-        add_settings_field(
-            'google_maps_api_key',
-            'API Key 2 (Maps API, Places API (New))',
-            array($this, 'google_maps_api_key_callback'),
             'keiste-solar-admin',
             'api_keys_section'
         );
@@ -414,10 +406,6 @@ class KSRAD_Admin {
             $new_input['google_solar_api_key'] = sanitize_text_field($input['google_solar_api_key']);
         }
         
-        if (isset($input['google_maps_api_key'])) {
-            $new_input['google_maps_api_key'] = sanitize_text_field($input['google_maps_api_key']);
-        }
-        
         // Validate and sanitize numeric values with range checks
         if (isset($input['default_electricity_rate'])) {
             $rate = floatval($input['default_electricity_rate']);
@@ -586,15 +574,7 @@ class KSRAD_Admin {
             '<input type="password" id="google_solar_api_key" name="ksrad_options[google_solar_api_key]" value="%s" class="regular-text" />',
             isset($this->options['google_solar_api_key']) ? esc_attr($this->options['google_solar_api_key']) : ''
         );
-        echo '<p class="description">**REQUIRED for fetching solar potential data. (Same API Key for both inputs is recommended)</p>';
-    }
-    
-    public function google_maps_api_key_callback() {
-        printf(
-            '<input type="password" id="google_maps_api_key" name="ksrad_options[google_maps_api_key]" value="%s" class="regular-text" />',
-            isset($this->options['google_maps_api_key']) ? esc_attr($this->options['google_maps_api_key']) : ''
-        );
-        echo '<p class="description">**REQUIRED for location search and map display. (Same API Key for both inputs is recommended)</p>';
+        echo '<p class="description">**REQUIRED - Single API key for all Google services (Solar API, Maps JavaScript API, Maps API, Places API)</p>';
     }
     
     public function logo_url_callback() {

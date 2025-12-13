@@ -4,7 +4,7 @@
  * Plugin Name: Keiste Solar Report
  * Plugin URI: https://keiste.com/keiste-solar-report
  * Description: Comprehensive solar panel analysis tool with ROI calculations, Google Solar API integration, interactive charts, and PDF report generation.
- * Version: 1.0.16
+ * Version: 1.0.17
  * Author: Dara Burke, Keiste
  * Author URI: https://keiste.com
  * License: GPL v2 or later
@@ -33,7 +33,7 @@ error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERRO
 
 // Define plugin constants (only once) with ksrad_ namespace
 if (!defined('KSRAD_VERSION')) {
-    define('KSRAD_VERSION', '1.0.16');
+    define('KSRAD_VERSION', '1.0.17');
 }
 if (!defined('KSRAD_PLUGIN_DIR')) {
     define('KSRAD_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -119,11 +119,11 @@ if (!function_exists('ksrad_fetch_solar_data')) {
                 }
                 echo '<div style="font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; border: 1px solid #dc3545; border-radius: 8px; background: #fff;">';
                 echo '<h2 style="color: #dc3545;">⚠️ Solar Data Not Found (404)</h2>';
-                echo '<p>The Google Solar API reports that the requested entity was not found for the provided coordinates.</p>';
+                echo '<p>The Google Solar API reports that the requested building may not be suitable for solar roof installation.</p>';
                 if (isset($errorResponse['error']['message'])) {
                     echo '<p><strong>Message:</strong> ' . esc_html($errorResponse['error']['message']) . '</p>';
                 }
-                echo '<p>Please verify the latitude and longitude, or try a location within Google Solar coverage.</p>';
+                echo '<p>Please choose another building, or try a location within Google Solar coverage. <a href="#" onclick="location.reload(); return false;">Try Again</a></p>';
                 echo '</div>';
                 exit;
             }
@@ -328,7 +328,7 @@ if ($ksrad_isAjaxRequest) {
                 style="text-align: center; background: #FDFDFB; border: 2px solid #E8E8E6; border-radius: 12px; padding: 2rem; margin: 2rem auto; max-width: 600px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
                 <h3 style="color: #2A2A28; margin-bottom: 1rem; font-size: 1.3em; font-weight: 600;">🔍 How Much Can You Save With Solar?
                 </h3>
-                <h5 style="font-size: 1rem; color: #2a2a28; font-family: 'Brush Script MT', cursive;">by <a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Keiste.com</a></h5>
+                <h5 style="font-size: 1.6rem; color: #2a2a28; font-family: 'Brush Script MT', cursive;">by <a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Keiste.com</a></h5>
 
                 <?php if (apply_filters('ksrad_is_premium', false)): ?>
 
@@ -380,10 +380,9 @@ if ($ksrad_isAjaxRequest) {
 
                 <?php endif; ?>
 
-                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-weight: 500;">Use the search box below to select an
-                    address.</p>
+                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;">Select your country and building type. Then search for your chosen building address.</p>
                 <p style="color: #5A5A58; font-size: 1rem; margin-bottom: 0;">We'll analyze solar potential
-                    and show you financial projections for your building.</p>
+                    and show you financial projections for your building. Correct building type is required for the correct grant calculations.</p>
             </div>
 
             <!-- Country and Building Type Selection Form -->
@@ -445,11 +444,31 @@ if ($ksrad_isAjaxRequest) {
 
         </div>
 
+        <?php if (empty(ksrad_get_option('google_solar_api_key', ''))): ?>
+        <div class="row">
+            <div class="section map-section col-md-12" id="map-section">
+                <div class="alert alert-warning" style="text-align: center; padding: 2rem; margin: 2rem auto;">
+                    <h4 style="margin-bottom: 1rem;">⚠️ API Key Required</h4>
+                    <p>You must add your Google API key in order for this plugin to function.</p>
+                    <p>Go to <a href="https://console.cloud.google.com" target="_blank" rel="noopener">console.cloud.google.com</a>, open a free account, and enable the following APIs for your key:</p>
+                    <ul style="list-style: none; padding: 0; margin: 1rem 0;">
+                        <li>✓ Google Solar API</li>
+                        <li>✓ Places API (New)</li>
+                        <li>✓ Maps JavaScript API</li>
+                        <li>✓ Maps API</li>
+                    </ul>
+                    <p><a href="<?php echo admin_url('admin.php?page=ksrad-solar'); ?>" class="button button-primary">Enter API Key in Settings</a></p>
+                    <p style="font-size: 0.9em; margin-top: 1rem;">See documentation for further details.</p>
+                </div>
+            </div>
+        </div>
+        <?php else: ?>
         <div class="row">
             <div class="section map-section col-md-12" id="map-section">
                 <div id="map" style="height: 400px;width: 100%;"></div>
             </div>
         </div>
+        <?php endif; ?>
 
         <script>
             // Configuration for maps-integration.js
@@ -729,8 +748,9 @@ if ($ksrad_isAjaxRequest) {
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                         </div>
-
+                                        <p class="mt-3 align-center"><a href="/how-is-our-math/" style="color: #5A5A58;font-size: 0.9rem;" >How is our math?</a></p>
                                     </div>
 
                                     <div class="row mt-4">

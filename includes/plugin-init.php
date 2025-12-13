@@ -298,7 +298,6 @@ class KSRAD_Plugin {
         // Set default options
         $default_options = array(
             'google_solar_api_key' => '',
-            'google_maps_api_key' => '',
             'report_key' => '',
             'logo_url' => '',
             'default_electricity_rate' => '0.45',

@@ -4,7 +4,7 @@ Tags: solar, solar panels, roi calculator, google solar api, energy analysis
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.16
+Stable tag: 1.0.17
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,11 +14,15 @@ A comprehensive solar analysis tool for residential, commercial, community, busi
 
 The Keiste Solar Report is a powerful WordPress plugin that provides comprehensive solar project analysis for US, Canadian, UK and Irish buildings including residential, commercial, community, business and farm buildings. Using Google's Solar API, it delivers accurate solar potential assessments, financial projections, and detailed ROI calculations. 
 
-The visitor simply enters a building address, their monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (Enterprise Plan only).
+The visitor simply enters a building address, their average monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (Enterprise Plan only).
+
+<b>NB: You will need a Google Cloud API Key to use this plugin</b>
 
 Calculations for the visitor's solar project include estimates of Return on Investment, CO2 saved and solar project breakeven point. 
 
 The Keiste Solar Plugin features a Google Solar API integration, interactive charts, a lead generation form (Premium Plan or above) and tons more features.
+
+</b>This interface uses 400W solar panels as standard. All the figures eg. grant, loan, small-medium-large system size and other estimates are entered by you the plugin admin in the settings. Figures are meant as estimates only, not as quotes. For the grant calculations to work, user must choose the correct building type from the dropdown menu. See the docs for more info.</b>
 
 Check out our Enterprise Plan which will programmatically verify your visitor lead data eg. phone number and email address as well as a custom-designed personalized downloadable report.
 
@@ -79,6 +83,10 @@ If the building isn't designed to take solar panels on the roof. The plugin will
 
 Parts of rural Ireland are not covered by the satellite and so won't appear on the results.
 
+Panels are chosen by the system as 400W (small) panels less than 2m squared in area. 
+
+It's up to the website admin to decide all variables in the system such as grant, loan, small - medium - large installation job cost per kWh, country geographic variables etc.
+
 Stay tuned for new country support, multi-language support and additional features.
 
 = Requirements =
@@ -91,8 +99,8 @@ Stay tuned for new country support, multi-language support and additional featur
 
 1. Upload the plugin files to `/wp-content/plugins/keiste-solar-report/` or install via WordPress plugin installer
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. **IMPORTANT: Get your Google Solar API key** (see Configuration below). Enable Google Places (New) API, Google Maps API and Google Solar API for this key. Add http website restrictions to the key on your Google Console for your domain only.
-4. Go to **Solar Leads → Settings** and enter your API Key (or keys)
+3. **IMPORTANT: Get your Google Console API key** (see Configuration below). Log on to cloud.google.com and create an credentials key. Enable Google Places (New) API, Google Maps API, Google Maps Javascript API and Google Solar API for this key. Don't forget to add http website restrictions to the key - for your domain only. So noone else can use your key.
+4. Go to **Solar Leads → Settings** and enter your API Key near the top of the page
 5. Add the shortcode `[keiste_solar_report]` to any page
 
 == Configuration ==
@@ -131,9 +139,13 @@ Add this shortcode to any page: `[keiste_solar_report]`
 
 This plugin connects to an API to obtain solar info, it's needed to show the iridescence information and access satellite photos of roofs of buildings.
 
-This service is provided by "Google": terms of use, privacy policy
+This service is provided by "Google": please consult Google for the terms of use and privacy policy
 
 == Frequently Asked Questions ==
+
+= Why do i get a red error (404) page when i search my building address? =
+
+Not every building will be able to have solar panels fitted to the roof. Some buildings are located outside the satellite area. Try another building or contact a solar installer.
 
 = Do I need a Google API key? =
 
@@ -180,23 +192,24 @@ Yes, you can use the plugin on multiple WordPress installations. Each site will 
 == Screenshots ==
 
 1. Address search interface with Google Maps autocomplete
-2. ROI results dashboard showing payback period and savings
-3. Interactive break-even chart over 25 years
-4. System size configuration with panel slider
-5. Financial inputs and customization options
+2. System size configuration with panel slider
+3. ROI results dashboard showing payback period and savings
+4. Financial analysis charts 
+5. Grant and installation variables entered by website admin
 
 == Changelog ==
+
+= 1.0.17 =
+* Simplified API key configuration - now uses single Google API key for all services
+* Added conditional display for API key setup message (only shows when key is missing)
+* Improved admin settings interface with clearer API requirements
+* Removed redundant google_maps_api_key field
 
 = 1.0.10 =
 * Fixed Font Awesome local loading
 * Improved responsive layout for narrow screens (650px breakpoint)
 * Centered input field alignment
 * Updated form control widths for better mobile display
-
-= 1.0.9 =
-* Fixed: Added missing config-inline.js file
-* Fixed: Font Awesome loading from local files instead of CDN
-* Improved: Asset enqueuing and dependency management
 
 = 1.0.0 =
 * Initial release
@@ -229,7 +242,7 @@ For support, please visit [keiste.com](https://keiste.com/) or contact us throug
 * Uses Google Solar API for solar potential data
 * Uses Google Maps API for rooftop satellite image
 * Uses Google Maps Javascript API for logic
-* Uses Google Places API for autocomplete address bar
+* Uses Google Places (New) API for autocomplete address bar
 * Charts powered by Chart.js
 * PDF generation by gamma.app
 * UI framework: Bootstrap 5

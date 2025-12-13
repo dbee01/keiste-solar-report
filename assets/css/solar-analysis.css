@@ -201,10 +201,9 @@ input[type=range].custom-slider::-moz-range-thumb {
 }
 
 .ksrad-wrapper .container {
-    max-width: 1200px;
     margin: 0 auto;
+    max-width: 650px;
     padding: 0 var(--spacing-md);
-    background-color: unset !important;
 }
 
 .middle-column {
@@ -1217,8 +1216,8 @@ input[type="number"] {
 html,
 .ksrad-wrapper {
     min-height: 100%;
-    margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 .ksrad-wrapper #place-autocomplete-card {
