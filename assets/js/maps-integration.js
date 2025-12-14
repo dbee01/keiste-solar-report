@@ -136,25 +136,30 @@ async function initMaps() {
     
     // Apply boundary restriction if coordinates are set (premium feature)
     const boundary = config.boundary;
-    if (boundary && 
-        boundary.latSW !== null && boundary.lngSW !== null && 
-        boundary.latNE !== null && boundary.lngNE !== null) {
-        
-        console.log('Applying map search boundary:', boundary);
-        
-        // For gmp-place-autocomplete, use locationRestriction as a plain object
-        const locationRestriction = {
-            south: boundary.latSW,
-            west: boundary.lngSW,
-            north: boundary.latNE,
-            east: boundary.lngNE
-        };
-        
-        // Apply boundary to autocomplete with strict bounds
-        pac.locationRestriction = locationRestriction;
-        console.log('Boundary restriction applied to autocomplete:', locationRestriction);
-    }
+    console.log('[Boundary] Config received:', boundary);
     
+
+
+    if (boundary &&
+        boundary.south !== null && boundary.west !== null &&
+        boundary.north !== null && boundary.east !== null) {
+
+        console.log('[Boundary] Valid coordinates detected, applying boundary:', boundary);
+
+        // Validate that north is greater than south and east is greater than west
+        if (boundary.north > boundary.south && boundary.east > boundary.west) {
+            // Apply the locationRestriction directly to the gmp-place-autocomplete element
+            pac.locationRestriction = boundary;
+            console.log('[Boundary] locationRestriction applied to gmp-place-autocomplete:', boundary);
+
+        } else {
+            console.error('[Boundary] Invalid coordinates: north must be > south and east must be > west', boundary);
+        }
+    }
+
+
+
+
     // Update region restriction when user changes country
     if (userCountrySelect) {
         userCountrySelect.addEventListener('change', function() {
@@ -220,6 +225,26 @@ async function initMaps() {
         await place.fetchFields({
             fields: ['displayName', 'formattedAddress', 'location', 'viewport']
         });
+        
+        // Check if place is within boundary (premium feature) - fallback validation
+        const boundary = config.boundary;
+        if (boundary && boundary.south !== null && place.location) {
+            const lat = place.location.lat();
+            const lng = place.location.lng();
+            
+            // Check if location is outside boundary
+            if (lat < boundary.south || lat > boundary.north || lng < boundary.west || lng > boundary.east) {
+                console.warn('[Boundary] Selected place is outside boundary:', {
+                    place: place.formattedAddress,
+                    location: {lat, lng},
+                    boundary: boundary
+                });
+                alert('The selected location is outside the allowed geographic area. Please select a location within the boundary.');
+                pac.value = ''; // Clear the input
+                return; // Don't proceed with the selection
+            }
+            console.log('[Boundary] Selected place is within boundary:', place.formattedAddress);
+        }
 
         if (place.viewport) {
             map.fitBounds(place.viewport);

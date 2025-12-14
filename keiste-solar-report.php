@@ -50,7 +50,7 @@ if (!defined('KSRAD_RENDERING')) {
 
 
 // Enable premium features
-add_filter('ksrad_is_premium', '__return_true');
+// add_filter('ksrad_is_premium', '__return_true');
 
 
 // GOOGLE SOLAR API URL
@@ -486,10 +486,10 @@ if ($ksrad_isAjaxRequest) {
                 lng: Number(<?php echo wp_json_encode(isset($ksrad_longitude) ? (float) $ksrad_longitude : -122.4194); ?>),
                 country: <?php echo wp_json_encode(ksrad_get_option('country', 'United States')); ?>,
                 boundary: {
-                    latSW: <?php echo wp_json_encode(ksrad_get_option('latitude_south_west', '') ? floatval(ksrad_get_option('latitude_south_west', '')) : null); ?>,
-                    lngSW: <?php echo wp_json_encode(ksrad_get_option('longitude_south_west', '') ? floatval(ksrad_get_option('longitude_south_west', '')) : null); ?>,
-                    latNE: <?php echo wp_json_encode(ksrad_get_option('latitude_north_east', '') ? floatval(ksrad_get_option('latitude_north_east', '')) : null); ?>,
-                    lngNE: <?php echo wp_json_encode(ksrad_get_option('longitude_north_east', '') ? floatval(ksrad_get_option('longitude_north_east', '')) : null); ?>
+                    south: <?php echo wp_json_encode(ksrad_get_option('boundary_south', '') ? floatval(ksrad_get_option('boundary_south', '')) : null); ?>,
+                    west: <?php echo wp_json_encode(ksrad_get_option('boundary_west', '') ? floatval(ksrad_get_option('boundary_west', '')) : null); ?>,
+                    north: <?php echo wp_json_encode(ksrad_get_option('boundary_north', '') ? floatval(ksrad_get_option('boundary_north', '')) : null); ?>,
+                    east: <?php echo wp_json_encode(ksrad_get_option('boundary_east', '') ? floatval(ksrad_get_option('boundary_east', '')) : null); ?>
                 }
             };
         </script>

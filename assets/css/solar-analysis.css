@@ -1137,14 +1137,20 @@ input[type="number"] {
 }
 
 /* Google Maps Places Autocomplete (new gmp component) */
-gmp-place-autocomplete * {
+gmp-place-autocomplete *,
+gmp-place-autocomplete * > * {
     text-align: left !important;
 }
 
 gmp-place-autocomplete .place-option,
-gmp-place-autocomplete .place-result {
+gmp-place-autocomplete .place-result,
+gmp-place-autocomplete [role="option"],
+gmp-place-autocomplete [role="listbox"] *,
+gmp-place-autocomplete div,
+gmp-place-autocomplete span {
     text-align: left !important;
     justify-content: flex-start !important;
+    display: block !important;
 }
 
 .header-image {

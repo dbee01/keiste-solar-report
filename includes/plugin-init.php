@@ -310,10 +310,10 @@ class KSRAD_Plugin {
             'aca_rate' => '12.5',
             'enable_pdf_export' => true,
             'modal_popup_delay' => '3',
-            'latitude_south_west' => '',
-            'longitude_south_west' => '',
-            'latitude_north_east' => '',
-            'longitude_north_east' => '',
+            'boundary_south' => '',
+            'boundary_west' => '',
+            'boundary_north' => '',
+            'boundary_east' => '',
             'search_instructions_text' => 'Select your country and building type. Then search for your chosen building address.',
         );
         

@@ -519,21 +519,21 @@ class KSRAD_Admin {
         }
         
         // Sanitize boundary coordinates
-        if (isset($input['latitude_south_west'])) {
-            $lat = floatval($input['latitude_south_west']);
-            $new_input['latitude_south_west'] = ($lat >= -90 && $lat <= 90) ? $lat : '';
+        if (isset($input['boundary_south'])) {
+            $lat = floatval($input['boundary_south']);
+            $new_input['boundary_south'] = ($lat >= -90 && $lat <= 90) ? $lat : '';
         }
-        if (isset($input['longitude_south_west'])) {
-            $lng = floatval($input['longitude_south_west']);
-            $new_input['longitude_south_west'] = ($lng >= -180 && $lng <= 180) ? $lng : '';
+        if (isset($input['boundary_west'])) {
+            $lng = floatval($input['boundary_west']);
+            $new_input['boundary_west'] = ($lng >= -180 && $lng <= 180) ? $lng : '';
         }
-        if (isset($input['latitude_north_east'])) {
-            $lat = floatval($input['latitude_north_east']);
-            $new_input['latitude_north_east'] = ($lat >= -90 && $lat <= 90) ? $lat : '';
+        if (isset($input['boundary_north'])) {
+            $lat = floatval($input['boundary_north']);
+            $new_input['boundary_north'] = ($lat >= -90 && $lat <= 90) ? $lat : '';
         }
-        if (isset($input['longitude_north_east'])) {
-            $lng = floatval($input['longitude_north_east']);
-            $new_input['longitude_north_east'] = ($lng >= -180 && $lng <= 180) ? $lng : '';
+        if (isset($input['boundary_east'])) {
+            $lng = floatval($input['boundary_east']);
+            $new_input['boundary_east'] = ($lng >= -180 && $lng <= 180) ? $lng : '';
         }
         
         if (isset($input['search_instructions_text'])) {
@@ -887,37 +887,38 @@ class KSRAD_Admin {
         $is_premium = apply_filters('ksrad_is_premium', false);
         $disabled = $is_premium ? '' : 'disabled';
         
-        $lat_sw = isset($this->options['latitude_south_west']) ? esc_attr($this->options['latitude_south_west']) : '';
-        $lng_sw = isset($this->options['longitude_south_west']) ? esc_attr($this->options['longitude_south_west']) : '';
-        $lat_ne = isset($this->options['latitude_north_east']) ? esc_attr($this->options['latitude_north_east']) : '';
-        $lng_ne = isset($this->options['longitude_north_east']) ? esc_attr($this->options['longitude_north_east']) : '';
+        $south = isset($this->options['boundary_south']) ? esc_attr($this->options['boundary_south']) : '';
+        $west = isset($this->options['boundary_west']) ? esc_attr($this->options['boundary_west']) : '';
+        $north = isset($this->options['boundary_north']) ? esc_attr($this->options['boundary_north']) : '';
+        $east = isset($this->options['boundary_east']) ? esc_attr($this->options['boundary_east']) : '';
         ?>
+
         <div style="margin-bottom: 10px;">
-            <label for="latitude_south_west" style="display: inline-block; width: 150px;">SW Latitude:</label>
-            <input type="number" step="0.000001" min="-90" max="90" id="latitude_south_west" 
-                   name="ksrad_options[latitude_south_west]" value="<?php echo $lat_sw; ?>" 
-                   class="regular-text" placeholder="e.g., 51.421" <?php echo $disabled; ?> />
-        </div>
-        <div style="margin-bottom: 10px;">
-            <label for="longitude_south_west" style="display: inline-block; width: 150px;">SW Longitude:</label>
-            <input type="number" step="0.000001" min="-180" max="180" id="longitude_south_west" 
-                   name="ksrad_options[longitude_south_west]" value="<?php echo $lng_sw; ?>" 
-                   class="regular-text" placeholder="e.g., -10.476" <?php echo $disabled; ?> />
-        </div>
-        <div style="margin-bottom: 10px;">
-            <label for="latitude_north_east" style="display: inline-block; width: 150px;">NE Latitude:</label>
-            <input type="number" step="0.000001" min="-90" max="90" id="latitude_north_east" 
-                   name="ksrad_options[latitude_north_east]" value="<?php echo $lat_ne; ?>" 
+            <label for="boundary_north" style="display: inline-block; width: 150px;">North:</label>
+            <input type="number" step="0.000001" min="-90" max="90" id="boundary_north" 
+                   name="ksrad_options[boundary_north]" value="<?php echo $north; ?>" 
                    class="regular-text" placeholder="e.g., 55.387" <?php echo $disabled; ?> />
         </div>
         <div style="margin-bottom: 10px;">
-            <label for="longitude_north_east" style="display: inline-block; width: 150px;">NE Longitude:</label>
-            <input type="number" step="0.000001" min="-180" max="180" id="longitude_north_east" 
-                   name="ksrad_options[longitude_north_east]" value="<?php echo $lng_ne; ?>" 
+            <label for="boundary_south" style="display: inline-block; width: 150px;">South:</label>
+            <input type="number" step="0.000001" min="-90" max="90" id="boundary_south" 
+                   name="ksrad_options[boundary_south]" value="<?php echo $south; ?>" 
+                   class="regular-text" placeholder="e.g., 51.421" <?php echo $disabled; ?> />
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="boundary_east" style="display: inline-block; width: 150px;">East:</label>
+            <input type="number" step="0.000001" min="-180" max="180" id="boundary_east" 
+                   name="ksrad_options[boundary_east]" value="<?php echo $east; ?>" 
                    class="regular-text" placeholder="e.g., -5.992" <?php echo $disabled; ?> />
         </div>
+        <div style="margin-bottom: 10px;">
+            <label for="boundary_west" style="display: inline-block; width: 150px;">West:</label>
+            <input type="number" step="0.000001" min="-180" max="180" id="boundary_west" 
+                   name="ksrad_options[boundary_west]" value="<?php echo $west; ?>" 
+                   class="regular-text" placeholder="e.g., -10.476" <?php echo $disabled; ?> />
+        </div>
         <p class="description">
-            Define a geographical boundary to restrict map search results. Enter the southwest and northeast corner coordinates.
+            Define a geographical boundary to restrict map search results. Enter the bounding box coordinates.
             Leave blank to allow global search.
         </p>
         <?php if (!$is_premium): ?>
