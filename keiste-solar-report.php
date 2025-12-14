@@ -420,8 +420,7 @@ if ($ksrad_isAjaxRequest) {
                 <?php endif; ?>
 
                 <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;">Select your building type, then search for your chosen building address.</p>
-                <p style="color: #5A5A58; font-size: 1rem; margin-bottom: 0;">We'll analyze solar potential
-                    and show you financial projections for your building. Correct building type is required for the correct grant calculations.</p>
+                
             </div>
 
             <!-- Building Type Selection Form -->
