@@ -163,8 +163,6 @@ textarea:focus {
     background: #fff;
     border-radius: var(--border-radius);
     box-shadow: 0 2px 12px rgba(38, 70, 83, 0.06);
-    padding: 2rem 0;
-    margin-bottom: 2rem;
 }
 
 .highlight,
@@ -595,10 +593,11 @@ input[type="number"] {
 .chart-container {
     position: relative;
     width: 100%;
-    max-width: 100%;
-    height: 400px;
+    min-height: 200px;
+    max-width: 800px;
     margin: var(--spacing-lg) 0;
     overflow: hidden;
+    background: transparent;
 }
 
 /* ===== Toggle Switches ===== */
@@ -1136,23 +1135,6 @@ input[type="number"] {
     padding: 8px !important;
 }
 
-/* Google Maps Places Autocomplete (new gmp component) */
-gmp-place-autocomplete *,
-gmp-place-autocomplete * > * {
-    text-align: left !important;
-}
-
-gmp-place-autocomplete .place-option,
-gmp-place-autocomplete .place-result,
-gmp-place-autocomplete [role="option"],
-gmp-place-autocomplete [role="listbox"] *,
-gmp-place-autocomplete div,
-gmp-place-autocomplete span {
-    text-align: left !important;
-    justify-content: flex-start !important;
-    display: block !important;
-}
-
 .header-image {
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -1249,7 +1231,8 @@ html,
 }
 
 gmp-place-autocomplete {
-    width: 100%;
+    width: 450px;
+    max-width: 95%;
 }
 
 /* Ensure autocomplete input has proper contrast on mobile */
@@ -1291,12 +1274,13 @@ gmp-place-autocomplete input:-webkit-autofill,
 }
 
 #pacContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    max-width: 80%;
-    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+    min-width: 280px;
+    width: 65%;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #reportHeader {
@@ -1417,7 +1401,10 @@ gmp-place-autocomplete input:-webkit-autofill,
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233A3A38' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
-    padding-right: 2.5rem;
+    min-width: 280px;
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .location-form-wrapper .form-select:focus {

@@ -154,12 +154,12 @@ class KSRAD_Admin {
             array($this, 'sanitize')           // Sanitize callback
         );
         
-        // API Keys Section
+        // Required API Configuration
         add_settings_section(
-            'api_keys_section',                // ID
-            'API Configuration',               // Title
-            array($this, 'api_keys_info'),     // Callback
-            'keiste-solar-admin'               // Page
+            'required_api_section',
+            '<span style="margin-top: 20px; display: inline-block;">▸ Required API Configuration</span>',
+            array($this, 'required_api_info'),
+            'keiste-solar-admin'
         );
         
         add_settings_field(
@@ -167,55 +167,47 @@ class KSRAD_Admin {
             'Google API Credentials Key',
             array($this, 'google_solar_api_key_callback'),
             'keiste-solar-admin',
-            'api_keys_section'
+            'required_api_section'
+        );
+        
+        // Display Options
+        add_settings_section(
+            'display_options_section',
+            '<span style="margin-top: 20px; display: inline-block;">▸ Display Options</span>',
+            array($this, 'display_options_info'),
+            'keiste-solar-admin'
         );
         
         add_settings_field(
-            'report_key',
-            'Report Key',
-            array($this, 'report_key_callback'),
+            'country',
+            'Country',
+            array($this, 'country_callback'),
             'keiste-solar-admin',
-            'api_keys_section'
+            'display_options_section'
         );
         
         add_settings_field(
-            'gamma_api_key',
-            'Gamma API Key',
-            array($this, 'gamma_api_key_callback'),
+            'financial_analysis_notes',
+            'Read Me Notes',
+            array($this, 'financial_analysis_notes_callback'),
             'keiste-solar-admin',
-            'api_keys_section'
+            'display_options_section'
         );
         
         add_settings_field(
-            'gamma_template_id',
-            'Gamma Template ID',
-            array($this, 'gamma_template_id_callback'),
+            'enable_pdf_export',
+            'Enable PDF Export',
+            array($this, 'enable_pdf_export_callback'),
             'keiste-solar-admin',
-            'api_keys_section'
+            'display_options_section'
         );
         
-        add_settings_field(
-            'twilio_account_sid',
-            'Twilio Account SID',
-            array($this, 'twilio_account_sid_callback'),
-            'keiste-solar-admin',
-            'api_keys_section'
-        );
-        
-        add_settings_field(
-            'twilio_auth_token',
-            'Twilio Auth Token',
-            array($this, 'twilio_auth_token_callback'),
-            'keiste-solar-admin',
-            'api_keys_section'
-        );
-        
-        add_settings_field(
-            'ga4_measurement_id',
-            'GA4 Measurement ID',
-            array($this, 'ga4_measurement_id_callback'),
-            'keiste-solar-admin',
-            'api_keys_section'
+        // Admin Notification Email Section
+        add_settings_section(
+            'admin_notification_section',
+            '<span style="margin-top: 20px; display: inline-block;">▸ Admin Notification Email</span>',
+            array($this, 'admin_notification_info'),
+            'keiste-solar-admin'
         );
         
         add_settings_field(
@@ -223,13 +215,13 @@ class KSRAD_Admin {
             'Admin Notification Email',
             array($this, 'admin_notification_email_callback'),
             'keiste-solar-admin',
-            'api_keys_section'
+            'admin_notification_section'
         );
         
         // Branding Section
         add_settings_section(
             'branding_section',
-            'Branding',
+            '<span style="margin-top: 20px; display: inline-block;">▸ Branding</span>',
             array($this, 'branding_info'),
             'keiste-solar-admin'
         );
@@ -242,33 +234,25 @@ class KSRAD_Admin {
             'branding_section'
         );
         
-        // Country Section
-        add_settings_section(
-            'country_section',
-            'Country Settings',
-            array($this, 'country_section_info'),
-            'keiste-solar-admin'
-        );
-        
         add_settings_field(
-            'country',
-            'Country',
-            array($this, 'country_callback'),
+            'logo_url_text',
+            'Report Logo URL',
+            array($this, 'logo_url_text_callback'),
             'keiste-solar-admin',
-            'country_section'
+            'branding_section'
         );
         
         // Default Values Section
         add_settings_section(
             'default_values_section',
-            'Default Values',
+            '<span style="margin-top: 20px; display: inline-block;">▸ Default Values</span>',
             array($this, 'default_values_info'),
             'keiste-solar-admin'
         );
         
         add_settings_field(
             'default_electricity_rate',
-            'Default Electricity Rate (cost/kWh)',
+            'Default Electricity Rate (€/kWh)',
             array($this, 'default_electricity_rate_callback'),
             'keiste-solar-admin',
             'default_values_section'
@@ -284,7 +268,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'default_feed_in_tariff',
-            'Feed-in Tariff (cost/kWh)',
+            'Feed-in Tariff (€/kWh)',
             array($this, 'default_feed_in_tariff_callback'),
             'keiste-solar-admin',
             'default_values_section'
@@ -314,12 +298,44 @@ class KSRAD_Admin {
             'default_values_section'
         );
         
+        // Grant Configuration Section
+        add_settings_section(
+            'grant_configuration_section',
+            '<span style="margin-top: 20px; display: inline-block;">▸ Grant Configuration</span>',
+            array($this, 'grant_configuration_info'),
+            'keiste-solar-admin'
+        );
+        
         add_settings_field(
-            'system_cost_ratio',
-            'System Cost Ratio (cost/kWp)',
-            array($this, 'system_cost_ratio_callback'),
+            'grant_rate_domestic',
+            'Grant Rate - Domestic (%)',
+            array($this, 'grant_rate_domestic_callback'),
             'keiste-solar-admin',
-            'default_values_section'
+            'grant_configuration_section'
+        );
+        
+        add_settings_field(
+            'grant_cap_domestic',
+            'Grant Cap - Domestic',
+            array($this, 'grant_cap_domestic_callback'),
+            'keiste-solar-admin',
+            'grant_configuration_section'
+        );
+        
+        add_settings_field(
+            'grant_rate_non_domestic',
+            'Grant Rate - Non-Domestic (%)',
+            array($this, 'grant_rate_non_domestic_callback'),
+            'keiste-solar-admin',
+            'grant_configuration_section'
+        );
+        
+        add_settings_field(
+            'grant_cap_non_domestic',
+            'Grant Cap - Non-Domestic',
+            array($this, 'grant_cap_non_domestic_callback'),
+            'keiste-solar-admin',
+            'grant_configuration_section'
         );
         
         add_settings_field(
@@ -327,88 +343,105 @@ class KSRAD_Admin {
             'Saving Allowance Rate (%)',
             array($this, 'aca_rate_callback'),
             'keiste-solar-admin',
-            'default_values_section'
-        );
-        
-        add_settings_field(
-            'financial_analysis_notes',
-            'Financial Analysis Notes',
-            array($this, 'financial_analysis_notes_callback'),
-            'keiste-solar-admin',
-            'default_values_section'
-        );
-        
-        // Grants Configuration Section
-        add_settings_section(
-            'grants_section',
-            'Grants Configuration',
-            array($this, 'grants_info'),
-            'keiste-solar-admin'
-        );
-        
-        add_settings_field(
-            'grants_table',
-            'Grants by Country & Building Type',
-            array($this, 'grants_table_callback'),
-            'keiste-solar-admin',
-            'grants_section'
+            'grant_configuration_section'
         );
         
         // System Size Configuration Section
         add_settings_section(
             'system_size_section',
-            'System Size Configuration',
+            '<span style="margin-top: 20px; display: inline-block;">▸ System Size Configuration</span>',
             array($this, 'system_size_info'),
             'keiste-solar-admin'
         );
         
         add_settings_field(
-            'system_size_table',
-            'System Cost Ratio by Country & Building Type',
-            array($this, 'system_size_table_callback'),
+            'cost_domestic',
+            'Cost - Domestic ($/kWp)',
+            array($this, 'cost_domestic_callback'),
             'keiste-solar-admin',
             'system_size_section'
         );
         
-        // Display Options
+        add_settings_field(
+            'cost_small',
+            'Cost - Small Commercial ($/kWp)',
+            array($this, 'cost_small_callback'),
+            'keiste-solar-admin',
+            'system_size_section'
+        );
+        
+        add_settings_field(
+            'cost_medium',
+            'Cost - Medium Commercial ($/kWp)',
+            array($this, 'cost_medium_callback'),
+            'keiste-solar-admin',
+            'system_size_section'
+        );
+        
+        add_settings_field(
+            'cost_large',
+            'Cost - Large Commercial ($/kWp)',
+            array($this, 'cost_large_callback'),
+            'keiste-solar-admin',
+            'system_size_section'
+        );
+        
+        // Other APIs Section
         add_settings_section(
-            'display_options_section',
-            'Display Options',
-            array($this, 'display_options_info'),
+            'other_apis_section',
+            '<span style="margin-top: 20px; display: inline-block;">▸ Other APIs</span>',
+            array($this, 'other_apis_info'),
             'keiste-solar-admin'
         );
         
         add_settings_field(
-            'enable_pdf_export',
-            'Enable PDF Export',
-            array($this, 'enable_pdf_export_callback'),
+            'report_key',
+            'Report Key',
+            array($this, 'report_key_callback'),
             'keiste-solar-admin',
-            'display_options_section'
+            'other_apis_section'
         );
         
         add_settings_field(
-            'modal_popup_delay',
-            'Lead Form Popup Delay (seconds)',
-            array($this, 'modal_popup_delay_callback'),
+            'gamma_api_key',
+            'Gamma API Key',
+            array($this, 'gamma_api_key_callback'),
             'keiste-solar-admin',
-            'display_options_section'
+            'other_apis_section'
         );
         
         add_settings_field(
-            'map_boundary_coords',
-            'Map Search Boundary Coordinates',
-            array($this, 'map_boundary_coords_callback'),
+            'gamma_template_id',
+            'Gamma Template ID',
+            array($this, 'gamma_template_id_callback'),
             'keiste-solar-admin',
-            'display_options_section'
+            'other_apis_section'
         );
         
         add_settings_field(
-            'search_instructions_text',
-            'Search Instructions Text',
-            array($this, 'search_instructions_text_callback'),
+            'twilio_account_sid',
+            'Twilio Account SID',
+            array($this, 'twilio_account_sid_callback'),
             'keiste-solar-admin',
-            'display_options_section'
+            'other_apis_section'
         );
+        
+        add_settings_field(
+            'twilio_auth_token',
+            'Twilio Auth Token',
+            array($this, 'twilio_auth_token_callback'),
+            'keiste-solar-admin',
+            'other_apis_section'
+        );
+        
+        add_settings_field(
+            'ga4_measurement_id',
+            'GA4 Measurement ID',
+            array($this, 'ga4_measurement_id_callback'),
+            'keiste-solar-admin',
+            'other_apis_section'
+        );
+        
     }
     
     /**
@@ -430,7 +463,7 @@ class KSRAD_Admin {
         
         if (isset($input['default_export_rate'])) {
             $rate = floatval($input['default_export_rate']);
-            $new_input['default_export_rate'] = ($rate >= 0 && $rate <= 100) ? $rate : 10;
+            $new_input['default_export_rate'] = ($rate >= 0 && $rate <= 100) ? $rate : 40;
         }
         
         if (isset($input['default_feed_in_tariff'])) {
@@ -467,14 +500,34 @@ class KSRAD_Admin {
             $new_input['currency'] = isset($currency_map[$new_input['country']]) ? $currency_map[$new_input['country']] : '€';
         }
         
-        if (isset($input['system_cost_ratio'])) {
-            $ratio = floatval($input['system_cost_ratio']);
-            $new_input['system_cost_ratio'] = ($ratio >= 0 && $ratio <= 10000) ? $ratio : 1500;
+        if (isset($input['grant_rate_domestic'])) {
+            $rate = floatval($input['grant_rate_domestic']);
+            $new_input['grant_rate_domestic'] = ($rate >= 0 && $rate <= 100) ? $rate : 30;
+        }
+        
+        if (isset($input['grant_cap_domestic'])) {
+            $cap = floatval($input['grant_cap_domestic']);
+            $new_input['grant_cap_domestic'] = ($cap >= 0 && $cap <= 1000000) ? $cap : 7500;
+        }
+        
+        if (isset($input['grant_rate_non_domestic'])) {
+            $rate = floatval($input['grant_rate_non_domestic']);
+            $new_input['grant_rate_non_domestic'] = ($rate >= 0 && $rate <= 100) ? $rate : 30;
+        }
+        
+        if (isset($input['grant_cap_non_domestic'])) {
+            $cap = floatval($input['grant_cap_non_domestic']);
+            $new_input['grant_cap_non_domestic'] = ($cap >= 0 && $cap <= 1000000) ? $cap : 50000;
         }
         
         if (isset($input['aca_rate'])) {
-            $aca = floatval($input['aca_rate']);
-            $new_input['aca_rate'] = ($aca >= 0 && $aca <= 100) ? $aca : 12.5;
+            $aca = $input['aca_rate'];
+            if ($aca === '' || $aca === null) {
+                $new_input['aca_rate'] = '';
+            } else {
+                $aca = floatval($aca);
+                $new_input['aca_rate'] = ($aca >= 0 && $aca <= 100) ? $aca : '';
+            }
         }
         
         if (isset($input['financial_analysis_notes'])) {
@@ -513,60 +566,33 @@ class KSRAD_Admin {
             $new_input['enable_pdf_export'] = (bool)$input['enable_pdf_export'];
         }
         
-        if (isset($input['modal_popup_delay'])) {
-            $delay = intval($input['modal_popup_delay']);
-            $new_input['modal_popup_delay'] = ($delay >= 0 && $delay <= 60) ? $delay : 3;
-        }
-        
-        // Sanitize boundary coordinates
-        if (isset($input['boundary_south'])) {
-            $lat = floatval($input['boundary_south']);
-            $new_input['boundary_south'] = ($lat >= -90 && $lat <= 90) ? $lat : '';
-        }
-        if (isset($input['boundary_west'])) {
-            $lng = floatval($input['boundary_west']);
-            $new_input['boundary_west'] = ($lng >= -180 && $lng <= 180) ? $lng : '';
-        }
-        if (isset($input['boundary_north'])) {
-            $lat = floatval($input['boundary_north']);
-            $new_input['boundary_north'] = ($lat >= -90 && $lat <= 90) ? $lat : '';
-        }
-        if (isset($input['boundary_east'])) {
-            $lng = floatval($input['boundary_east']);
-            $new_input['boundary_east'] = ($lng >= -180 && $lng <= 180) ? $lng : '';
-        }
-        
-        if (isset($input['search_instructions_text'])) {
-            $new_input['search_instructions_text'] = wp_kses_post($input['search_instructions_text']);
-        }
-        
         if (isset($input['logo_url'])) {
             $new_input['logo_url'] = esc_url_raw($input['logo_url']);
         }
         
-        // Sanitize grants table
-        if (isset($input['grants_table']) && is_array($input['grants_table'])) {
-            $new_input['grants_table'] = array();
-            foreach ($input['grants_table'] as $key => $grant) {
-                $new_input['grants_table'][$key] = array(
-                    'country' => sanitize_text_field($grant['country']),
-                    'building_type' => sanitize_text_field($grant['building_type']),
-                    'grant_percentage' => floatval($grant['grant_percentage']),
-                    'grant_max' => floatval($grant['grant_max'])
-                );
-            }
+        if (isset($input['logo_url_text'])) {
+            $new_input['logo_url_text'] = esc_url_raw($input['logo_url_text']);
         }
         
-        // Sanitize system size table
-        if (isset($input['system_size_table']) && is_array($input['system_size_table'])) {
-            $new_input['system_size_table'] = array();
-            foreach ($input['system_size_table'] as $key => $size) {
-                $new_input['system_size_table'][$key] = array(
-                    'country' => sanitize_text_field($size['country']),
-                    'building_type' => sanitize_text_field($size['building_type']),
-                    'cost_ratio' => floatval($size['cost_ratio'])
-                );
-            }
+        // Sanitize system size costs
+        if (isset($input['cost_domestic'])) {
+            $cost = floatval($input['cost_domestic']);
+            $new_input['cost_domestic'] = ($cost >= 0 && $cost <= 10000) ? $cost : 2500;
+        }
+        
+        if (isset($input['cost_small'])) {
+            $cost = floatval($input['cost_small']);
+            $new_input['cost_small'] = ($cost >= 0 && $cost <= 10000) ? $cost : 2000;
+        }
+        
+        if (isset($input['cost_medium'])) {
+            $cost = floatval($input['cost_medium']);
+            $new_input['cost_medium'] = ($cost >= 0 && $cost <= 10000) ? $cost : 1700;
+        }
+        
+        if (isset($input['cost_large'])) {
+            $cost = floatval($input['cost_large']);
+            $new_input['cost_large'] = ($cost >= 0 && $cost <= 10000) ? $cost : 1500;
         }
         
         return $new_input;
@@ -575,28 +601,32 @@ class KSRAD_Admin {
     /**
      * Section info callbacks
      */
-    public function api_keys_info() {
-        echo '<p>Enter your Google API keys. These are required for the solar analysis tool to function.</p>';
+    public function required_api_info() {
+        echo '<p>Enter your Google API key. This is required for the solar analysis tool to function.</p>';
+    }
+    
+    public function other_apis_info() {
+        echo '<p>Optional API integrations for enhanced features like lead capture, SMS verification, analytics, and automated presentations.</p>';
     }
     
     public function branding_info() {
         echo '<p>Customize the appearance of your solar reports with your company logo.</p>';
     }
     
+    public function admin_notification_info() {
+        echo '<p>Configure the email address that receives lead capture notifications from the solar calculator.</p>';
+    }
+    
     public function default_values_info() {
         echo '<p>Set default values for financial calculations. Users can override these in the calculator.</p>';
     }
     
-    public function country_section_info() {
-        echo '<p>Select the default country for your solar analysis tool. Currency is automatically set based on country selection.</p>';
-    }
-    
-    public function grants_info() {
-        echo '<p>Configure grant percentages and maximum amounts for different country and building type combinations.</p>';
+    public function grant_configuration_info() {
+        echo '<p>Configure grant percentages and maximum amounts for domestic (residential) and non-domestic (commercial) installations.</p>';
     }
     
     public function system_size_info() {
-        echo '<p>Configure system installation cost ratios (per kWp) for different country and building type combinations.</p>';
+        echo '<p>Set the installation cost per kilowatt-peak (kWp) for different system sizes. Costs typically decrease as system size increases.</p>';
     }
     
     public function display_options_info() {
@@ -669,18 +699,26 @@ class KSRAD_Admin {
         <?php
     }
     
+    public function logo_url_text_callback() {
+        printf(
+            '<input type="text" id="logo_url_text" name="ksrad_options[logo_url_text]" value="%s" class="regular-text" placeholder="https://example.com/logo.png" />',
+            isset($this->options['logo_url_text']) ? esc_attr($this->options['logo_url_text']) : ''
+        );
+        echo '<p class="description">Enter a direct URL to your logo image (alternative to uploading).</p>';
+    }
+    
     public function default_electricity_rate_callback() {
         printf(
             '<input type="number" step="0.01" id="default_electricity_rate" name="ksrad_options[default_electricity_rate]" value="%s" />',
             isset($this->options['default_electricity_rate']) ? esc_attr($this->options['default_electricity_rate']) : '0.35'
         );
-        echo ' <span class="description">cost/kWh (e.g., 0.35 for $0.35/kWh or €0.35/kWh)</span>';
+        echo ' <span class="description">€/kWh (e.g., 0.35 for €0.35/kWh)</span>';
     }
     
     public function default_export_rate_callback() {
         printf(
             '<input type="number" step="1" id="default_export_rate" name="ksrad_options[default_export_rate]" value="%s" />',
-            isset($this->options['default_export_rate']) ? esc_attr($this->options['default_export_rate']) : '10'
+            isset($this->options['default_export_rate']) ? esc_attr($this->options['default_export_rate']) : '40'
         );
         echo ' <span class="description">% (percentage of energy exported to grid)</span>';
     }
@@ -690,7 +728,7 @@ class KSRAD_Admin {
             '<input type="number" step="0.01" id="default_feed_in_tariff" name="ksrad_options[default_feed_in_tariff]" value="%s" />',
             isset($this->options['default_feed_in_tariff']) ? esc_attr($this->options['default_feed_in_tariff']) : '0.21'
         );
-        echo ' <span class="description">cost/kWh</span>';
+        echo ' <span class="description">€/kWh</span>';
     }
     
     public function default_loan_apr_callback() {
@@ -720,49 +758,70 @@ class KSRAD_Admin {
     public function country_callback() {
         $current = isset($this->options['country']) ? $this->options['country'] : 'United States';
         $countries = array(
-            'Rep. of Ireland' => 'Rep. of Ireland (€)',
-            'UK' => 'UK (£)',
             'United States' => 'United States ($)',
-            'Canada' => 'Canada ($)'
+            'Canada' => 'Canada ($)',
+            'UK' => 'UK (£)',
+            'Rep. of Ireland' => 'Rep. of Ireland (€)'
         );
-        echo '<select id="country" name="ksrad_options[country]">';
+        
+        echo '<fieldset>';
         foreach ($countries as $value => $label) {
             printf(
-                '<option value="%s"%s>%s</option>',
+                '<label style="display: block; margin-bottom: 8px;"><input type="radio" name="ksrad_options[country]" value="%s"%s /> %s</label>',
                 esc_attr($value),
-                selected($current, $value, false),
+                checked($current, $value, false),
                 esc_html($label)
             );
         }
-        echo '</select>';
-        echo '<p class="description">Currency is automatically set based on country selection.</p>';
+        echo '</fieldset>';
+        echo '<p class="description">Select the country/market for your solar calculator. This sets the default currency, grants, and financial parameters. Users will not see a country selector on the frontend.</p>';
     }
     
-    public function system_cost_ratio_callback() {
+    public function grant_rate_domestic_callback() {
         printf(
-            '<input type="number" step="0.01" id="system_cost_ratio" name="ksrad_options[system_cost_ratio]" value="%s" />',
-            isset($this->options['system_cost_ratio']) ? esc_attr($this->options['system_cost_ratio']) : '1500'
+            '<input type="number" step="0.1" id="grant_rate_domestic" name="ksrad_options[grant_rate_domestic]" value="%s" />',
+            isset($this->options['grant_rate_domestic']) ? esc_attr($this->options['grant_rate_domestic']) : '30'
         );
-        echo ' <span class="description">cost/kWp (cost per kilowatt peak installed)</span>';
+        echo ' <span class="description">% (grant percentage for residential/domestic installations)</span>';
+    }
+    
+    public function grant_cap_domestic_callback() {
+        $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
+        printf(
+            '<input type="number" step="1" id="grant_cap_domestic" name="ksrad_options[grant_cap_domestic]" value="%s" />',
+            isset($this->options['grant_cap_domestic']) ? esc_attr($this->options['grant_cap_domestic']) : '7500'
+        );
+        echo ' <span class="description">' . $currency . ' (maximum grant for residential/domestic)</span>';
+    }
+    
+    public function grant_rate_non_domestic_callback() {
+        printf(
+            '<input type="number" step="0.1" id="grant_rate_non_domestic" name="ksrad_options[grant_rate_non_domestic]" value="%s" />',
+            isset($this->options['grant_rate_non_domestic']) ? esc_attr($this->options['grant_rate_non_domestic']) : '30'
+        );
+        echo ' <span class="description">% (grant percentage for commercial/non-domestic installations)</span>';
+    }
+    
+    public function grant_cap_non_domestic_callback() {
+        $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
+        printf(
+            '<input type="number" step="1" id="grant_cap_non_domestic" name="ksrad_options[grant_cap_non_domestic]" value="%s" />',
+            isset($this->options['grant_cap_non_domestic']) ? esc_attr($this->options['grant_cap_non_domestic']) : '50000'
+        );
+        echo ' <span class="description">' . $currency . ' (maximum grant for commercial/non-domestic)</span>';
     }
     
     public function aca_rate_callback() {
-        $is_premium = apply_filters('ksrad_is_premium', false);
-        $disabled = $is_premium ? '' : 'disabled';
         printf(
-            '<input type="number" step="0.1" id="aca_rate" name="ksrad_options[aca_rate]" value="%s" %s />',
-            isset($this->options['aca_rate']) ? esc_attr($this->options['aca_rate']) : '12.5',
-            $disabled
+            '<input type="number" step="0.1" id="aca_rate" name="ksrad_options[aca_rate]" value="%s" placeholder="Optional" />',
+            isset($this->options['aca_rate']) ? esc_attr($this->options['aca_rate']) : ''
         );
-        echo ' <span class="description">% (Saving allowance rate)</span>';
-        if (!$is_premium) {
-            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Upgrade to customize this value.</p>';
-        }
+        echo ' <span class="description">% (optional accelerated capital allowance rate)</span>';
     }
     
     public function financial_analysis_notes_callback() {
         printf(
-            '<textarea id="financial_analysis_notes" name="ksrad_options[financial_analysis_notes]" rows="4" class="large-text">%s</textarea>',
+            '<textarea id="financial_analysis_notes" name="ksrad_options[financial_analysis_notes]" rows="6" class="large-text" style="max-width: 600px; width: 100%%;">%s</textarea>',
             isset($this->options['financial_analysis_notes']) ? esc_textarea($this->options['financial_analysis_notes']) : ''
         );
         echo '<p class="description">Add notes or disclaimers for financial analysis calculations (optional)</p>';
@@ -869,87 +928,7 @@ class KSRAD_Admin {
         echo ' <span class="description">Allow users to export analysis as PDF</span>';
     }
     
-    public function modal_popup_delay_callback() {
-        $is_premium = apply_filters('ksrad_is_premium', false);
-        $disabled = $is_premium ? '' : 'disabled';
-        printf(
-            '<input type="number" step="1" min="0" max="60" id="modal_popup_delay" name="ksrad_options[modal_popup_delay]" value="%s" %s />',
-            isset($this->options['modal_popup_delay']) ? esc_attr($this->options['modal_popup_delay']) : '3',
-            $disabled
-        );
-        echo ' <span class="description">Time in seconds before lead capture form appears after user interaction (0-60, default: 3)</span>';
-        if (!$is_premium) {
-            echo '<p class="description" style="color: #d63638;"><strong>Premium feature:</strong> Upgrade to customize this value.</p>';
-        }
-    }
-    
-    public function map_boundary_coords_callback() {
-        $is_premium = apply_filters('ksrad_is_premium', false);
-        $disabled = $is_premium ? '' : 'disabled';
-        
-        $south = isset($this->options['boundary_south']) ? esc_attr($this->options['boundary_south']) : '';
-        $west = isset($this->options['boundary_west']) ? esc_attr($this->options['boundary_west']) : '';
-        $north = isset($this->options['boundary_north']) ? esc_attr($this->options['boundary_north']) : '';
-        $east = isset($this->options['boundary_east']) ? esc_attr($this->options['boundary_east']) : '';
-        ?>
-
-        <div style="margin-bottom: 10px;">
-            <label for="boundary_north" style="display: inline-block; width: 150px;">North:</label>
-            <input type="number" step="0.000001" min="-90" max="90" id="boundary_north" 
-                   name="ksrad_options[boundary_north]" value="<?php echo $north; ?>" 
-                   class="regular-text" placeholder="e.g., 55.387" <?php echo $disabled; ?> />
-        </div>
-        <div style="margin-bottom: 10px;">
-            <label for="boundary_south" style="display: inline-block; width: 150px;">South:</label>
-            <input type="number" step="0.000001" min="-90" max="90" id="boundary_south" 
-                   name="ksrad_options[boundary_south]" value="<?php echo $south; ?>" 
-                   class="regular-text" placeholder="e.g., 51.421" <?php echo $disabled; ?> />
-        </div>
-        <div style="margin-bottom: 10px;">
-            <label for="boundary_east" style="display: inline-block; width: 150px;">East:</label>
-            <input type="number" step="0.000001" min="-180" max="180" id="boundary_east" 
-                   name="ksrad_options[boundary_east]" value="<?php echo $east; ?>" 
-                   class="regular-text" placeholder="e.g., -5.992" <?php echo $disabled; ?> />
-        </div>
-        <div style="margin-bottom: 10px;">
-            <label for="boundary_west" style="display: inline-block; width: 150px;">West:</label>
-            <input type="number" step="0.000001" min="-180" max="180" id="boundary_west" 
-                   name="ksrad_options[boundary_west]" value="<?php echo $west; ?>" 
-                   class="regular-text" placeholder="e.g., -10.476" <?php echo $disabled; ?> />
-        </div>
-        <p class="description">
-            Define a geographical boundary to restrict map search results. Enter the bounding box coordinates.
-            Leave blank to allow global search.
-        </p>
-        <?php if (!$is_premium): ?>
-            <p class="description" style="color: #d63638;">
-                <strong>Premium feature:</strong> Activate the premium version to enable custom boundaries.
-            </p>
-        <?php endif; ?>
-        <?php
-    }
-    
-    /**
-     * Callback for search instructions text
-     */
-    public function search_instructions_text_callback() {
-        $value = ksrad_get_option('search_instructions_text', 'Select your country and building type. Then search for your chosen building address.');
-        ?>
-        <textarea 
-            id="search_instructions_text" 
-            name="ksrad_options[search_instructions_text]" 
-            rows="3" 
-            cols="50" 
-            class="large-text"
-            placeholder="Select your country and building type. Then search for your chosen building address."
-        ><?php echo esc_textarea($value); ?></textarea>
-        <p class="description">
-            Instructions shown to users above the map search box. Supports basic HTML formatting.
-        </p>
-        <?php
-    }
-    
-    public function grants_table_callback() {
+    public function grants_table_callback_DISABLED() {
         $grants = isset($this->options['grants_table']) ? $this->options['grants_table'] : array();
         
         // Default grants if none set
@@ -1143,7 +1122,43 @@ class KSRAD_Admin {
         <?php
     }
     
-    public function system_size_table_callback() {
+    public function cost_domestic_callback() {
+        $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
+        printf(
+            '<input type="number" step="1" id="cost_domestic" name="ksrad_options[cost_domestic]" value="%s" />',
+            isset($this->options['cost_domestic']) ? esc_attr($this->options['cost_domestic']) : '2500'
+        );
+        echo ' <span class="description">' . $currency . '/kWp (cost per kW for residential/domestic installations)</span>';
+    }
+    
+    public function cost_small_callback() {
+        $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
+        printf(
+            '<input type="number" step="1" id="cost_small" name="ksrad_options[cost_small]" value="%s" />',
+            isset($this->options['cost_small']) ? esc_attr($this->options['cost_small']) : '2000'
+        );
+        echo ' <span class="description">' . $currency . '/kWp (cost per kW for small commercial, <50kW)</span>';
+    }
+    
+    public function cost_medium_callback() {
+        $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
+        printf(
+            '<input type="number" step="1" id="cost_medium" name="ksrad_options[cost_medium]" value="%s" />',
+            isset($this->options['cost_medium']) ? esc_attr($this->options['cost_medium']) : '1700'
+        );
+        echo ' <span class="description">' . $currency . '/kWp (cost per kW for medium commercial, 50-250kW)</span>';
+    }
+    
+    public function cost_large_callback() {
+        $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
+        printf(
+            '<input type="number" step="1" id="cost_large" name="ksrad_options[cost_large]" value="%s" />',
+            isset($this->options['cost_large']) ? esc_attr($this->options['cost_large']) : '1500'
+        );
+        echo ' <span class="description">' . $currency . '/kWp (cost per kW for large commercial, >250kW)</span>';
+    }
+    
+    public function system_size_table_callback_DISABLED() {
         $system_sizes = isset($this->options['system_size_table']) ? $this->options['system_size_table'] : array();
         
         // Default system sizes if none set

@@ -134,32 +134,6 @@ async function initMaps() {
 
     pac.includedRegionCodes = [REGION_CODE];
     
-    // Apply boundary restriction if coordinates are set (premium feature)
-    const boundary = config.boundary;
-    console.log('[Boundary] Config received:', boundary);
-    
-
-
-    if (boundary &&
-        boundary.south !== null && boundary.west !== null &&
-        boundary.north !== null && boundary.east !== null) {
-
-        console.log('[Boundary] Valid coordinates detected, applying boundary:', boundary);
-
-        // Validate that north is greater than south and east is greater than west
-        if (boundary.north > boundary.south && boundary.east > boundary.west) {
-            // Apply the locationRestriction directly to the gmp-place-autocomplete element
-            pac.locationRestriction = boundary;
-            console.log('[Boundary] locationRestriction applied to gmp-place-autocomplete:', boundary);
-
-        } else {
-            console.error('[Boundary] Invalid coordinates: north must be > south and east must be > west', boundary);
-        }
-    }
-
-
-
-
     // Update region restriction when user changes country
     if (userCountrySelect) {
         userCountrySelect.addEventListener('change', function() {
@@ -219,32 +193,24 @@ async function initMaps() {
     }
 
     // Add event listener for place selection
-    pac.addEventListener('gmp-select', async ({ placePrediction }) => {
+    pac.addEventListener('gmp-select', async (e) => {
+        console.log('[DEBUG] Place selected - event fired');
+        
+        // Prevent form submission and event bubbling
+        if (e) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        }
+        
+        console.log('[DEBUG] Event prevented, processing selection...');
+        
+        const { placePrediction } = e;
         const place = placePrediction.toPlace();
         
         await place.fetchFields({
             fields: ['displayName', 'formattedAddress', 'location', 'viewport']
         });
-        
-        // Check if place is within boundary (premium feature) - fallback validation
-        const boundary = config.boundary;
-        if (boundary && boundary.south !== null && place.location) {
-            const lat = place.location.lat();
-            const lng = place.location.lng();
-            
-            // Check if location is outside boundary
-            if (lat < boundary.south || lat > boundary.north || lng < boundary.west || lng > boundary.east) {
-                console.warn('[Boundary] Selected place is outside boundary:', {
-                    place: place.formattedAddress,
-                    location: {lat, lng},
-                    boundary: boundary
-                });
-                alert('The selected location is outside the allowed geographic area. Please select a location within the boundary.');
-                pac.value = ''; // Clear the input
-                return; // Don't proceed with the selection
-            }
-            console.log('[Boundary] Selected place is within boundary:', place.formattedAddress);
-        }
 
         if (place.viewport) {
             map.fitBounds(place.viewport);
@@ -305,16 +271,28 @@ async function initMaps() {
         window.history.pushState({ lat: coords.lat, lng: coords.lng, label: label }, '', newUrl);
         
         // Fetch solar data via AJAX instead of page reload
-        fetch(`${window.location.pathname}?${params.toString()}`, {
+        const fetchUrl = `${window.location.pathname}?${params.toString()}`;
+        console.log('[DEBUG] Fetching solar data from:', fetchUrl);
+        
+        fetch(fetchUrl, {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
         .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
+            console.log('[DEBUG] Response status:', response.status);
+            if (!response.ok) {
+                // Try to parse error as JSON first
+                return response.json().then(err => {
+                    throw new Error(err.message || `HTTP ${response.status}: ${response.statusText}`);
+                }).catch(() => {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                });
+            }
             return response.text();
         })
         .then(html => {
+            console.log('[DEBUG] HTML received, length:', html.length);
             // Parse the HTML response
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
@@ -411,9 +389,9 @@ async function initMaps() {
         })
         .catch(error => {
             console.error('[ajax] Error fetching solar data:', error);
+            console.error('[ajax] Full error details:', error.message, error.stack);
             if (loader) loader.style.display = "none";
-            // Fallback to page reload on error
-            window.location.reload();
+            alert('Unable to load solar data for this location. Check console for details.\n\nError: ' + error.message);
         });
     }
 
@@ -436,6 +414,8 @@ async function initMaps() {
     inputEl.addEventListener("keydown", async (ev) => {
         if (ev.key !== "Enter") return;
         ev.preventDefault();
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
         const text = inputEl.value?.trim();
         if (!text) return;
         const resolved = await geocodeText(text);
@@ -464,6 +444,34 @@ function updateCurrencySymbols() {
     }
 }
 
+// Prevent form submission on Enter key in autocomplete
+function preventFormSubmission() {
+    const solarForm = document.getElementById('solarForm');
+    if (solarForm) {
+        solarForm.addEventListener('submit', function(e) {
+            // Only prevent if the event originated from autocomplete
+            const pacInput = document.getElementById('pacInput');
+            if (document.activeElement === pacInput) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        });
+        
+        // Also prevent on keypress
+        const pacInput = document.getElementById('pacInput');
+        if (pacInput) {
+            pacInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            });
+        }
+    }
+}
+
 // Expose and run initializer
 window.initMaps = initMaps;
 
@@ -472,8 +480,10 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initMaps();
         updateCurrencySymbols();
+        preventFormSubmission();
     });
 } else {
     initMaps();
     updateCurrencySymbols();
+    preventFormSubmission();
 }

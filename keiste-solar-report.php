@@ -48,11 +48,6 @@ if (!defined('KSRAD_RENDERING')) {
     define('KSRAD_RENDERING_CONST', false);
 }
 
-
-// Enable premium features
-// add_filter('ksrad_is_premium', '__return_true');
-
-
 // GOOGLE SOLAR API URL
 if (!defined('KSRAD_GOOGLE_SOLAR_API_URL')) {
     define('KSRAD_GOOGLE_SOLAR_API_URL', 'https://solar.googleapis.com/v1/buildingInsights:findClosest');
@@ -161,6 +156,12 @@ $ksrad_solarData = null;
 // Only fetch solar data if AJAX request with coordinates
 if ($ksrad_isAjaxRequest) {
     try {
+        // Check if API key exists before making request
+        $api_key = ksrad_get_option('google_solar_api_key', '');
+        if (empty($api_key)) {
+            throw new Exception('Google Solar API key is not configured. Please add your API key in the plugin settings.');
+        }
+        
         $ksrad_solarData = ksrad_fetch_solar_data($ksrad_latitude, $ksrad_longitude);
         if (!empty($ksrad_solarData)) {
             $ksrad_solarDataAvailable = true;
@@ -170,6 +171,22 @@ if ($ksrad_isAjaxRequest) {
     } catch (Exception $e) {
         $ksrad_errorMessage = $e->getMessage();
         $ksrad_solarData = null;
+        
+        // Log error for debugging
+        error_log('Keiste Solar Report Error: ' . $e->getMessage());
+        
+        // For AJAX requests, send proper error response
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            if (!headers_sent()) {
+                header('Content-Type: application/json');
+                http_response_code(400);
+            }
+            echo json_encode(array(
+                'error' => true,
+                'message' => $ksrad_errorMessage
+            ));
+            exit;
+        }
     }
 }
 
@@ -340,7 +357,7 @@ if ($ksrad_isAjaxRequest) {
                     }
                 }
             ?>
-            <h1>Solar Report<sup style="color: red;font-size: 16px;vertical-align: middle;top: -14px;"><?php echo esc_html($ksrad_country_code); ?> BETA</sup></h1>
+            <h1>Solar Report<sup style="color: red;font-size: 16px;vertical-align: middle;top: -14px;"> <?php echo esc_html($ksrad_country_code); ?></sup></h1>
         </div>
 
 
@@ -402,31 +419,17 @@ if ($ksrad_isAjaxRequest) {
 
                 <?php endif; ?>
 
-                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;"><?php echo wp_kses_post(ksrad_get_option('search_instructions_text', 'Select your country and building type. Then search for your chosen building address.')); ?></p>
+                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;">Select your building type, then search for your chosen building address.</p>
                 <p style="color: #5A5A58; font-size: 1rem; margin-bottom: 0;">We'll analyze solar potential
                     and show you financial projections for your building. Correct building type is required for the correct grant calculations.</p>
             </div>
 
-            <!-- Country and Building Type Selection Form -->
-            <div class="location-form-wrapper" style="margin: 2rem auto; max-width: 80%;">
+            <!-- Building Type Selection Form -->
+            <div class="location-form-wrapper">
                 <div class="row g-3">
-                    <!-- Country Selection (Hidden for Premium Users) -->
-                    <?php if (!apply_filters('ksrad_is_premium', false)): ?>
-                    <div class="col-md-6">
-                        <label for="userCountry" class="form-label" style="font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;text-align: left;">Country <span style="color: #dc3545;">*</span></label>
-                        <select id="userCountry" name="userCountry" class="form-select" required style="padding: 0.75rem; border: 1px solid #E8E8E6; border-radius: 6px; font-size: 1rem;">
-                            <option value="">Select your country</option>
-                            <option value="USA" data-flag="🇺🇸" selected>🇺🇸 United States</option>
-                            <option value="Canada" data-flag="🇨🇦">🇨🇦 Canada</option>
-                            <option value="UK" data-flag="🇬🇧">🇬🇧 United Kingdom</option>
-                            <option value="Ireland" data-flag="🇮🇪">🇮🇪 Rep. of Ireland</option>
-                        </select>
-                    </div>
-                    <?php endif; ?>
-
                     <!-- Building Type Selection -->
-                    <div class="<?php echo apply_filters('ksrad_is_premium', false) ? 'col-md-12' : 'col-md-6'; ?>">
-                        <label for="userBuildingType" class="form-label" style="text-align: left;font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;">Building Type <span style="color: #dc3545;">*</span></label>
+                    <div class="col-md-12">
+                        <label for="userBuildingType" class="form-label" style="font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;">Building Type <span style="color: #dc3545;">*</span></label>
                         <select id="userBuildingType" name="userBuildingType" class="form-select" required style="padding: 0.75rem; border: 1px solid #E8E8E6; border-radius: 6px; font-size: 1rem;">
                             <option value="">Select building type</option>
                             <option value="Residential" selected>🏠 Residential</option>
@@ -453,7 +456,7 @@ if ($ksrad_isAjaxRequest) {
 
 
         <div id="pacContainer" style="display: none;">
-            <gmp-place-autocomplete id="pac" fields="id,location,formattedAddress,displayName" style="min-width: 280px;" 
+            <gmp-place-autocomplete id="pac" fields="id,location,formattedAddress,displayName" 
                 placeholder: 'Search your address';
                 background-color: #fff;
                 color: #222;
@@ -499,15 +502,9 @@ if ($ksrad_isAjaxRequest) {
             window.KSRAD_MapsConfig = {
                 apiKey: <?php echo wp_json_encode(ksrad_get_option('google_solar_api_key', NULL)); ?>,
                 businessName: <?php echo wp_json_encode(isset($ksrad_business_name) ? (string) $ksrad_business_name : 'Location'); ?>,
-                lat: Number(<?php echo wp_json_encode(isset($ksrad_latitude) ? (float) $ksrad_latitude : 37.7749); ?>),
-                lng: Number(<?php echo wp_json_encode(isset($ksrad_longitude) ? (float) $ksrad_longitude : -122.4194); ?>),
-                country: <?php echo wp_json_encode(ksrad_get_option('country', 'United States')); ?>,
-                boundary: {
-                    south: <?php echo wp_json_encode(ksrad_get_option('boundary_south', '') ? floatval(ksrad_get_option('boundary_south', '')) : null); ?>,
-                    west: <?php echo wp_json_encode(ksrad_get_option('boundary_west', '') ? floatval(ksrad_get_option('boundary_west', '')) : null); ?>,
-                    north: <?php echo wp_json_encode(ksrad_get_option('boundary_north', '') ? floatval(ksrad_get_option('boundary_north', '')) : null); ?>,
-                    east: <?php echo wp_json_encode(ksrad_get_option('boundary_east', '') ? floatval(ksrad_get_option('boundary_east', '')) : null); ?>
-                }
+                lat: Number(<?php echo wp_json_encode(isset($ksrad_latitude) ? (float) $ksrad_latitude : 51.886656); ?>),
+                lng: Number(<?php echo wp_json_encode(isset($ksrad_longitude) ? (float) $ksrad_longitude : -8.535580); ?>),
+                country: <?php echo wp_json_encode(ksrad_get_option('country', 'Rep. of Ireland')); ?>
             };
         </script>
         <!-- Maps integration script enqueued via WordPress -->
@@ -557,7 +554,7 @@ if ($ksrad_isAjaxRequest) {
                             </div>
                         </div>
 
-                        <form id="solarForm" class="needs-validation mt-4" novalidate>
+                        <div id="solarForm" class="needs-validation mt-4">
                             <?php wp_nonce_field('ksrad_solar_form', 'ksrad_solar_nonce'); ?>
 
                             <!-- Solar Investment Analysis -->
@@ -660,7 +657,7 @@ if ($ksrad_isAjaxRequest) {
                                                 style="text-align: right;border-right: 1px #ccc solid;padding-right: 2rem;">
                                                 <div>
                                                     <label for="electricityBill" class="form-label"
-                                                        style="color: var(--primary-green);">Your Monthly Electricity Bill
+                                                        style="color: var(--primary-green);">Monthly Elec. Bill
                                                         (<span class="currency-symbol" id="elecBillCurrency"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>)</label>
                                                 </div>
                                                 <input type="number" min="0" class="form-control"
@@ -687,7 +684,7 @@ if ($ksrad_isAjaxRequest) {
                                                 <div>
                                                     <input type="checkbox" id="inclLoan" required>
                                                     <label for="inclLoan" class="form-label">
-                                                        <I>Loan (<?php echo esc_html(ksrad_get_option('loan_term', '7')); ?> yr @ <?php echo esc_html(ksrad_get_option('default_loan_apr', '5')); ?>%)
+                                                        <I>Loan: <?php echo esc_html(ksrad_get_option('loan_term', '7')); ?> yrs <?php echo esc_html(ksrad_get_option('default_loan_apr', '5')); ?>% APR
                                                             <span class="tooltip-icon" title="Finance your solar installation over <?php echo esc_html(ksrad_get_option('loan_term', '7')); ?> years">ⓘ</span>
                                                         </I>
                                                     </label>
@@ -779,11 +776,15 @@ if ($ksrad_isAjaxRequest) {
                                                 </div>
                                             </div>
                                             
-                                        </div>
+                                            </div>
+                                            
+                                        <?php if (!apply_filters('ksrad_is_premium', false)): ?>
                                         <p class="mt-3 align-center"><a href="https://keiste.com/how-is-our-math/" style="color: #5A5A58;font-size: 0.9rem;" >How is our math?</a></p>
+                                        <?php endif; ?>
+                                    
                                     </div>
 
-                                    <div class="row mt-4">
+                                    <div class="row mt-4" style="display: none;" >
                                         <div class="col-md-12 text-center mt-4">
 
                                             <!-- Modal handler script enqueued via WordPress -->
@@ -816,7 +817,7 @@ if ($ksrad_isAjaxRequest) {
                                         </div>
                                     </div>
                                     <div class="col-12" style="display: flex; justify-content: center;">
-                                        <div class="chart-container" style="position: relative; height: 400px; width: 80%; max-width: 800px; background: transparent;">
+                                        <div class="chart-container" style="position: relative; width: 80%; min-height: 300px; max-width: 800px; background: transparent;">
                                             <canvas id="energyChart" style="background: transparent;"></canvas>
                                         </div>
                                     </div>
@@ -942,7 +943,9 @@ if ($ksrad_isAjaxRequest) {
                                 // Configuration for event-handlers.js
                                 window.KSRAD_EventConfig = {
                                     currencySymbol: '<?php echo esc_js(ksrad_get_option('currency', '€')); ?>',
-                                    acaRate: <?php echo esc_js(ksrad_get_option('aca_rate', '12.5') / 100); ?>
+                                    seaiGrantRate: <?php echo esc_js(floatval(ksrad_get_option('seai_grant_rate', '30')) / 100); ?>,
+                                    seaiGrantCap: <?php echo esc_js(floatval(ksrad_get_option('seai_grant_cap', '162000'))); ?>,
+                                    acaRate: <?php $aca = ksrad_get_option('aca_rate', ''); echo esc_js($aca === '' ? '0' : (floatval($aca) / 100)); ?>
                                 };
                             </script>
                             <!-- Event handlers script enqueued via WordPress -->
@@ -1155,8 +1158,7 @@ if ($ksrad_isAjaxRequest) {
         window.KSRAD_CalcConfig = {
             currencySymbol: '<?php echo esc_js(ksrad_get_option('currency', '€')); ?>',
             seaiGrantRate: <?php echo esc_js(ksrad_get_option('seai_grant_rate', '30') / 100); ?>,
-            seaiGrantCap: <?php echo esc_js(ksrad_get_option('seai_grant_cap', '162000')); ?>,
-            modalPopupDelay: <?php echo esc_js(intval(ksrad_get_option('modal_popup_delay', 3)) * 1000); ?>
+            seaiGrantCap: <?php echo esc_js(ksrad_get_option('seai_grant_cap', '162000')); ?>
         };
     </script>
     <!-- Solar calculator main script enqueued via WordPress -->

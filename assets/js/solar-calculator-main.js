@@ -530,15 +530,14 @@
                 clearTimeout(modalPopupTimer);
             }
             
-            // Schedule modal to appear after configured delay (only once)
-            const popupDelay = (window.KSRAD_CalcConfig && window.KSRAD_CalcConfig.modalPopupDelay) || 3000;
+            // Schedule modal to appear after 3 seconds (only once)
             modalPopupTimer = setTimeout(() => {
                 if (!window.formSubmittedSuccessfully && !modalShown && typeof window.showModal === 'function') {
-                    console.log('Opening modal popup after', popupDelay / 1000, 'seconds of interaction');
+                    console.log('Opening modal popup after 3 seconds of interaction');
                     window.showModal();
                     modalShown = true; // Prevent modal from showing again
                 }
-            }, popupDelay);
+            }, 3000);
         }
         
         // Guard: require monthly bill to compute robustly
