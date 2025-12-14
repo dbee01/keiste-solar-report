@@ -134,6 +134,27 @@ async function initMaps() {
 
     pac.includedRegionCodes = [REGION_CODE];
     
+    // Apply boundary restriction if coordinates are set (premium feature)
+    const boundary = config.boundary;
+    if (boundary && 
+        boundary.latSW !== null && boundary.lngSW !== null && 
+        boundary.latNE !== null && boundary.lngNE !== null) {
+        
+        console.log('Applying map search boundary:', boundary);
+        
+        // For gmp-place-autocomplete, use locationRestriction as a plain object
+        const locationRestriction = {
+            south: boundary.latSW,
+            west: boundary.lngSW,
+            north: boundary.latNE,
+            east: boundary.lngNE
+        };
+        
+        // Apply boundary to autocomplete with strict bounds
+        pac.locationRestriction = locationRestriction;
+        console.log('Boundary restriction applied to autocomplete:', locationRestriction);
+    }
+    
     // Update region restriction when user changes country
     if (userCountrySelect) {
         userCountrySelect.addEventListener('change', function() {

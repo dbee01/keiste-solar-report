@@ -1136,6 +1136,17 @@ input[type="number"] {
     padding: 8px !important;
 }
 
+/* Google Maps Places Autocomplete (new gmp component) */
+gmp-place-autocomplete * {
+    text-align: left !important;
+}
+
+gmp-place-autocomplete .place-option,
+gmp-place-autocomplete .place-result {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+
 .header-image {
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -1232,8 +1243,7 @@ html,
 }
 
 gmp-place-autocomplete {
-    width: 450px;
-    max-width: 95%;
+    width: 100%;
 }
 
 /* Ensure autocomplete input has proper contrast on mobile */
@@ -1275,12 +1285,12 @@ gmp-place-autocomplete input:-webkit-autofill,
 }
 
 #pacContainer {
-    text-align: -webkit-center;
-    margin-bottom: 20px;
-    max-width: 450px;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 80%;
+    width: 100%;
 }
 
 #reportHeader {

@@ -48,6 +48,11 @@ if (!defined('KSRAD_RENDERING')) {
     define('KSRAD_RENDERING_CONST', false);
 }
 
+
+// Enable premium features
+add_filter('ksrad_is_premium', '__return_true');
+
+
 // GOOGLE SOLAR API URL
 if (!defined('KSRAD_GOOGLE_SOLAR_API_URL')) {
     define('KSRAD_GOOGLE_SOLAR_API_URL', 'https://solar.googleapis.com/v1/buildingInsights:findClosest');
@@ -380,29 +385,31 @@ if ($ksrad_isAjaxRequest) {
 
                 <?php endif; ?>
 
-                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;">Select your country and building type. Then search for your chosen building address.</p>
+                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;"><?php echo wp_kses_post(ksrad_get_option('search_instructions_text', 'Select your country and building type. Then search for your chosen building address.')); ?></p>
                 <p style="color: #5A5A58; font-size: 1rem; margin-bottom: 0;">We'll analyze solar potential
                     and show you financial projections for your building. Correct building type is required for the correct grant calculations.</p>
             </div>
 
             <!-- Country and Building Type Selection Form -->
-            <div class="location-form-wrapper" style="margin: 2rem auto; max-width: 600px;">
+            <div class="location-form-wrapper" style="margin: 2rem auto; max-width: 80%;">
                 <div class="row g-3">
-                    <!-- Country Selection -->
+                    <!-- Country Selection (Hidden for Premium Users) -->
+                    <?php if (!apply_filters('ksrad_is_premium', false)): ?>
                     <div class="col-md-6">
-                        <label for="userCountry" class="form-label" style="font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;">Country <span style="color: #dc3545;">*</span></label>
+                        <label for="userCountry" class="form-label" style="font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;text-align: left;">Country <span style="color: #dc3545;">*</span></label>
                         <select id="userCountry" name="userCountry" class="form-select" required style="padding: 0.75rem; border: 1px solid #E8E8E6; border-radius: 6px; font-size: 1rem;">
                             <option value="">Select your country</option>
-                            <option value="USA" data-flag="🇺🇸">🇺🇸 United States</option>
+                            <option value="USA" data-flag="🇺🇸" selected>🇺🇸 United States</option>
                             <option value="Canada" data-flag="🇨🇦">🇨🇦 Canada</option>
                             <option value="UK" data-flag="🇬🇧">🇬🇧 United Kingdom</option>
                             <option value="Ireland" data-flag="🇮🇪">🇮🇪 Rep. of Ireland</option>
                         </select>
                     </div>
+                    <?php endif; ?>
 
                     <!-- Building Type Selection -->
-                    <div class="col-md-6">
-                        <label for="userBuildingType" class="form-label" style="font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;">Building Type <span style="color: #dc3545;">*</span></label>
+                    <div class="<?php echo apply_filters('ksrad_is_premium', false) ? 'col-md-12' : 'col-md-6'; ?>">
+                        <label for="userBuildingType" class="form-label" style="text-align: left;font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;">Building Type <span style="color: #dc3545;">*</span></label>
                         <select id="userBuildingType" name="userBuildingType" class="form-select" required style="padding: 0.75rem; border: 1px solid #E8E8E6; border-radius: 6px; font-size: 1rem;">
                             <option value="">Select building type</option>
                             <option value="Residential" selected>🏠 Residential</option>
@@ -475,9 +482,15 @@ if ($ksrad_isAjaxRequest) {
             window.KSRAD_MapsConfig = {
                 apiKey: <?php echo wp_json_encode(ksrad_get_option('google_solar_api_key', NULL)); ?>,
                 businessName: <?php echo wp_json_encode(isset($ksrad_business_name) ? (string) $ksrad_business_name : 'Location'); ?>,
-                lat: Number(<?php echo wp_json_encode(isset($ksrad_latitude) ? (float) $ksrad_latitude : 51.886656); ?>),
-                lng: Number(<?php echo wp_json_encode(isset($ksrad_longitude) ? (float) $ksrad_longitude : -8.535580); ?>),
-                country: <?php echo wp_json_encode(ksrad_get_option('country', 'Rep. of Ireland')); ?>
+                lat: Number(<?php echo wp_json_encode(isset($ksrad_latitude) ? (float) $ksrad_latitude : 37.7749); ?>),
+                lng: Number(<?php echo wp_json_encode(isset($ksrad_longitude) ? (float) $ksrad_longitude : -122.4194); ?>),
+                country: <?php echo wp_json_encode(ksrad_get_option('country', 'United States')); ?>,
+                boundary: {
+                    latSW: <?php echo wp_json_encode(ksrad_get_option('latitude_south_west', '') ? floatval(ksrad_get_option('latitude_south_west', '')) : null); ?>,
+                    lngSW: <?php echo wp_json_encode(ksrad_get_option('longitude_south_west', '') ? floatval(ksrad_get_option('longitude_south_west', '')) : null); ?>,
+                    latNE: <?php echo wp_json_encode(ksrad_get_option('latitude_north_east', '') ? floatval(ksrad_get_option('latitude_north_east', '')) : null); ?>,
+                    lngNE: <?php echo wp_json_encode(ksrad_get_option('longitude_north_east', '') ? floatval(ksrad_get_option('longitude_north_east', '')) : null); ?>
+                }
             };
         </script>
         <!-- Maps integration script enqueued via WordPress -->
@@ -657,7 +670,7 @@ if ($ksrad_isAjaxRequest) {
                                                 <div>
                                                     <input type="checkbox" id="inclLoan" required>
                                                     <label for="inclLoan" class="form-label">
-                                                        <I>Loan (<?php echo esc_html(ksrad_get_option('loan_term', '7')); ?> year @ <?php echo esc_html(ksrad_get_option('default_loan_apr', '5')); ?>% APR)
+                                                        <I>Loan (<?php echo esc_html(ksrad_get_option('loan_term', '7')); ?> yr @ <?php echo esc_html(ksrad_get_option('default_loan_apr', '5')); ?>%)
                                                             <span class="tooltip-icon" title="Finance your solar installation over <?php echo esc_html(ksrad_get_option('loan_term', '7')); ?> years">ⓘ</span>
                                                         </I>
                                                     </label>
@@ -750,7 +763,7 @@ if ($ksrad_isAjaxRequest) {
                                             </div>
                                             
                                         </div>
-                                        <p class="mt-3 align-center"><a href="/how-is-our-math/" style="color: #5A5A58;font-size: 0.9rem;" >How is our math?</a></p>
+                                        <p class="mt-3 align-center"><a href="https://keiste.com/how-is-our-math/" style="color: #5A5A58;font-size: 0.9rem;" >How is our math?</a></p>
                                     </div>
 
                                     <div class="row mt-4">
@@ -906,8 +919,6 @@ if ($ksrad_isAjaxRequest) {
                                 // Configuration for event-handlers.js
                                 window.KSRAD_EventConfig = {
                                     currencySymbol: '<?php echo esc_js(ksrad_get_option('currency', '€')); ?>',
-                                    seaiGrantRate: <?php echo esc_js(ksrad_get_option('seai_grant_rate', '30') / 100); ?>,
-                                    seaiGrantCap: <?php echo esc_js(ksrad_get_option('seai_grant_cap', '162000')); ?>,
                                     acaRate: <?php echo esc_js(ksrad_get_option('aca_rate', '12.5') / 100); ?>
                                 };
                             </script>
