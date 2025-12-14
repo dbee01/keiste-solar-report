@@ -4,7 +4,7 @@ Tags: solar, solar panels, roi calculator, google solar api, energy analysis
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.20
+Stable tag: 1.0.21
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -198,11 +198,18 @@ Yes, you can use the plugin on multiple WordPress installations. Each site will 
 5. Grant and installation variables entered by website admin
 
 == Changelog ==
-\n+= 1.0.20 =
+
+= 1.0.21 =
+* Set default electricity rate to 0.17 across calculator and admin UI
+* Removed unused US/UK static page copies
+* Synced admin defaults and JS fallback rates
+
+= 1.0.20 =
 * Default country set to United States and currency to $
 * Aligned `system_cost_ratio` fallback to 650 to match domestic tier
 * Updated versions and SVN tags
-\n = 1.0.17 =
+
+ = 1.0.17 =
 
 = 1.0.17 =
 * Simplified API key configuration - now uses single Google API key for all services

@@ -4,7 +4,7 @@
  * Plugin Name: Keiste Solar Report
  * Plugin URI: https://keiste.com/keiste-solar-report
  * Description: Comprehensive solar panel analysis tool with ROI calculations, Google Solar API integration, interactive charts, and PDF report generation.
- * Version: 1.0.20
+ * Version: 1.0.21
  * Author: Dara Burke, Keiste
  * Author URI: https://keiste.com
  * License: GPL v2 or later
@@ -33,7 +33,7 @@ error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERRO
 
 // Define plugin constants (only once) with ksrad_ namespace
 if (!defined('KSRAD_VERSION')) {
-    define('KSRAD_VERSION', '1.0.20');
+    define('KSRAD_VERSION', '1.0.21');
 }
 if (!defined('KSRAD_PLUGIN_DIR')) {
     define('KSRAD_PLUGIN_DIR', plugin_dir_path(__FILE__));
