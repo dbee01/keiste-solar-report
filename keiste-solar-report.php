@@ -555,6 +555,9 @@ if ($ksrad_isAjaxRequest) {
 
                         <div id="solarForm" class="needs-validation mt-4">
                             <?php wp_nonce_field('ksrad_solar_form', 'ksrad_solar_nonce'); ?>
+                            
+                            <!-- Hidden field to preserve building type through AJAX -->
+                            <input type="hidden" id="selectedBuildingType" value="Residential" />
 
                             <!-- Solar Investment Analysis -->
                             <div class="solar-investment-analysis section" id="solar-investment-analysis">
@@ -605,7 +608,7 @@ if ($ksrad_isAjaxRequest) {
                                                 <span><?php echo esc_html($ksrad_maxPanels); ?></span>
                                             </div>
                                         </div>
-                                        <div class="input-help text-center">Drag slider to adjust number of panels (Maximum
+                                        <div class="input-help text-center">Choose number of 400W panels (Maximum
                                             capacity: <?php echo esc_html($ksrad_maxPanels); ?> panels)</div>
                                     </div>
                                     
@@ -652,6 +655,16 @@ if ($ksrad_isAjaxRequest) {
 
                                     <div class="mb-4 mt-4">
                                         <div class="row">
+                                            <div class="col-md-12 mb-3 text-center">
+                                                <label for="userBuildingType" class="form-label" style="font-weight: 600;">Building Type</label>
+                                                <select id="userBuildingType" name="userBuildingType" class="form-select" style="max-width: 300px; margin: 0 auto;">
+                                                    <option value="Residential" selected>🏠 Residential</option>
+                                                    <option value="Commercial">🏢 Commercial</option>
+                                                    <option value="Farm">🚜 Farm</option>
+                                                    <option value="Community">🏘️ Community</option>
+                                                    <option value="Business">💼 Business</option>
+                                                </select>
+                                            </div>
                                             <div class="col-md-6 mb-3 elecbill"
                                                 style="text-align: right;border-right: 1px #ccc solid;padding-right: 2rem;">
                                                 <div>
@@ -942,8 +955,6 @@ if ($ksrad_isAjaxRequest) {
                                 // Configuration for event-handlers.js
                                 window.KSRAD_EventConfig = {
                                     currencySymbol: '<?php echo esc_js(ksrad_get_option('currency', '€')); ?>',
-                                    seaiGrantRate: <?php echo esc_js(floatval(ksrad_get_option('seai_grant_rate', '30')) / 100); ?>,
-                                    seaiGrantCap: <?php echo esc_js(floatval(ksrad_get_option('seai_grant_cap', '162000'))); ?>,
                                     acaRate: <?php $aca = ksrad_get_option('aca_rate', ''); echo esc_js($aca === '' ? '0' : (floatval($aca) / 100)); ?>
                                 };
                             </script>
@@ -1153,12 +1164,29 @@ if ($ksrad_isAjaxRequest) {
     <?php endif; ?>
 
     <script>
-        // Configuration for solar-calculator-main.js
-        window.KSRAD_CalcConfig = {
+        // Configuration for solar-calculator-main.js (consolidated with system costs)
+        window.KSRAD_CalcConfig = Object.assign({}, window.KSRAD_CalcConfig || {}, {
             currencySymbol: '<?php echo esc_js(ksrad_get_option('currency', '€')); ?>',
-            seaiGrantRate: <?php echo esc_js(ksrad_get_option('seai_grant_rate', '30') / 100); ?>,
-            seaiGrantCap: <?php echo esc_js(ksrad_get_option('seai_grant_cap', '162000')); ?>
-        };
+            defaultExportRate: <?php echo esc_js(floatval(ksrad_get_option('default_export_rate', '10')) / 100); ?>,
+            // Grant settings by building type
+            grantSettings: {
+                Residential: {
+                    rate: <?php echo esc_js(floatval(ksrad_get_option('grant_rate_domestic', '30')) / 100); ?>,
+                    cap: <?php echo esc_js(floatval(ksrad_get_option('grant_cap_domestic', '1800'))); ?>
+                },
+                'Non-Residential': {
+                    rate: <?php echo esc_js(floatval(ksrad_get_option('grant_rate_non_domestic', '30')) / 100); ?>,
+                    cap: <?php echo esc_js(floatval(ksrad_get_option('grant_cap_non_domestic', '162000'))); ?>
+                }
+            },
+            systemCosts: {
+                Residential: <?php echo esc_js(floatval(ksrad_get_option('cost_domestic', '2500'))); ?>,
+                Commercial: <?php echo esc_js(floatval(ksrad_get_option('cost_small', '2000'))); ?>,
+                Farm: <?php echo esc_js(floatval(ksrad_get_option('cost_medium', '1700'))); ?>,
+                Community: <?php echo esc_js(floatval(ksrad_get_option('cost_large', '1500'))); ?>,
+                Business: <?php echo esc_js(floatval(ksrad_get_option('cost_small', '2000'))); ?>
+            }
+        });
     </script>
     <!-- Solar calculator main script enqueued via WordPress -->
 

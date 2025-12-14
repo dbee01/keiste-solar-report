@@ -356,7 +356,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'cost_domestic',
-            'Cost - Domestic ($/kWp)',
+            'Cost - Domestic (cost/kWp)',
             array($this, 'cost_domestic_callback'),
             'keiste-solar-admin',
             'system_size_section'
@@ -364,7 +364,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'cost_small',
-            'Cost - Small Commercial ($/kWp)',
+            'Cost - Small Commercial (cost/kWp)',
             array($this, 'cost_small_callback'),
             'keiste-solar-admin',
             'system_size_section'
@@ -372,7 +372,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'cost_medium',
-            'Cost - Medium Commercial ($/kWp)',
+            'Cost - Medium Commercial (cost/kWp)',
             array($this, 'cost_medium_callback'),
             'keiste-solar-admin',
             'system_size_section'
@@ -380,7 +380,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'cost_large',
-            'Cost - Large Commercial ($/kWp)',
+            'Cost - Large Commercial (cost/kWp)',
             array($this, 'cost_large_callback'),
             'keiste-solar-admin',
             'system_size_section'
@@ -572,27 +572,26 @@ class KSRAD_Admin {
         
         if (isset($input['logo_url_text'])) {
             $new_input['logo_url_text'] = esc_url_raw($input['logo_url_text']);
-        }
         
         // Sanitize system size costs
         if (isset($input['cost_domestic'])) {
             $cost = floatval($input['cost_domestic']);
-            $new_input['cost_domestic'] = ($cost >= 0 && $cost <= 10000) ? $cost : 2500;
+            $new_input['cost_domestic'] = ($cost >= 0 && $cost <= 10000) ? $cost : 650;
         }
         
         if (isset($input['cost_small'])) {
             $cost = floatval($input['cost_small']);
-            $new_input['cost_small'] = ($cost >= 0 && $cost <= 10000) ? $cost : 2000;
+            $new_input['cost_small'] = ($cost >= 0 && $cost <= 10000) ? $cost : 600;
         }
         
         if (isset($input['cost_medium'])) {
             $cost = floatval($input['cost_medium']);
-            $new_input['cost_medium'] = ($cost >= 0 && $cost <= 10000) ? $cost : 1700;
+            $new_input['cost_medium'] = ($cost >= 0 && $cost <= 10000) ? $cost : 500;
         }
         
         if (isset($input['cost_large'])) {
             $cost = floatval($input['cost_large']);
-            $new_input['cost_large'] = ($cost >= 0 && $cost <= 10000) ? $cost : 1500;
+            $new_input['cost_large'] = ($cost >= 0 && $cost <= 10000) ? $cost : 425;
         }
         
         return $new_input;
@@ -1123,39 +1122,43 @@ class KSRAD_Admin {
     }
     
     public function cost_domestic_callback() {
+        // Show cost value only; omit currency symbol in description per request
         $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
         printf(
             '<input type="number" step="1" id="cost_domestic" name="ksrad_options[cost_domestic]" value="%s" />',
-            isset($this->options['cost_domestic']) ? esc_attr($this->options['cost_domestic']) : '2500'
+            isset($this->options['cost_domestic']) ? esc_attr($this->options['cost_domestic']) : '650'
         );
-        echo ' <span class="description">' . $currency . '/kWp (cost per kW for residential/domestic installations)</span>';
+        echo ' <span class="description">Cost per kWp for residential/domestic installations</span>';
     }
     
     public function cost_small_callback() {
+        // Show cost value only; omit currency symbol in description per request
         $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
         printf(
             '<input type="number" step="1" id="cost_small" name="ksrad_options[cost_small]" value="%s" />',
-            isset($this->options['cost_small']) ? esc_attr($this->options['cost_small']) : '2000'
+            isset($this->options['cost_small']) ? esc_attr($this->options['cost_small']) : '600'
         );
-        echo ' <span class="description">' . $currency . '/kWp (cost per kW for small commercial, <50kW)</span>';
+        echo ' <span class="description">Cost per kWp for small commercial (<50kW)</span>';
     }
     
     public function cost_medium_callback() {
+        // Show cost value only; omit currency symbol in description per request
         $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
         printf(
             '<input type="number" step="1" id="cost_medium" name="ksrad_options[cost_medium]" value="%s" />',
-            isset($this->options['cost_medium']) ? esc_attr($this->options['cost_medium']) : '1700'
+            isset($this->options['cost_medium']) ? esc_attr($this->options['cost_medium']) : '500'
         );
-        echo ' <span class="description">' . $currency . '/kWp (cost per kW for medium commercial, 50-250kW)</span>';
+        echo ' <span class="description">Cost per kWp for medium commercial (50-250kW)</span>';
     }
     
     public function cost_large_callback() {
+        // Show cost value only; omit currency symbol in description per request
         $currency = isset($this->options['currency']) ? esc_html($this->options['currency']) : '$';
         printf(
             '<input type="number" step="1" id="cost_large" name="ksrad_options[cost_large]" value="%s" />',
-            isset($this->options['cost_large']) ? esc_attr($this->options['cost_large']) : '1500'
+            isset($this->options['cost_large']) ? esc_attr($this->options['cost_large']) : '425'
         );
-        echo ' <span class="description">' . $currency . '/kWp (cost per kW for large commercial, >250kW)</span>';
+        echo ' <span class="description">Cost per kWp for large commercial (>250kW)</span>';
     }
     
     public function system_size_table_callback_DISABLED() {

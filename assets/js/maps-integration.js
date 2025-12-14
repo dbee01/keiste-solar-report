@@ -185,6 +185,12 @@ async function initMaps() {
             window.BUILDING_TYPE = this.value;
             console.log('Building type changed to:', window.BUILDING_TYPE);
             
+            // Update hidden field that persists through AJAX
+            const hiddenField = document.getElementById('selectedBuildingType');
+            if (hiddenField) {
+                hiddenField.value = this.value;
+            }
+            
             // Recalculate with new building type settings (only if form elements exist)
             if (typeof window.calculateROI === 'function' && document.getElementById('panelCount')) {
                 window.calculateROI();

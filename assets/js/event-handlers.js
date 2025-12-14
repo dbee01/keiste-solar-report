@@ -7,9 +7,8 @@
 
     // Configuration variables - will be set from PHP config
     let CURRENCY_SYMBOL = '€';
-    let SEAI_GRANT_RATE = 0.3;
-    let SEAI_GRANT_CAP = 162000;
     let ACA_RATE = 0.125;
+    // Grant settings are now building-type-specific in window.KSRAD_CalcConfig.grantSettings
 
     /**
      * Format currency value
@@ -178,10 +177,9 @@
     function init() {
         if (window.KSRAD_EventConfig) {
             CURRENCY_SYMBOL = window.KSRAD_EventConfig.currencySymbol || '€';
-            SEAI_GRANT_RATE = window.KSRAD_EventConfig.seaiGrantRate || 0.3;
-            SEAI_GRANT_CAP = window.KSRAD_EventConfig.seaiGrantCap || 162000;
             ACA_RATE = window.KSRAD_EventConfig.acaRate || 0.125;
         }
+        // Grant settings are now building-type-specific in KSRAD_CalcConfig.grantSettings
         
         // Expose updateCosts globally if needed by other scripts
         window.updateCosts = updateCosts;

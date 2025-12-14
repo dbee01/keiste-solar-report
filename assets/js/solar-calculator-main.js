@@ -14,8 +14,7 @@
     // Financial - will be set from PHP config
     const CORPORATION_TAX = 0.125;        // 12.5%
     let CURRENCY_SYMBOL = '€';  // Default, will be overridden by config
-    let SEAI_GRANT_RATE = 0.30;         // Grant rate from admin settings
-    let SEAI_GRANT_CAP = 162000;        // Grant cap from admin settings
+    // Grant settings are now building-type-specific, resolved dynamically
     const LOAN_APR_DEFAULT = 0.07;        // 7% APR
     const FEED_IN_TARIFF_DEFAULT = 0.21;  // €/kWh
     const COMPOUND_7_YRS = 1.07;          // coefficient @5% over 7years
@@ -33,7 +32,7 @@
 
     // UI defaults
     const DEFAULT_PANELS = 0;
-    const DEFAULT_EXPORT_PERCENT = 0.4;   // 40% of production exported (assumption if no slider)
+    const DEFAULT_EXPORT_PERCENT = 0.10;   // 10% of production exported
     const DEFAULT_RETAIL_RATE = 0.35;     // €/kWh – sensible default if blank
     const DEFAULT_FEED_IN_TARIFF = FEED_IN_TARIFF_DEFAULT;
     const DEFAULT_APR = LOAN_APR_DEFAULT;
@@ -111,10 +110,33 @@
      */
     function estimateSolarCost(panels, batteryKWh = 0, includeDiverter = true) {
         const panelWatt = 400;              // average panel size
-        const costPerKwP = 1200;            // €/kWp installed
+        // Resolve cost per kWp from admin-configured values using building type
+        const getCostPerKwP = () => {
+            try {
+                const cfg = window.KSRAD_CalcConfig || {};
+                const costs = cfg.systemCosts || {};
+                // Get building type from dropdown
+                const btEl = document.getElementById('userBuildingType');
+                const buildingType = (btEl && btEl.value) ? btEl.value.trim() : 'Residential';
+                
+                // Use the building type's cost directly
+                if (typeof costs[buildingType] === 'number' && costs[buildingType] > 0) {
+                    console.log('Using cost for', buildingType, ':', costs[buildingType], '€/kWp');
+                    return Number(costs[buildingType]);
+                }
+                
+                // Fallback: default cost
+                console.warn('No cost configured for', buildingType, '- using default 1200 €/kWp');
+                return 1200;
+            } catch (e) {
+                console.error('Error resolving cost per kWp:', e);
+                return 1200;
+            }
+        };
+        const costPerKwP = getCostPerKwP();
+        const systemKwP = (panels * panelWatt) / 1000;
         const batteryCostPerKWh = 500;      // €/kWh installed
         const diverterCost = 550;           // one-off
-        const systemKwP = (panels * panelWatt) / 1000;
         const panelCost = systemKwP * costPerKwP;
         const batteryCost = batteryKWh * batteryCostPerKWh;
         // Only include diverter cost when at least one panel is selected.
@@ -135,9 +157,13 @@
 
         // key text inputs
         const exportRate = (() => {
-            const val = byId('exportRate')?.value;
-            const p = num(val) / 100; // assume percent in UI
-            return Number.isFinite(p) && p > 0 ? clamp(p, 0, 1) : DEFAULT_EXPORT_PERCENT;
+            // exportRate is the % of production exported (from admin settings or default 10%)
+            const cfg = window.KSRAD_CalcConfig || {};
+            const rate = cfg.defaultExportRate;
+            if (typeof rate === 'number' && rate > 0) {
+                return clamp(rate, 0, 1);
+            }
+            return DEFAULT_EXPORT_PERCENT; // 0.10 = 10% exported
         })();
 
         const electricityRate = (() => {
@@ -170,9 +196,13 @@
         // add an energy production estimate based on panels and available solar configs
         let yearlyEnergy = 0;
         // prefer parsed DOM configs, then server-provided `solarConfigs` (may be a top-level const, not on window)
+        console.log('Looking for configs - window.__parsedSolarConfigs:', window.__parsedSolarConfigs, 'window.KSRAD_UtilityConfig:', window.KSRAD_UtilityConfig);
         const availableConfigs = (Array.isArray(window.__parsedSolarConfigs) && window.__parsedSolarConfigs.length > 0)
             ? window.__parsedSolarConfigs
-            : (typeof solarConfigs !== 'undefined' && Array.isArray(solarConfigs) && solarConfigs.length > 0 ? solarConfigs : []);
+            : (window.KSRAD_UtilityConfig && Array.isArray(window.KSRAD_UtilityConfig.solarConfigs) && window.KSRAD_UtilityConfig.solarConfigs.length > 0 
+                ? window.KSRAD_UtilityConfig.solarConfigs 
+                : (typeof solarConfigs !== 'undefined' && Array.isArray(solarConfigs) && solarConfigs.length > 0 ? solarConfigs : []));
+        console.log('availableConfigs found:', availableConfigs.length, 'configs');
         if (availableConfigs.length > 0) {
             // helper: try to extract a numeric kWh value from a config object safely
             const extractKwh = (cfg) => {
@@ -203,8 +233,10 @@
             for (let i = 0; i < availableConfigs.length; i++) {
                 const config = availableConfigs[i];
                 const configPanels = parseInt(config['panelsCount'] || config['panels'] || config['Number of Panels'] || config['Panels']) || 0;
+                console.log('Config', i, '- panels:', configPanels, 'config:', config);
                 if (configPanels === panels) {
                     yearlyEnergy = extractKwh(config) || 0;
+                    console.log('Found exact match - panels:', panels, 'yearlyEnergy:', yearlyEnergy);
                     break;
                 }
             }
@@ -233,8 +265,30 @@
         const baseCost = Math.round(estimateSolarCost(state.panels)); // €
         console.log('baseCost', baseCost);
 
-        const seaiGrant = state.inclGrant ? Math.min(Number(baseCost * SEAI_GRANT_RATE), SEAI_GRANT_CAP) : 0;
-        console.log('seaiGrant', seaiGrant);
+        // Resolve grant settings based on building type (Residential vs Non-Residential)
+        const getGrantSettings = () => {
+            try {
+                const cfg = window.KSRAD_CalcConfig || {};
+                const grants = cfg.grantSettings || {};
+                const btEl = document.getElementById('userBuildingType');
+                const selected = (btEl && btEl.value) ? btEl.value.trim() : 'Residential';
+                console.log('Building type:', selected);
+                // Map building types to grant categories
+                const isResidential = (selected === 'Residential');
+                const category = isResidential ? 'Residential' : 'Non-Residential';
+                if (grants[category]) {
+                    console.log('Grant:', category, '- rate:', grants[category].rate, 'cap:', grants[category].cap);
+                    return { rate: grants[category].rate || 0.30, cap: grants[category].cap || 162000 };
+                }
+                return { rate: 0.30, cap: 162000 }; // fallback
+            } catch (e) {
+                console.error('Error getting grant settings:', e);
+                return { rate: 0.30, cap: 162000 };
+            }
+        };
+        const grantSettings = getGrantSettings();
+        const seaiGrant = state.inclGrant ? Math.min(Number(baseCost * grantSettings.rate), grantSettings.cap) : 0;
+        console.log('Grant applied:', seaiGrant, '(', baseCost, '*', grantSettings.rate, '= capped at', grantSettings.cap, ')');
         const acaAllowance = state.inclACA ? Math.min(Number(baseCost - seaiGrant), Number(baseCost) * CORPORATION_TAX ) : 0;
         console.log('acaAllowance', acaAllowance);
 
@@ -262,13 +316,22 @@
         const yearlyLoanCost = Math.round(inclLoan ? monthlyRepay * 12 : 0);
 
         // Total 25-year savings (benefits - cost + ACA if included)
+        // Must account for actual electricity usage—can't "self-consume" power if you have no bill
         const benefits25 = Array.from({ length: YRS_OF_SYSTEM }, (_, y) => {
-            const pvYear = panels * DAY_POWER_AVG * DAYS_IN_YR * Math.pow(1 - SOLAR_PANEL_DEGRADATION, y);
-            const self = pvYear * (1 - exportRate);
-            const exp = pvYear * exportRate;
+            // Use actual yearly production (not formula) for consistency
+            const baseProduction = yearlyEnergy > 0 ? yearlyEnergy : (panels * DAY_POWER_AVG * DAYS_IN_YR);
+            const pvYear = baseProduction * Math.pow(1 - SOLAR_PANEL_DEGRADATION, y);
+            
+            // Determine actual self-consumption based on bill (same logic as savings_year0)
+            const currentUsageKwh = (billMonthly * 12) / RETAIL;
+            const maxSelfConsumptionKwh = pvYear * (1 - exportRate);
+            const actualSelfConsumptionKwh = Math.min(maxSelfConsumptionKwh, currentUsageKwh);
+            const exportKwh = pvYear - actualSelfConsumptionKwh;
+            
+            // Financial benefits with escalation
             const retailY = RETAIL * Math.pow(1 + ANNUAL_INCREASE, y);
             const fitY = FIT; // could escalate, left constant per provided spec
-            return self * retailY + exp * fitY;
+            return (actualSelfConsumptionKwh * retailY) + (exportKwh * fitY);
         }).reduce((a, b) => a + b, 0);
 
         // Total loan payments over the evaluation window: stop counting repayments after the loan term
@@ -280,20 +343,27 @@
         const savings_year0 = (() => {
             // Current electricity usage based on their bill
             const current_usage_kwh = (billMonthly * 12) / RETAIL;
+            console.log('Bill calculation - billMonthly:', billMonthly, 'RETAIL:', RETAIL, 'current_usage_kwh:', current_usage_kwh);
             
-            // Total solar production
-            const annual_solar_kwh = panels * DAY_POWER_AVG * DAYS_IN_YR;
+            // Total solar production (use actual config data, not formula)
+            const annual_solar_kwh = yearlyEnergy > 0 ? yearlyEnergy : (panels * DAY_POWER_AVG * DAYS_IN_YR);
+            console.log('Annual solar production:', annual_solar_kwh, 'kWh (from yearlyEnergy:', yearlyEnergy, ')');
             
             // Self-consumption: what they can use themselves (capped by their actual usage)
             const max_self_consumption_kwh = annual_solar_kwh * (1 - exportRate);
             const actual_self_consumption_kwh = Math.min(max_self_consumption_kwh, current_usage_kwh);
+            console.log('Export rate:', exportRate, 'Max self:', max_self_consumption_kwh, 'Actual self:', actual_self_consumption_kwh, 'Current usage:', current_usage_kwh);
             
             // Export: everything not self-consumed
             const export_kwh = annual_solar_kwh - actual_self_consumption_kwh;
+            console.log('Export kWh:', export_kwh);
             
             // Financial benefits
             const bill_savings = actual_self_consumption_kwh * RETAIL;  // Avoided electricity cost
             const export_income = export_kwh * FIT;                     // Export income
+            console.log('Bill savings:', bill_savings, '(', actual_self_consumption_kwh, '*', RETAIL, ')');
+            console.log('Export income:', export_income, '(', export_kwh, '*', FIT, ')');
+
             const loan_cost = inclLoan ? yearlyLoanCost : 0;
             const acaBump = (inclACA ? acaAllowance : 0);
             
@@ -349,7 +419,15 @@
         setTxt('installationCost', fmtEuro(figs.install_cost));
         setTxt('grant', fmtEuro(figs.seaiGrant));
         setTxt('panelCount', fmtNum(state.panels, 0));
-        setTxt('yearlyEnergy', fmtNum(figs.yearlyEnergyKWh, 0) + ' kWh');
+        // Annual energy production display: support both legacy `yearlyEnergy` and current `yearlyEnergyValue` IDs
+        const yearlyKwhDisplay = fmtNum(figs.yearlyEnergyKWh || (state.panels * DAY_POWER_AVG * DAYS_IN_YR), 0) + ' kWh';
+        setTxt('yearlyEnergy', yearlyKwhDisplay);
+        setTxt('yearlyEnergyValue', yearlyKwhDisplay.replace(/\s*kWh$/,'')); // value-only for left-side summary
+        // Keep hidden input `yearlyEnergy` in sync if present
+        const yearlyHidden = byId('yearlyEnergy');
+        if (yearlyHidden && yearlyHidden.tagName && yearlyHidden.tagName.toUpperCase() === 'INPUT') {
+            yearlyHidden.value = String(figs.yearlyEnergyKWh || (state.panels * DAY_POWER_AVG * DAYS_IN_YR) || 0);
+        }
         setTxt('monthlyBill', fmtEuro(state.billMonthly));
         setTxt('annualIncrease', (ANNUAL_INCREASE * 100).toFixed(1) + '%');
         // if the income is negative, show in red (format/sign is handled here)
@@ -586,6 +664,9 @@
         // keyup handlers for text inputs
         onChangeRecalc('exportRate', 'keyup');
         onChangeRecalc('electricityRate', 'keyup');
+        
+        // Building type change triggers recalc (affects grant rates and cost tiers)
+        onChangeRecalc('userBuildingType', 'change');
 
         const btn = byId('openRoiModalButton');
         if (btn) {
@@ -635,8 +716,6 @@
         if (window.KSRAD_CalcConfig) {
             console.log('[INIT] KSRAD_CalcConfig found:', window.KSRAD_CalcConfig);
             CURRENCY_SYMBOL = window.KSRAD_CalcConfig.currencySymbol || CURRENCY_SYMBOL;
-            SEAI_GRANT_RATE = window.KSRAD_CalcConfig.seaiGrantRate || SEAI_GRANT_RATE;
-            SEAI_GRANT_CAP = window.KSRAD_CalcConfig.seaiGrantCap || SEAI_GRANT_CAP;
             
             // Also expose globally for consistency with other scripts
             window.CURRENCY_SYMBOL = CURRENCY_SYMBOL;
