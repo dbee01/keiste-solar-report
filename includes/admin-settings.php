@@ -572,6 +572,7 @@ class KSRAD_Admin {
         
         if (isset($input['logo_url_text'])) {
             $new_input['logo_url_text'] = esc_url_raw($input['logo_url_text']);
+        }
         
         // Sanitize system size costs
         if (isset($input['cost_domestic'])) {
