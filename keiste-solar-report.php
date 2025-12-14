@@ -877,7 +877,7 @@ if ($ksrad_isAjaxRequest) {
                                         </div>
                                         <div class="install-details-cell install-details-border">
                                             <label for="electricityRate" class="form-label-right">Electricity Rate (<span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>/kWh)</label>
-                                            <input type="number" class="form-control" id="electricityRate" value="<?php echo esc_attr(ksrad_get_option('default_electricity_rate', '0.45')); ?>" step="0.01"
+                                            <input type="number" class="form-control" id="electricityRate" value="<?php echo esc_attr(ksrad_get_option('default_electricity_rate', '0.17')); ?>" step="0.01"
                                                 min="0" required>
                                             <div class="input-help-right">Electricity unit cost / kWh</div>
                                         </div>
@@ -893,7 +893,7 @@ if ($ksrad_isAjaxRequest) {
                                         </div>
                                         <div class="install-details-cell install-details-border">
                                             <label for="exportRate" class="form-label-right">Feed-in Tariff (<span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>/kWh)</label>
-                                            <input type="number" class="form-control" id="exportRate" value="<?php echo esc_attr(ksrad_get_option('default_feed_in_tariff', '0.21')); ?>" step="0.01"
+                                            <input type="number" class="form-control" id="exportRate" value="<?php echo esc_attr(ksrad_get_option('default_feed_in_tariff', '0.15')); ?>" step="0.01"
                                                 min="0" required>
                                             <div class="input-help-right">Export rate</div>
                                         </div>

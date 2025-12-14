@@ -463,12 +463,12 @@ class KSRAD_Admin {
         
         if (isset($input['default_export_rate'])) {
             $rate = floatval($input['default_export_rate']);
-            $new_input['default_export_rate'] = ($rate >= 0 && $rate <= 100) ? $rate : 40;
+            $new_input['default_export_rate'] = ($rate >= 0 && $rate <= 100) ? $rate : 10;
         }
         
         if (isset($input['default_feed_in_tariff'])) {
             $tariff = floatval($input['default_feed_in_tariff']);
-            $new_input['default_feed_in_tariff'] = ($tariff >= 0 && $tariff <= 10) ? $tariff : 0.21;
+            $new_input['default_feed_in_tariff'] = ($tariff >= 0 && $tariff <= 10) ? $tariff : 0.15;
         }
         
         if (isset($input['default_loan_apr'])) {
@@ -718,7 +718,7 @@ class KSRAD_Admin {
     public function default_export_rate_callback() {
         printf(
             '<input type="number" step="1" id="default_export_rate" name="ksrad_options[default_export_rate]" value="%s" />',
-            isset($this->options['default_export_rate']) ? esc_attr($this->options['default_export_rate']) : '40'
+            isset($this->options['default_export_rate']) ? esc_attr($this->options['default_export_rate']) : '10'
         );
         echo ' <span class="description">% (percentage of energy exported to grid)</span>';
     }
@@ -726,7 +726,7 @@ class KSRAD_Admin {
     public function default_feed_in_tariff_callback() {
         printf(
             '<input type="number" step="0.01" id="default_feed_in_tariff" name="ksrad_options[default_feed_in_tariff]" value="%s" />',
-            isset($this->options['default_feed_in_tariff']) ? esc_attr($this->options['default_feed_in_tariff']) : '0.21'
+            isset($this->options['default_feed_in_tariff']) ? esc_attr($this->options['default_feed_in_tariff']) : '0.15'
         );
         echo ' <span class="description">€/kWh</span>';
     }
