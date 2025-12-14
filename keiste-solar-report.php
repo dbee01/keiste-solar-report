@@ -419,56 +419,39 @@ if ($ksrad_isAjaxRequest) {
 
                 <?php endif; ?>
 
-                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;">Select your building type, then search for your chosen building address.</p>
+                <p style="color: #3A3A38; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 500;">Enter your chosen building address.</p>
                 
-            </div>
 
-            <!-- Building Type Selection Form -->
-            <div class="location-form-wrapper">
-                <div class="row g-3">
-                    <!-- Building Type Selection -->
-                    <div class="col-md-12">
-                        <label for="userBuildingType" class="form-label" style="font-weight: 600; color: #2A2A28; margin-bottom: 0.5rem;">Building Type <span style="color: #dc3545;">*</span></label>
-                        <select id="userBuildingType" name="userBuildingType" class="form-select" required style="padding: 0.75rem; border: 1px solid #E8E8E6; border-radius: 6px; font-size: 1rem;">
-                            <option value="">Select building type</option>
-                            <option value="Residential" selected>🏠 Residential</option>
-                            <option value="Commercial">🏢 Commercial</option>
-                            <option value="Farm">🚜 Farm</option>
-                            <option value="Community">🏘️ Community</option>
-                            <option value="Business">💼 Business</option>
-                        </select>
+                <div class="text-center mb-4">
+
+                    <div class="report-header" id="reportHeader">
+
+                        <h3><em><?php echo esc_html($ksrad_business_name); ?></em></h3>
+
+                        <div id="pacContainer">
+                            <gmp-place-autocomplete id="pac" fields="id,location,formattedAddress,displayName" style="
+                                background-color: #fff;
+                                color: #222;
+                                text-align: left;
+                                font-size: 16px;
+                                padding: 8px 12px;
+                                border: 1px solid #ccc;
+                                border-radius: 15px;
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <input id="pacInput" placeholder="Search your address" />
+                            </gmp-place-autocomplete>
+
+                        </div>
+
                     </div>
+
                 </div>
+
+
+
             </div>
 
         <?php endif; ?>
-
-
-        <div class="text-center mb-4">
-
-            <div class="report-header" id="reportHeader">
-                <h3><em><?php echo esc_html($ksrad_business_name); ?></em></h3>
-            </div>
-
-        </div>
-
-
-
-        <div id="pacContainer" style="display: none;">
-            <gmp-place-autocomplete id="pac" fields="id,location,formattedAddress,displayName" 
-                placeholder: 'Search your address';
-                background-color: #fff;
-                color: #222;
-                text-align: left;
-                font-size: 16px;
-                padding: 8px 12px;
-                border: 1px solid #ccc;
-                border-radius: 15px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <input id="pacInput" placeholder="Search your address" />
-            </gmp-place-autocomplete>
-
-        </div>
 
         <?php if (empty(ksrad_get_option('google_solar_api_key', ''))): ?>
         <div class="row">
@@ -656,7 +639,7 @@ if ($ksrad_isAjaxRequest) {
                                     <div class="mb-4 mt-4">
                                         <div class="row">
                                             <div class="col-md-12 mb-3 text-center">
-                                                <label for="userBuildingType" class="form-label" style="font-weight: 600;">Building Type</label>
+                                                <label for="userBuildingType" class="form-label" style="font-weight: 600;">Building / Grant Type</label>
                                                 <select id="userBuildingType" name="userBuildingType" class="form-select" style="max-width: 300px; margin: 0 auto;">
                                                     <option value="Residential" selected>🏠 Residential</option>
                                                     <option value="Commercial">🏢 Commercial</option>
