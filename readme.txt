@@ -198,6 +198,11 @@ Yes, you can use the plugin on multiple WordPress installations. Each site will 
 5. Grant and installation variables entered by website admin
 
 == Changelog ==
+\n+= 1.0.20 =
+* Default country set to United States and currency to $
+* Aligned `system_cost_ratio` fallback to 650 to match domestic tier
+* Updated versions and SVN tags
+\n = 1.0.17 =
 
 = 1.0.17 =
 * Simplified API key configuration - now uses single Google API key for all services
