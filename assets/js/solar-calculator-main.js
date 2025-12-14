@@ -117,7 +117,9 @@
         const systemKwP = (panels * panelWatt) / 1000;
         const panelCost = systemKwP * costPerKwP;
         const batteryCost = batteryKWh * batteryCostPerKWh;
-        const diverter = includeDiverter ? diverterCost : 0;
+        // Only include diverter cost when at least one panel is selected.
+        // This prevents a default €550 cost appearing when panels = 0.
+        const diverter = includeDiverter && panels > 0 ? diverterCost : 0;
         return panelCost + batteryCost + diverter;
     }
 

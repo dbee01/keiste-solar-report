@@ -323,7 +323,24 @@ if ($ksrad_isAjaxRequest) {
         </div>
 
         <div class="text-center mt-4">
-            <h1>Solar Report<sup style="color: red;font-size: 16px;vertical-align: middle;top: -14px;"> BETA</sup></h1>
+            <?php
+                // Derive a short country code from backend setting
+                $ksrad_country_name = ksrad_get_option('country', 'Rep. of Ireland');
+                $ksrad_country_code = 'IE';
+                if (is_string($ksrad_country_name)) {
+                    $name = strtolower(trim($ksrad_country_name));
+                    if (strpos($name, 'united states') !== false || $name === 'usa' || $name === 'us') {
+                        $ksrad_country_code = 'US';
+                    } elseif (strpos($name, 'canada') !== false || $name === 'ca') {
+                        $ksrad_country_code = 'CA';
+                    } elseif (strpos($name, 'uk') !== false || strpos($name, 'united kingdom') !== false || $name === 'gb') {
+                        $ksrad_country_code = 'UK';
+                    } elseif (strpos($name, 'ireland') !== false || strpos($name, 'ireland') !== false || $name === 'ie' || strpos($name, 'rep.') !== false) {
+                        $ksrad_country_code = 'IE';
+                    }
+                }
+            ?>
+            <h1>Solar Report<sup style="color: red;font-size: 16px;vertical-align: middle;top: -14px;"><?php echo esc_html($ksrad_country_code); ?> BETA</sup></h1>
         </div>
 
 
@@ -829,7 +846,13 @@ if ($ksrad_isAjaxRequest) {
                                             <label for="grant" class="form-label-right">Available Grant (<span class="currency-symbol"><?php echo esc_html(ksrad_get_option('currency', '€')); ?></span>)</label>
                                             <div class="energy-display-right"><span id="grant"
                                                     class="highlighted-value">0</span></div>
-                                            <div class="input-help-right"><?php echo esc_html(ksrad_get_option('seai_grant_rate', '%')); ?>% Grant (max <?php echo esc_html(ksrad_get_option('seai_grant_cap', '€')); ?>)</div>
+                                            <?php
+                                                // Display grant help with correct percent and currency formatting
+                                                $ksrad_currency_symbol = ksrad_get_option('currency', '€');
+                                                $ksrad_grant_rate = floatval(ksrad_get_option('seai_grant_rate', '30')); // default 30%
+                                                $ksrad_grant_cap = floatval(ksrad_get_option('seai_grant_cap', '162000')); // sensible numeric default
+                                            ?>
+                                            <div class="input-help-right"><?php echo esc_html($ksrad_grant_rate); ?>% Grant (max <?php echo esc_html($ksrad_currency_symbol); ?><?php echo number_format($ksrad_grant_cap, 0); ?>)</div>
                                         </div>
                                     </div>
                                     <div class="install-details-row">
