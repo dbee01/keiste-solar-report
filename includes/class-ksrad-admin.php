@@ -288,7 +288,7 @@ class KSRAD_Admin {
             update_option('ksrad_send_confirmation', isset($_POST['ksrad_send_confirmation']) ? '1' : '0');
             
             // Validate and sanitize electricity rate (0.01 to 10.00)
-            $electricity_rate = isset($_POST['ksrad_default_electricity_rate']) ? floatval($_POST['ksrad_default_electricity_rate']) : 0.13;
+            $electricity_rate = isset($_POST['ksrad_default_electricity_rate']) ? floatval($_POST['ksrad_default_electricity_rate']) : 0.17;
             if ($electricity_rate > 0 && $electricity_rate <= 10) {
                 update_option('ksrad_default_electricity_rate', $electricity_rate);
             }
@@ -311,7 +311,7 @@ class KSRAD_Admin {
         // Get current settings
         $notification_email = get_option('ksrad_notification_email', get_option('admin_email'));
         $send_confirmation = get_option('ksrad_send_confirmation', '1');
-        $electricity_rate = get_option('ksrad_default_electricity_rate', '0.13');
+        $electricity_rate = get_option('ksrad_default_electricity_rate', '0.17');
         $cost_per_watt = get_option('ksrad_cost_per_watt', '2.75');
         $tax_credit = get_option('ksrad_tax_credit', '0.30');
         

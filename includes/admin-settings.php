@@ -252,7 +252,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'default_electricity_rate',
-            'Default Electricity Rate (€/kWh)',
+            'Default Electricity Rate (cost/kWh)',
             array($this, 'default_electricity_rate_callback'),
             'keiste-solar-admin',
             'default_values_section'
@@ -268,7 +268,7 @@ class KSRAD_Admin {
         
         add_settings_field(
             'default_feed_in_tariff',
-            'Feed-in Tariff (€/kWh)',
+            'Feed-in Tariff (cost/kWh)',
             array($this, 'default_feed_in_tariff_callback'),
             'keiste-solar-admin',
             'default_values_section'
@@ -458,7 +458,7 @@ class KSRAD_Admin {
         // Validate and sanitize numeric values with range checks
         if (isset($input['default_electricity_rate'])) {
             $rate = floatval($input['default_electricity_rate']);
-            $new_input['default_electricity_rate'] = ($rate >= 0 && $rate <= 10) ? $rate : 0.35;
+            $new_input['default_electricity_rate'] = ($rate >= 0 && $rate <= 10) ? $rate : 0.17;
         }
         
         if (isset($input['default_export_rate'])) {
@@ -497,7 +497,7 @@ class KSRAD_Admin {
                 'United States' => '$',
                 'Canada' => '$'
             );
-            $new_input['currency'] = isset($currency_map[$new_input['country']]) ? $currency_map[$new_input['country']] : '€';
+            $new_input['currency'] = isset($currency_map[$new_input['country']]) ? $currency_map[$new_input['country']] : '$';
         }
         
         if (isset($input['grant_rate_domestic'])) {
@@ -710,9 +710,9 @@ class KSRAD_Admin {
     public function default_electricity_rate_callback() {
         printf(
             '<input type="number" step="0.01" id="default_electricity_rate" name="ksrad_options[default_electricity_rate]" value="%s" />',
-            isset($this->options['default_electricity_rate']) ? esc_attr($this->options['default_electricity_rate']) : '0.35'
+            isset($this->options['default_electricity_rate']) ? esc_attr($this->options['default_electricity_rate']) : '0.17'
         );
-        echo ' <span class="description">€/kWh (e.g., 0.35 for €0.35/kWh)</span>';
+        echo ' <span class="description">per kWh (e.g., 0.17 for 0.17/kWh)</span>';
     }
     
     public function default_export_rate_callback() {
@@ -728,7 +728,7 @@ class KSRAD_Admin {
             '<input type="number" step="0.01" id="default_feed_in_tariff" name="ksrad_options[default_feed_in_tariff]" value="%s" />',
             isset($this->options['default_feed_in_tariff']) ? esc_attr($this->options['default_feed_in_tariff']) : '0.15'
         );
-        echo ' <span class="description">€/kWh</span>';
+        echo ' <span class="description">per kWh</span>';
     }
     
     public function default_loan_apr_callback() {
@@ -1189,7 +1189,7 @@ class KSRAD_Admin {
         
         $countries = array('United States', 'Canada', 'United Kingdom', 'Rep. of Ireland');
         $building_types = array('Residential', 'Commercial Small', 'Commercial Medium', 'Commercial Large');
-        $currency = isset($this->options['currency']) ? $this->options['currency'] : '€';
+        $currency = isset($this->options['currency']) ? $this->options['currency'] : '$';
         ?>
         <div class="system-size-table-wrapper">
             <style>

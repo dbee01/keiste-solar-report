@@ -33,7 +33,7 @@
     // UI defaults
     const DEFAULT_PANELS = 0;
     const DEFAULT_EXPORT_PERCENT = 0.10;   // 10% of production exported
-    const DEFAULT_RETAIL_RATE = 0.35;     // €/kWh – sensible default if blank
+    const DEFAULT_RETAIL_RATE = 0.17;     // €/kWh – sensible default if blank
     const DEFAULT_FEED_IN_TARIFF = FEED_IN_TARIFF_DEFAULT;
     const DEFAULT_APR = LOAN_APR_DEFAULT;
 
