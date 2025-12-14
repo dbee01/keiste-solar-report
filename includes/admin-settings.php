@@ -393,6 +393,14 @@ class KSRAD_Admin {
             'keiste-solar-admin',
             'display_options_section'
         );
+        
+        add_settings_field(
+            'modal_popup_delay',
+            'Lead Form Popup Delay (seconds)',
+            array($this, 'modal_popup_delay_callback'),
+            'keiste-solar-admin',
+            'display_options_section'
+        );
     }
     
     /**
@@ -505,6 +513,11 @@ class KSRAD_Admin {
         
         if (isset($input['enable_pdf_export'])) {
             $new_input['enable_pdf_export'] = (bool)$input['enable_pdf_export'];
+        }
+        
+        if (isset($input['modal_popup_delay'])) {
+            $delay = intval($input['modal_popup_delay']);
+            $new_input['modal_popup_delay'] = ($delay >= 0 && $delay <= 60) ? $delay : 3;
         }
         
         if (isset($input['logo_url'])) {
@@ -840,6 +853,14 @@ class KSRAD_Admin {
             esc_attr($checked)
         );
         echo esc_html(' <span class="description">Allow users to export analysis as PDF</span>');
+    }
+    
+    public function modal_popup_delay_callback() {
+        printf(
+            '<input type="number" step="1" min="0" max="60" id="modal_popup_delay" name="ksrad_options[modal_popup_delay]" value="%s" />',
+            isset($this->options['modal_popup_delay']) ? esc_attr($this->options['modal_popup_delay']) : '3'
+        );
+        echo ' <span class="description">Time in seconds before lead capture form appears after user interaction (0-60, default: 3)</span>';
     }
     
     public function grants_table_callback() {

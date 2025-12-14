@@ -313,6 +313,7 @@ class KSRAD_Plugin {
             'seai_grant_cap' => '162000',
             'aca_rate' => '12.5',
             'enable_pdf_export' => true,
+            'modal_popup_delay' => '3',
         );
         
         add_option('ksrad_options', $default_options);

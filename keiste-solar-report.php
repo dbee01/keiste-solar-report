@@ -1121,7 +1121,8 @@ if ($ksrad_isAjaxRequest) {
         window.KSRAD_CalcConfig = {
             currencySymbol: '<?php echo esc_js(ksrad_get_option('currency', '€')); ?>',
             seaiGrantRate: <?php echo esc_js(ksrad_get_option('seai_grant_rate', '30') / 100); ?>,
-            seaiGrantCap: <?php echo esc_js(ksrad_get_option('seai_grant_cap', '162000')); ?>
+            seaiGrantCap: <?php echo esc_js(ksrad_get_option('seai_grant_cap', '162000')); ?>,
+            modalPopupDelay: <?php echo esc_js(intval(ksrad_get_option('modal_popup_delay', 3)) * 1000); ?>
         };
     </script>
     <!-- Solar calculator main script enqueued via WordPress -->

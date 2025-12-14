@@ -65,7 +65,7 @@
                             scrollTop: messageDiv.offset().top - 50
                         }, 500);
                         
-                        // Re-enable form after delay
+                        // Re-enable form after delay.
                         setTimeout(function() {
                             form.find('input, textarea, button').prop('disabled', false);
                             submitBtn.text(submitBtn.data('original-text') || 'Get My Free Quote');
