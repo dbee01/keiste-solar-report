@@ -214,7 +214,7 @@ class KSRAD_Plugin {
             'defaultLoanApr' => ksrad_get_option('default_loan_apr', '5'),
             'loanTerm' => ksrad_get_option('loan_term', '7'),
             'annualPriceIncrease' => ksrad_get_option('annual_price_increase', '5'),
-            'currency' => ksrad_get_option('currency', '€'),
+            'currency' => ksrad_get_option('currency', '$'),
             'country' => ksrad_get_option('country', 'Rep. of Ireland'),
             'systemCostRatio' => ksrad_get_option('system_cost_ratio', '1500'),
             'grantRateDomestic' => ksrad_get_option('grant_rate_domestic', '30'),
@@ -228,8 +228,8 @@ class KSRAD_Plugin {
         // Add inline script to set global configuration variables
         // These need to be output inline because they may depend on dynamic page data
         $inline_config = "
-            window.CURRENCY_SYMBOL = '" . esc_js(ksrad_get_option('currency', '€')) . "';
-            window.COUNTRY_SETTING = '" . esc_js(ksrad_get_option('country', 'Rep. of Ireland')) . "';
+            window.CURRENCY_SYMBOL = '" . esc_js(ksrad_get_option('currency', '$')) . "';
+            window.COUNTRY_SETTING = '" . esc_js(ksrad_get_option('country', 'United States')) . "';
             window.BUILDING_TYPE = 'Residential'; // Default, will be updated by user selection
         ";
         wp_add_inline_script('keiste-solar-utility-functions', $inline_config, 'before');
@@ -302,19 +302,19 @@ class KSRAD_Plugin {
             'google_solar_api_key' => '',
             'report_key' => '',
             'logo_url' => '',
-            'default_electricity_rate' => '0.45',
-            'default_export_rate' => '40',
-            'default_feed_in_tariff' => '0.21',
+            'default_electricity_rate' => '0.17',
+            'default_export_rate' => '10',
+            'default_feed_in_tariff' => '0.14',
             'default_loan_apr' => '5',
             'loan_term' => '7',
             'annual_price_increase' => '5',
             'currency' => '$',
             'country' => 'United States',
             'system_cost_ratio' => '1500',
-            'cost_domestic' => '2500',
-            'cost_small' => '2000',
-            'cost_medium' => '1700',
-            'cost_large' => '1500',
+            'cost_domestic' => '650',
+            'cost_small' => '600',
+            'cost_medium' => '500',
+            'cost_large' => '425',
             'grant_rate_domestic' => '30',
             'grant_cap_domestic' => '7500',
             'grant_rate_non_domestic' => '30',
