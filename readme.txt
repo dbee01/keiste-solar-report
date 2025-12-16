@@ -4,7 +4,7 @@ Tags: solar, solar panels, roi calculator, google solar api, energy analysis
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.21
+Stable tag: 1.0.23
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ The Keiste Solar Report is a powerful WordPress plugin that provides comprehensi
 
 The visitor simply enters a building address, their average monthly electricity bill amount and their preferred System Size (ie. no of solar panels). They receive a full financial and technical breakdown along with a 10-12 page bespoke-designed personalized report download (Enterprise Plan only).
 
-<b>NB: You will need a Google Cloud API Key to use this plugin</b>
+**NB: You will need a Google Cloud API Key to use this plugin**
 
 Calculations for the visitor's solar project include estimates of Return on Investment, CO2 saved and solar project breakeven point. 
 

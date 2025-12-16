@@ -4,7 +4,7 @@
  * Plugin Name: Keiste Solar Report
  * Plugin URI: https://keiste.com/keiste-solar-report
  * Description: Comprehensive solar panel analysis tool with ROI calculations, Google Solar API integration, interactive charts, and PDF report generation.
- * Version: 1.0.21
+ * Version: 1.0.23
  * Author: Dara Burke, Keiste
  * Author URI: https://keiste.com
  * License: GPL v2 or later
@@ -367,7 +367,7 @@ if ($ksrad_isAjaxRequest) {
                 style="text-align: center; background: #FDFDFB; border: 2px solid #E8E8E6; border-radius: 12px; padding: 2rem; margin: 2rem auto; max-width: 600px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
                 <h3 style="color: #2A2A28; margin-bottom: 1rem; font-size: 1.3em; font-weight: 600;">🔍 How Much Can You Save With Solar?
                 </h3>
-                <h5 style="font-size: 1.6rem; color: #2a2a28; font-family: 'Brush Script MT', cursive;">by <a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Keiste.com</a></h5>
+                <h5 style="font-size: 1.6rem; color: #2a2a28;" class="bad-script-regular" >by <a href="https://keiste.com"  class="bad-script-regular" target="_blank" rel="noopener noreferrer">Keiste.com</a></h5>
 
                 <?php if (apply_filters('ksrad_is_premium', false)): ?>
 
@@ -428,7 +428,7 @@ if ($ksrad_isAjaxRequest) {
 
                         <h3><em><?php echo esc_html($ksrad_business_name); ?></em></h3>
 
-                        <div id="pacContainer">
+                        <div id="pacContainer" style="display: none;" >
                             <gmp-place-autocomplete id="pac" fields="id,location,formattedAddress,displayName" style="
                                 background-color: #fff;
                                 color: #222;
@@ -1176,7 +1176,7 @@ if ($ksrad_isAjaxRequest) {
     <!-- Solar Calculator v1.0.9 -->
 
     <?php if (!apply_filters('ksrad_is_premium', false)): ?>
-        <h6 style="color: #2a2a28; text-align: center;font-family: 'Brush Script MT', cursive;margin-top: 2rem;"><a href="https://keiste.com" target="_blank" rel="noopener noreferrer">Get Your Keiste Solar Report</a></h6>
+        <h6 style="color: #2a2a28; text-align: center;font-family: 'Brush Script MT', cursive;margin-top: 2rem;"><a href="https://keiste.com" target="_blank" rel="noopener noreferrer" class="bad-script-regular">Get Your Keiste Solar Report</a></h6>
     <?php endif; ?>
 
 </div><!-- #keiste-solar-report-wrapper -->

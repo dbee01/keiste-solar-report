@@ -66,6 +66,14 @@ class KSRAD_Plugin {
             return;
         }
         
+        // Google Fonts
+        wp_enqueue_style(
+            'google-fonts-bad-script',
+            'https://fonts.googleapis.com/css2?family=Bad+Script&display=swap',
+            array(),
+            null
+        );
+        
         // Font Awesome (local)
         wp_enqueue_style(
             'font-awesome',
